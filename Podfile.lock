@@ -1,0 +1,39 @@
+PODS:
+  - ABMenuTableViewCell (1.0.1)
+  - AFNetworking (2.5.2):
+    - AFNetworking/NSURLConnection (= 2.5.2)
+    - AFNetworking/NSURLSession (= 2.5.2)
+    - AFNetworking/Reachability (= 2.5.2)
+    - AFNetworking/Security (= 2.5.2)
+    - AFNetworking/Serialization (= 2.5.2)
+    - AFNetworking/UIKit (= 2.5.2)
+  - AFNetworking/NSURLConnection (2.5.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.2)
+  - AFNetworking/Security (2.5.2)
+  - AFNetworking/Serialization (2.5.2)
+  - AFNetworking/UIKit (2.5.2):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - IQLabelView (0.1.5)
+  - WPAttributedMarkup (1.0.0)
+
+DEPENDENCIES:
+  - ABMenuTableViewCell (~> 1.0.1)
+  - AFNetworking (~> 2.5.2)
+  - IQLabelView (~> 0.1.5)
+  - WPAttributedMarkup (~> 1.0.0)
+
+SPEC CHECKSUMS:
+  ABMenuTableViewCell: bdadf2c442881745131ad986d404a1f5964cde51
+  AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
+  WPAttributedMarkup: eb50878af4ec647d8d2090f721a5cfe7d29c27fe
+
+COCOAPODS: 0.36.3
