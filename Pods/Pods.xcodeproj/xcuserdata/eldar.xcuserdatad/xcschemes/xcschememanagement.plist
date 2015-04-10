@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-AFSQLManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-IQLabelView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>18B6DBFCFDCD36764B2095BA</key>
+		<key>21E5FA820B61A11BF42B8CFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5DF958C01A70182B82D9CBE8</key>
+		<key>29916B6C2C636F92EA386EC6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9247FB7A436FFA90F7F02AD5</key>
+		<key>8ADCE3C0E1900AADF5F79846</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC82144CF62A6EAA3AD1D256</key>
+		<key>9E9B24A2E646A2B8FFAB2FE6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FB6CD1364E7AC25F35AA34A5</key>
+		<key>BBD754BAB195E23E161DA88B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CB4C497AB22BE77AB032CEB3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

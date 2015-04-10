@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BBD754BAB195E23E161DA88B"
-               BuildableName = "libPods-ABMenuTableViewCell.a"
-               BlueprintName = "Pods-ABMenuTableViewCell"
+               BlueprintIdentifier = "8ADCE3C0E1900AADF5F79846"
+               BuildableName = "libPods-AFSQLManager.a"
+               BlueprintName = "Pods-AFSQLManager"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

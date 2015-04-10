@@ -21,18 +21,21 @@ PODS:
   - AFNetworking/UIKit (2.5.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AFSQLManager (1.0.2)
   - IQLabelView (0.1.5)
   - WPAttributedMarkup (1.0.0)
 
 DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.1)
   - AFNetworking (~> 2.5.2)
+  - AFSQLManager (~> 1.0.2)
   - IQLabelView (~> 0.1.5)
   - WPAttributedMarkup (~> 1.0.0)
 
 SPEC CHECKSUMS:
   ABMenuTableViewCell: bdadf2c442881745131ad986d404a1f5964cde51
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  AFSQLManager: 387d7556386797d54dc2727677aab9c4e6604a1c
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
   WPAttributedMarkup: eb50878af4ec647d8d2090f721a5cfe7d29c27fe
 

@@ -11,13 +11,20 @@
 #import "DeviceTypeHelper.h"
 #import "UIHelper.h"
 #import "YCameraViewController.h"
+#import "KKProgressTimer.h"
 
-@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate>
+
+@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *contentView;
 @property (nonatomic, strong) IBOutlet UIButton *niceButton;
 @property (nonatomic, strong) IBOutlet UIButton *skipButton;
 @property (nonatomic, strong) IBOutlet UIButton *bidPostButton;
+
+@property (nonatomic, strong) KKProgressTimer *timerController;
+@property (nonatomic) CGFloat timerPercentCount;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic) NSInteger timerFinishSeconds;
 
 
 

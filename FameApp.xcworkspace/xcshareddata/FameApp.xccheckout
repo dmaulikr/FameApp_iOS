@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4A3E982E-8BAC-4914-991E-30ED615A867D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FameApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FFF19719EE8EE38153707C842F030A0C0BA4FC5B</key>
+		<string>https://bitbucket.org/fameapp/fameapp_ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FameApp.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FFF19719EE8EE38153707C842F030A0C0BA4FC5B</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/fameapp/fameapp_ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FFF19719EE8EE38153707C842F030A0C0BA4FC5B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FFF19719EE8EE38153707C842F030A0C0BA4FC5B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FameApp</string>
+		</dict>
+	</array>
+</dict>
+</plist>

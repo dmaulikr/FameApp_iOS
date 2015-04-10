@@ -8,6 +8,8 @@
 
 #import "Main_ViewController.h"
 
+#import "DataStorageHelper.h"
+
 int dt;
 
 
@@ -19,6 +21,7 @@ int dt;
 
 @synthesize contentView;
 @synthesize niceButton, skipButton, bidPostButton;
+@synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
 
 
 - (void)didReceiveMemoryWarning {
@@ -40,6 +43,14 @@ int dt;
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
     [self initSubViews];
+    [self initTimerView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {  // TODO: DEBUG - REMOVE
+    
+    [super viewDidAppear:animated];
+    
+    [self startTimer:0 finishSeconds:15];
 }
 
 #pragma mark - Subviews init by device type
@@ -71,6 +82,49 @@ int dt;
 //    [self.view viewWithTag:1001].frame = CGRectMake(10, 57, 345, 336);
 //    
 //    [self.view viewWithTag:2000].frame = CGRectMake(5, 544, 365, 122);
+}
+
+#pragma mark - Timer related
+- (void)initTimerView {
+    
+    timerController = [[KKProgressTimer alloc] initWithFrame:[self.view viewWithTag:1002].frame];
+    [self.view addSubview:timerController];
+    timerController.delegate = self;
+}
+
+- (void)startTimer:(NSInteger)startSeconds finishSeconds:(NSInteger)finishSeconds {
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(timerInverval:) userInfo:nil repeats:YES];
+    timerFinishSeconds = finishSeconds;
+    timerPercentCount = startSeconds;
+    [timerController startWithBlock:^CGFloat {
+        
+        return timerPercentCount / 100;
+    }];
+}
+
+- (void)timerInverval:(NSTimer *)aTimer {
+    
+    timerPercentCount += 100/(CGFloat)timerFinishSeconds/10;
+    
+    if (timerPercentCount == 100) {
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
+- (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    
+    NSLog(@"%f", percentage);
+    
+    if (percentage >= 1) {
+        [progressTimer stop];
+    }
+}
+
+- (void)didStopProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    
+    NSLog(@"TIMER DONE.");
 }
 
 #pragma mark - Camera related
