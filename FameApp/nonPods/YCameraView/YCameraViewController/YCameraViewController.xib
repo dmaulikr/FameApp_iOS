@@ -82,7 +82,7 @@
                                 <action selector="gridToogle:" destination="-1" eventType="touchUpInside" id="7Jf-AS-SCL"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77">
                             <rect key="frame" x="255" y="10" width="44" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="44" id="s8Y-a8-4Im"/>
@@ -181,6 +181,7 @@
                         <constraint firstItem="32" firstAttribute="centerY" secondItem="31" secondAttribute="centerY" id="jRM-NZ-36x"/>
                         <constraint firstItem="32" firstAttribute="top" secondItem="31" secondAttribute="top" constant="20" id="l9q-3M-LHx"/>
                         <constraint firstItem="lCz-vv-NSh" firstAttribute="leading" secondItem="32" secondAttribute="trailing" constant="39" id="mql-XU-6iS"/>
+                        <constraint firstAttribute="bottom" secondItem="83" secondAttribute="bottom" constant="39" id="tty-Ig-kF3"/>
                     </constraints>
                 </view>
             </subviews>

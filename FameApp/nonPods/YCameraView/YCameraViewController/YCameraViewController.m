@@ -90,6 +90,10 @@
         // Initialize camera
         [self initializeCamera];
     }
+    else {
+        
+        [self retakePhoto:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -409,9 +413,13 @@
     [self setCapturedImage];
 }
 
-- (void)setCapturedImage{
+- (void)setCapturedImage {
+    
+    self.theCaptureImage = self.captureImage.image;
+    
     // Stop capturing image
     [session stopRunning];
+    self.captureImage.image = self.theCaptureImage;
     
 //    // Hide Top/Bottom controller after taking photo for editing
 //    [self hideControllers];
@@ -439,7 +447,8 @@
         
         if (outputImage) {
             self.captureImage.hidden = NO;
-            self.captureImage.image=outputImage;
+            self.captureImage.image = outputImage;
+            self.theCaptureImage = outputImage;
             
             [self dismissViewControllerAnimated:NO completion:nil];
             
@@ -447,8 +456,6 @@
             
 //            // Hide Top/Bottom controller after taking photo for editing
 //            [self hideControllers];
-            
-
         }
     }
 }
@@ -521,7 +528,7 @@
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ContentEdit_ViewController *myView = [storyBoard instantiateViewControllerWithIdentifier:@"ContentEditScreen"];
-    myView.image = [UIImage imageWithCGImage:self.captureImage.image.CGImage];
+    myView.image = [UIImage imageWithCGImage:self.theCaptureImage.CGImage];
     [self.navigationController pushViewController:myView animated:YES];
 }
 

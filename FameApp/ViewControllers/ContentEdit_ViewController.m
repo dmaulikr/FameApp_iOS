@@ -50,7 +50,7 @@ int dt;
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchOutside:)]];
     [self.imageView setImage:image];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"GO GO GO"
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"GO"
                                                                    style:UIBarButtonItemStyleBordered target:self action:@selector(saveImage)];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:saveButton, nil];
     

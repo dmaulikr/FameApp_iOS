@@ -94,6 +94,9 @@ int dt;
 
 - (void)startTimer:(NSInteger)startSeconds finishSeconds:(NSInteger)finishSeconds {
     
+    if (timer != nil) {
+        [timer invalidate];
+    }
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(timerInverval:) userInfo:nil repeats:YES];
     timerFinishSeconds = finishSeconds;
     timerPercentCount = startSeconds;
@@ -107,7 +110,7 @@ int dt;
     
     timerPercentCount += 100/(CGFloat)timerFinishSeconds/10;
     
-    if (timerPercentCount == 100) {
+    if (timerPercentCount >= 100) {
         [timer invalidate];
         timer = nil;
     }
@@ -115,8 +118,7 @@ int dt;
 
 - (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
     
-    NSLog(@"%f", percentage);
-    
+//    NSLog(@"%f", percentage);
     if (percentage >= 1) {
         [progressTimer stop];
     }

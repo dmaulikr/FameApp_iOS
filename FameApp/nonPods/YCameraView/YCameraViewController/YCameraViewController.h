@@ -59,7 +59,8 @@
 @property (nonatomic, strong) IBOutlet UIView *photoBar;
 @property (nonatomic, strong) IBOutlet UIView *topBar;
 @property (retain, nonatomic) IBOutlet UIView *imagePreview;
-@property (retain, nonatomic) IBOutlet UIImageView *captureImage;
+@property (strong, nonatomic) IBOutlet UIImageView *captureImage;
+@property (nonatomic, strong) UIImage *theCaptureImage;
 
 @end
 

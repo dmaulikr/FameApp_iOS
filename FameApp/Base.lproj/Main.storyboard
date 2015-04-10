@@ -271,6 +271,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="y9E-tk-Usk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="374"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TzI-6r-CV2">
                                 <rect key="frame" x="0.0" y="395" width="375" height="101"/>
@@ -337,8 +338,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Tests_1" width="234" height="234"/>
-        <image name="Tests_2" width="158" height="158"/>
+        <image name="Tests_1" width="704" height="704"/>
+        <image name="Tests_2" width="474" height="474"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
