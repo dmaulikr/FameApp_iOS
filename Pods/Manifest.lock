@@ -22,21 +22,30 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AFSQLManager (1.0.2)
+  - DLRadioButton (1.1.1)
+  - IQKeyboardManager (3.2.2)
   - IQLabelView (0.1.5)
+  - KLCPopup (1.0)
   - WPAttributedMarkup (1.0.0)
 
 DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.1)
   - AFNetworking (~> 2.5.2)
   - AFSQLManager (~> 1.0.2)
+  - DLRadioButton (~> 1.1.1)
+  - IQKeyboardManager (~> 3.2.2)
   - IQLabelView (~> 0.1.5)
+  - KLCPopup (~> 1.0)
   - WPAttributedMarkup (~> 1.0.0)
 
 SPEC CHECKSUMS:
   ABMenuTableViewCell: bdadf2c442881745131ad986d404a1f5964cde51
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
   AFSQLManager: 387d7556386797d54dc2727677aab9c4e6604a1c
+  DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
+  IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
+  KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
   WPAttributedMarkup: eb50878af4ec647d8d2090f721a5cfe7d29c27fe
 
 COCOAPODS: 0.36.3

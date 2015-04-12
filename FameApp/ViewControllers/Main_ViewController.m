@@ -8,7 +8,7 @@
 
 #import "Main_ViewController.h"
 
-#import "DataStorageHelper.h"
+#import "DataStorageHelper.h"  // TODO:
 
 int dt;
 
@@ -22,6 +22,7 @@ int dt;
 @synthesize contentView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
+@synthesize popup;
 
 
 - (void)didReceiveMemoryWarning {
@@ -118,7 +119,6 @@ int dt;
 
 - (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
     
-//    NSLog(@"%f", percentage);
     if (percentage >= 1) {
         [progressTimer stop];
     }
@@ -151,6 +151,141 @@ int dt;
     // Called when user clicks on "X" button to close YCameraViewController
 }
 
+#pragma mark - 'Report This?' related
+- (IBAction)showReportThisPopup:(UIButton *)aButton {
+    
+    // Generate content view to present
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 370)];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    popupView.backgroundColor = [Colors_Modal getUIColorForMain_1];
+    popupView.layer.borderColor = [UIColor whiteColor].CGColor;
+    popupView.layer.borderWidth = 3.0;
+    popupView.layer.cornerRadius = 8.0;
+    popupView.tag = 666;
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 280, 30)];
+    label1.text = @"Report this post, because:";
+    label1.textColor = [UIColor whiteColor];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0];
+    [popupView addSubview:label1];
+    
+    // radio buttons
+    DLRadioButton *radio1 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 65, 280, 30)];
+    radio1.buttonSideLength = 30;
+    radio1.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.0];
+    [radio1 setTitle:@"Illegal content\n(drugs, underage nudity, etc.)" forState:UIControlStateNormal];
+    radio1.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [radio1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    radio1.circleColor = [UIColor whiteColor];
+    radio1.indicatorColor = [UIColor whiteColor];
+    radio1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [popupView addSubview:radio1];
+    
+    DLRadioButton *radio2 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 105, 280, 30)];
+    radio2.buttonSideLength = 30;
+    radio2.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.0];
+    [radio2 setTitle:@"Pornography" forState:UIControlStateNormal];
+    [radio2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    radio2.circleColor = [UIColor whiteColor];
+    radio2.indicatorColor = [UIColor whiteColor];
+    radio2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [popupView addSubview:radio2];
+    
+    DLRadioButton *radio3 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 145, 280, 30)];
+    radio3.buttonSideLength = 30;
+    radio3.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.0];
+    [radio3 setTitle:@"It's Spam !!" forState:UIControlStateNormal];
+    [radio3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    radio3.circleColor = [UIColor whiteColor];
+    radio3.indicatorColor = [UIColor whiteColor];
+    radio3.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [popupView addSubview:radio3];
+    
+    DLRadioButton *radio4 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 185, 280, 30)];
+    radio4.buttonSideLength = 30;
+    radio4.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.0];
+    [radio4 setTitle:@"Something else (tell us more)" forState:UIControlStateNormal];
+    [radio4 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    radio4.circleColor = [UIColor whiteColor];
+    radio4.indicatorColor = [UIColor whiteColor];
+    radio4.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [radio4 setSelected:YES];
+    [popupView addSubview:radio4];
+    
+    NSMutableArray *otherRadioButtons = [[NSMutableArray alloc] init];
+    [otherRadioButtons addObject:radio2];
+    [otherRadioButtons addObject:radio3];
+    [otherRadioButtons addObject:radio4];
+    radio1.otherButtons = otherRadioButtons;
+    
+    
+    // message from user
+    UITextView *msgField = [[UITextView alloc] initWithFrame:CGRectMake(30, 225, 240, 50)];
+    msgField.delegate = self;
+    [popupView addSubview:msgField];
+    
+    
+    // action buttons
+    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 310, 120, 40)];
+    cancelButton.backgroundColor = [Colors_Modal getUIColorForMain_7];
+    cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+    [cancelButton setTitle:@"Never Mind" forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:@selector(cancelButtonPressed_reportThis:) forControlEvents:UIControlEventTouchUpInside];
+    [popupView addSubview:cancelButton];
+    
+    UIButton *reportButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 310, 120, 40)];
+    reportButton.backgroundColor = [Colors_Modal getUIColorForMain_4];
+    reportButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+    [reportButton setTitle:@"Report Now!!" forState:UIControlStateNormal];
+    [reportButton addTarget:self action:@selector(reportButtonPressed_reportThis:) forControlEvents:UIControlEventTouchUpInside];
+    [popupView addSubview:reportButton];
+    
+    
+    // Show in popup
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
+    
+    popup = [KLCPopup popupWithContentView:popupView
+                                            showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
+                                         dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
+                                            maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
+                            dismissOnBackgroundTouch:NO
+                               dismissOnContentTouch:NO];
+    
+    [popup showWithLayout:layout];
+}
+
+- (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
+    
+    [popup dismiss:YES];
+}
+
+- (void)reportButtonPressed_reportThis:(UIButton *)aButton {
+    
+    // TODO: incomplete
+    NSLog(@"report now pressed");
+    
+    
+    // TODO: collect:
+    // TODO:    1. selected radio button value.
+    // TODO:    2. msg from user
+    // TODO:    3. reported content ID.
+    
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+    CGRect frame = popup.bounds;
+    frame.origin.y += 130;
+    popup.bounds = frame;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    
+    CGRect frame = popup.bounds;
+    frame.origin.y -= 130;
+    popup.bounds = frame;
+    [textView resignFirstResponder];
+}
 
 @end
 

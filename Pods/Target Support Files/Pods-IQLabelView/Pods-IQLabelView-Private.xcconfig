@@ -1,6 +1,6 @@
 #include "Pods-IQLabelView.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/IQLabelView" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ABMenuTableViewCell" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/AFSQLManager" "${PODS_ROOT}/Headers/Public/IQLabelView" "${PODS_ROOT}/Headers/Public/WPAttributedMarkup"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/IQLabelView" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ABMenuTableViewCell" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/AFSQLManager" "${PODS_ROOT}/Headers/Public/DLRadioButton" "${PODS_ROOT}/Headers/Public/IQKeyboardManager" "${PODS_ROOT}/Headers/Public/IQLabelView" "${PODS_ROOT}/Headers/Public/KLCPopup" "${PODS_ROOT}/Headers/Public/WPAttributedMarkup"
 OTHER_LDFLAGS = ${PODS_IQLABELVIEW_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}
 SKIP_INSTALL = YES

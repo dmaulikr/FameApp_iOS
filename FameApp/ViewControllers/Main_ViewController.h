@@ -12,9 +12,11 @@
 #import "UIHelper.h"
 #import "YCameraViewController.h"
 #import "KKProgressTimer.h"
+#import "KLCPopup.h"
+#import "DLRadioButton.h"
 
 
-@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate>
+@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *contentView;
 @property (nonatomic, strong) IBOutlet UIButton *niceButton;
@@ -25,6 +27,8 @@
 @property (nonatomic) CGFloat timerPercentCount;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSInteger timerFinishSeconds;
+
+@property (nonatomic, strong) KLCPopup* popup;
 
 
 
