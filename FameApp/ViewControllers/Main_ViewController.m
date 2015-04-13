@@ -9,6 +9,7 @@
 #import "Main_ViewController.h"
 
 #import "DataStorageHelper.h"  // TODO:
+#import "UserInfo.h" // TODO:
 
 int dt;
 
@@ -33,6 +34,17 @@ int dt;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+//    NSLog(@"%@", [DataStorageHelper getLoginUserInfo]);
+//    
+//    NSString *TEMP = [DataStorageHelper testCreate];
+//    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
+//                                                    message:TEMP
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"OK"
+//                                          otherButtonTitles:nil];
+//    [alert show];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

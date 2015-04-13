@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataStorageHelper.h"
 #import "Colors_Modal.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

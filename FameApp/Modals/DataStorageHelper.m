@@ -1,74 +1,122 @@
-////
-////  DataStorageHelper.m
-////  FameApp
-////
-////  Created by Eldar on 4/10/15.
-////  Copyright (c) 2015 FameApp. All rights reserved.
-////
 //
-//#import "DataStorageHelper.h"
+//  DataStorageHelper.m
+//  FameApp
 //
-//@implementation DataStorageHelper
+//  Created by Eldar on 4/10/15.
+//  Copyright (c) 2015 FameApp. All rights reserved.
 //
-//+ (void)testCreate {
-//    
-//    [[AFSQLManager sharedManager]openLocalDatabaseWithName:@"testdb_WTF.sqlite" andStatusBlock:^(BOOL success, NSError *error) {
-//        
-//        [[AFSQLManager sharedManager]performQuery:
-//         @"create table if not exists User(id INT PRIMARY KEY NOT NULL, userId TEXT, userDisplayName TEXT)" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-//             
-//             [[AFSQLManager sharedManager]performQuery:
-//              @"SELECT 1 FROM user LIMIT 1;" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-//                  
-//                  NSLog(@"AA");
-//              }];
-//         }];
-//    }];
-//}
-//
-//+ (void)testAdd {
-//    
-//    NSLog(@"WTF");
-//    // check if table exists
-//    [[AFSQLManager sharedManager]performQuery:
-//     @"SELECT 1 FROM user LIMIT 1;" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-//         
-//         NSLog(@"TABLE CHECK");
-//     }];
-//    
-////    NSLog(@"HERE 1");
-////    [[AFSQLManager sharedManager]performQuery:
-////     @"CREATE TABLE User(id INT PRIMARY KEY NOT NULL, userId TEXT, userDisplayName TEXT);" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-////         
-////         NSLog(@"HERE 2");
-////         
-////         // Handle each row
-////         [[AFSQLManager sharedManager]performQuery:@"INSERT INTO User (id, userId, userDisplayName) VALUES (2, '@number2', 'Number2');" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-////             
-////             NSLog(@"HERE 3");
-////             
-////             [DataStorageHelper testGet];
-////         }];
-////     }];
-//
-////    [[AFSQLManager sharedManager]performQuery:@"INSERT INTO User (id, userId, userDisplayName) VALUES (1, '@number1', 'Number1');" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-////        
-////        NSLog(@"HERE 3");
-////        
-//////        [DataStorageHelper testGet];
-////    }];
-//    
-//}
-//
-//+ (void)testGet {
-//
-//    [[AFSQLManager sharedManager]performQuery:@"SELECT * FROM User" withBlock:^(NSArray *row, NSError *error, BOOL finished) {
-//        
-//        NSLog(@"XXX");
-//        NSLog(@">> %@", error);
-//        NSLog(@"<< %@", row);
-//    }];
-//}
-//
-//@end
-//
+
+#import "DataStorageHelper.h"
+
+@implementation DataStorageHelper
+
++ (void)setupDB {
+    
+    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb.db"];
+}
+
+#pragma mark - UserInfo related
+// there can be ONLY one user at every given time
++ (UserInfo *)getLoginUserInfo {
+    
+    return [UserInfo SQPFetchOne];
+}
+
++ (void)setLoginUserInfo:(UserInfo *)aUser {
+    
+    UserInfo *existingUser = [DataStorageHelper getLoginUserInfo];
+    
+    // update existing user
+    if (existingUser != nil) {
+        
+        existingUser.userId = aUser.userId;
+        existingUser.userDisplayName = aUser.userDisplayName;
+        existingUser.userImageURL = aUser.userImageURL;
+        
+        [existingUser SQPSaveEntity];
+    }
+    // insert new user
+    else {
+        
+        UserInfo *newUser = [UserInfo SQPCreateEntity];
+        newUser.userId = aUser.userId;
+        newUser.userDisplayName = aUser.userDisplayName;
+        newUser.userImageURL = aUser.userImageURL;
+        
+        [newUser SQPSaveEntity];
+    }
+}
+
++ (void)deleteLoginUserInfo {
+    
+    UserInfo *user = [DataStorageHelper getLoginUserInfo];
+    
+    if (user != nil) {
+        
+        // delete existing login user
+        user.deleteObject = YES;
+        [user SQPSaveEntity];
+    }
+}
+
+
+#pragma mark - PostHistory related
+/*!
+ Adds a PostHistory, for the currently login user.
+ And creates a timestamp.
+ */
++ (void)addPostHistory:(PostHistory *)aPost {
+    
+    UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
+    if (loginUser != nil) {
+        
+        PostHistory *newPost = [PostHistory SQPCreateEntity];
+        newPost.userId = loginUser.userId;
+        newPost.timestamp = [[NSDate alloc] init];
+        newPost.postId = aPost.postId;
+        newPost.contentFileName = aPost.contentFileName;
+        newPost.countViews = aPost.countViews;
+        newPost.countNices = aPost.countNices;
+        
+        [newPost SQPSaveEntity];
+    }
+}
+
+/*!
+ Gets all PostHistory related to the currently login user.
+ @return Mutable Array of PostHistory objects OR nil.
+ */
++ (NSMutableArray *)getAllPostHistory {
+    
+    UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
+    if (loginUser != nil) {
+        
+        NSString *query = [NSString stringWithFormat:@"userId = '%@'", loginUser.userId];
+        return [PostHistory SQPFetchAllWhere:query];
+    }
+    else {
+        
+        return nil;
+    }
+}
+
++ (PostHistory *)getPostHistory:(NSString *)postId {
+    
+    NSString *query = [NSString stringWithFormat:@"postId = '%@'", postId];
+    return [PostHistory SQPFetchOneWhere:query];
+}
+
++ (void)deletePostHistory:(NSString *)postId {
+    
+    PostHistory *aPost = [DataStorageHelper getPostHistory:postId];
+    if (aPost != nil) {
+        
+        // delete a PostHistory entry
+        aPost.deleteObject = YES;
+        [aPost SQPSaveEntity];
+    }
+}
+
+
+@end
+

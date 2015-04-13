@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E08756AD8EB5A40A96C823CB"
-               BuildableName = "libPods-AFSQLManager.a"
-               BlueprintName = "Pods-AFSQLManager"
+               BlueprintIdentifier = "617C52D66D761FBFA979D405"
+               BuildableName = "libPods-SQPersist.a"
+               BlueprintName = "Pods-SQPersist"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

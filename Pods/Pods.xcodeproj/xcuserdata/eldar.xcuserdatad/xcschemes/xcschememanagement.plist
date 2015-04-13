@@ -14,12 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-AFSQLManager.xcscheme</key>
+		<key>Pods-DLRadioButton.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-DLRadioButton.xcscheme</key>
+		<key>Pods-FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-SQPersist.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-WPAttributedMarkup.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>172DEC5C092E4A7A3642931A</key>
+		<key>0803647D59D49FC59D8752C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>610BA5D6F93511DDEC690BC3</key>
+		<key>571BC6DFB2A8B10F971977E3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>84D77ACFEF7995B1571B895D</key>
+		<key>617C52D66D761FBFA979D405</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AB376F30A9FFC6F70A184BCB</key>
+		<key>67067A7D8AB1AA91B33D1D57</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ADD49F871D594188086B0209</key>
+		<key>7AED49B1B3B7AF7766477717</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B92BD629155C5D58E426502E</key>
+		<key>86C9FCB9EF0330C3C519DC47</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D78D2076D61FD92C0ED964AC</key>
+		<key>8CBC16452569B73F40DEA8E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DB6A7FA74196F9FC662FBFB9</key>
+		<key>B2ED18AFE93142A37E98F840</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E08756AD8EB5A40A96C823CB</key>
+		<key>F62558985BE555902610ED4D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FEEC6A3DFD1DC638705EC24B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

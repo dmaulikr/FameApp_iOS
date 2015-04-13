@@ -11,7 +11,10 @@
 
 @interface ImageStorageHelper : NSObject
 
-+ (BOOL)saveImageToLocalDirectory:(UIImage *)aImage aUsername:(NSString *)aUsername;
+/*!
+ return Local Image Path OR nil.
+ */
++ (NSString *)saveImageToLocalDirectory:(UIImage *)aImage aUsername:(NSString *)aUserId;
 
 @end
 

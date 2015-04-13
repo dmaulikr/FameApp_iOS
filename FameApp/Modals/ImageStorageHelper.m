@@ -10,27 +10,27 @@
 
 @implementation ImageStorageHelper
 
-+ (BOOL)saveImageToLocalDirectory:(UIImage *)aImage aUsername:(NSString *)aUsername {
-
-    NSLog(@"%@", [ImageStorageHelper constructSaveFileName:aUsername]);
-    return YES;
+/*!
+ return Local Image Path OR nil.
+ */
++ (NSString *)saveImageToLocalDirectory:(UIImage *)aImage aUsername:(NSString *)aUserId {
     
-//    NSData *imageData = UIImageJPEGRepresentation(aImage, 0.8);
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSString *fileName =[NSString stringWithFormat:@"%@.jpg",[ImageStorageHelper constructSaveFileName:aUsername]];
-//    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:fileName];
-//    
-//    if ([imageData writeToFile:imagePath atomically:NO]) {
-//        
-//        NSLog(@"the cachedImagedPath is %@",imagePath);
-//        return YES;
-//    }
-//    else {
-//        
-//        NSLog(@"Failed to cache image data to disk");
-//        return NO;
-//    }
+    NSData *imageData = UIImageJPEGRepresentation(aImage, 0.8);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *fileName =[NSString stringWithFormat:@"%@.jpg",[ImageStorageHelper constructSaveFileName:aUserId]];
+    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    if ([imageData writeToFile:imagePath atomically:NO]) {
+        
+        NSLog(@"the cachedImagedPath is %@",imagePath);
+        return imagePath;
+    }
+    else {
+        
+        NSLog(@"Failed to cache image data to disk");
+        return nil;
+    }
 }
 
 + (NSString *)constructSaveFileName:(NSString *)aUsername {
