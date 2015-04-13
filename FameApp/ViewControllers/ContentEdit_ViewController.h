@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "IQLabelView.h"
 #import "DeviceTypeHelper.h"
+#import "ImageStorageHelper.h"
+#import "PostHistory.h"
 
 @interface ContentEdit_ViewController : UIViewController <IQLabelViewDelegate>
 
@@ -20,3 +22,4 @@
 @property (nonatomic, strong) NSMutableArray *labels;
 
 @end
+

@@ -35,6 +35,7 @@ int dt;
     
     [super viewDidLoad];
     
+//    // DEBUG
 //    NSLog(@"%@", [DataStorageHelper getLoginUserInfo]);
 //    
 //    NSString *TEMP = [DataStorageHelper testCreate];

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DataStorageHelper.h"
+#import "UserInfo.h"
 #import "Colors_Modal.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UserInfo *loginUser;
 
 @end
 

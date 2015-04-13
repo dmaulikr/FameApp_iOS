@@ -49,6 +49,7 @@
 		7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DD1ADB34E80088109C /* PostHistory.m */; };
 		7887E7E01ADB34E80088109C /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DE1ADB34E80088109C /* UserInfo.m */; };
 		78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D436F41AD81DC800B9D05A /* KKProgressTimer.m */; };
+		78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB087D1ADC169100AA60FD /* FormattingHelper.m */; };
 		78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */; };
 		78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38E1ACDD29200FD5CB0 /* DeviceTypeHelper.m */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,8 @@
 		7887E7DE1ADB34E80088109C /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = Modals/UserInfo.m; sourceTree = "<group>"; };
 		78D436F31AD81DC800B9D05A /* KKProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKProgressTimer.h; sourceTree = "<group>"; };
 		78D436F41AD81DC800B9D05A /* KKProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKProgressTimer.m; sourceTree = "<group>"; };
+		78DB087C1ADC169100AA60FD /* FormattingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormattingHelper.h; path = Modals/FormattingHelper.h; sourceTree = "<group>"; };
+		78DB087D1ADC169100AA60FD /* FormattingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormattingHelper.m; path = Modals/FormattingHelper.m; sourceTree = "<group>"; };
 		78E0A38A1ACDD28000FD5CB0 /* Colors_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colors_Modal.h; path = Modals/Colors_Modal.h; sourceTree = "<group>"; };
 		78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Colors_Modal.m; path = Modals/Colors_Modal.m; sourceTree = "<group>"; };
 		78E0A38D1ACDD29200FD5CB0 /* DeviceTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceTypeHelper.h; path = Modals/DeviceTypeHelper.h; sourceTree = "<group>"; };
@@ -260,6 +263,7 @@
 			children = (
 				787E00FA1AD72A23000139E2 /* Data Storage Helper */,
 				787E00F61AD71989000139E2 /* Image Storage Helper */,
+				78DB087B1ADC164500AA60FD /* Formatting Helper */,
 				7804E4751AD1C9EB00A611C2 /* UI Helper */,
 				7804E4741AD1C9D600A611C2 /* DeviceType Helper */,
 			);
@@ -393,8 +397,8 @@
 		7887E7E21ADB35100088109C /* PostHistory */ = {
 			isa = PBXGroup;
 			children = (
-				7887E7DD1ADB34E80088109C /* PostHistory.m */,
 				7887E7DA1ADB340B0088109C /* PostHistory.h */,
+				7887E7DD1ADB34E80088109C /* PostHistory.m */,
 			);
 			name = PostHistory;
 			sourceTree = "<group>";
@@ -406,6 +410,15 @@
 				78D436F41AD81DC800B9D05A /* KKProgressTimer.m */,
 			);
 			path = KKProgressTimer;
+			sourceTree = "<group>";
+		};
+		78DB087B1ADC164500AA60FD /* Formatting Helper */ = {
+			isa = PBXGroup;
+			children = (
+				78DB087C1ADC169100AA60FD /* FormattingHelper.h */,
+				78DB087D1ADC169100AA60FD /* FormattingHelper.m */,
+			);
+			name = "Formatting Helper";
 			sourceTree = "<group>";
 		};
 		863FD918D9CB255FAFE27EAA /* Pods */ = {
@@ -580,6 +593,7 @@
 				787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */,
 				7804E4731AD1C94C00A611C2 /* UIHelper.m in Sources */,
 				7887E7E01ADB34E80088109C /* UserInfo.m in Sources */,
+				78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */,
 				78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */,
 				7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */,
 				785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */,

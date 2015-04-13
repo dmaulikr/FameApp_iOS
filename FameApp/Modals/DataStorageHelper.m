@@ -12,7 +12,7 @@
 
 + (void)setupDB {
     
-    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb.db"];
+    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb_1.db"];  // TODO: this is not the final DB name
 }
 
 #pragma mark - UserInfo related
@@ -75,6 +75,7 @@
         newPost.timestamp = [[NSDate alloc] init];
         newPost.postId = aPost.postId;
         newPost.contentFileName = aPost.contentFileName;
+        newPost.isPublished = aPost.isPublished;
         newPost.countViews = aPost.countViews;
         newPost.countNices = aPost.countNices;
         
@@ -87,6 +88,8 @@
  @return Mutable Array of PostHistory objects OR nil.
  */
 + (NSMutableArray *)getAllPostHistory {
+    
+    // TODO: reverse the order: new -> old
     
     UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
     if (loginUser != nil) {

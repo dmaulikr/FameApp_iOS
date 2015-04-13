@@ -30,6 +30,7 @@ PODS:
   - IQKeyboardManager (3.2.2)
   - IQLabelView (0.1.5)
   - KLCPopup (1.0)
+  - NVDate (0.0.2)
   - SQPersist (1.0.3):
     - FMDB (~> 2.4)
   - WPAttributedMarkup (1.0.0)
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - IQKeyboardManager (~> 3.2.2)
   - IQLabelView (~> 0.1.5)
   - KLCPopup (~> 1.0)
+  - NVDate (~> 0.0.2)
   - SQPersist (~> 1.0.3)
   - WPAttributedMarkup (~> 1.0.0)
 
@@ -52,6 +54,7 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
   KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
+  NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01
   WPAttributedMarkup: eb50878af4ec647d8d2090f721a5cfe7d29c27fe
 

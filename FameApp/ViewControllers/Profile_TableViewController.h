@@ -7,16 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Colors_Modal.h"
-#import "DeviceTypeHelper.h"
 #import "ABMenuTableViewCell.h"
 #import "NSString+WPAttributedMarkup.h"
+#import "KLCPopup.h"
+#import "Colors_Modal.h"
+#import "DeviceTypeHelper.h"
+#import "ImageStorageHelper.h"
+#import "DataStorageHelper.h"
+#import "PostHistory.h"
+#import "FormattingHelper.h"
 
 @interface Profile_TableViewController : UITableViewController
 
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UILabel *userDisplayNameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *usernameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *userIdLabel;
+@property (nonatomic, strong) IBOutlet UITableView *postsTableView;
+@property (nonatomic, strong) NSMutableArray *postsHistoryList;
+@property (nonatomic, strong) KLCPopup *popup;
 
 @end
+

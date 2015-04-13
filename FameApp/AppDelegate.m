@@ -9,10 +9,11 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
+
+@synthesize loginUser;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -25,6 +26,13 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [UIColor whiteColor], NSForegroundColorAttributeName,
                                                             [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20.0], NSFontAttributeName, nil]];
+    
+    // TODO: DEBUG
+    loginUser = [[UserInfo alloc] init];
+    loginUser.userId = @"@number1";
+    loginUser.userDisplayName = @"Number1";
+    loginUser.userImageURL = @"http://";
+    [DataStorageHelper setLoginUserInfo:loginUser];
     
     return YES;
 }

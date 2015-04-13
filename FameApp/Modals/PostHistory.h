@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *postId;
 @property (nonatomic, strong) NSString *contentFileName;
+@property (nonatomic) bool isPublished;
 @property (nonatomic) int countViews;
 @property (nonatomic) int countNices;
 

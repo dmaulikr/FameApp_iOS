@@ -81,11 +81,34 @@ int dt;
 - (void)saveImage {
     
     // save image
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{   // TODO: need to save to an album OR not at all (meaning: use local DB instead)
-        UIImageWriteToSavedPhotosAlbum([self visibleImage], nil, nil, nil);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Saved to Photo Roll");
-        });
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        UIImage *imageToSave = [self visibleImage];
+        if (imageToSave != nil) {
+            
+            NSString *userId = @"@number1";  // TODO: get userId
+            
+            NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
+            
+            
+            // TODO: DEBUG - should be a global var.
+            // TODO:    here will be only 'userId' and 'contentFileName'
+            PostHistory *currentPost = [[PostHistory alloc] init];
+            currentPost.userId = userId;
+            currentPost.contentFileName = imagePath;
+            currentPost.isPublished = true;
+            currentPost.countNices = 10000;
+            currentPost.countViews = 100000;
+            currentPost.timestamp = [[NSDate alloc] init];
+            currentPost.postId = @"123";
+            [DataStorageHelper addPostHistory:currentPost];
+            
+            
+        }
+        else {
+            
+            // TODO: handle the error
+        }
     });
 }
 
@@ -177,7 +200,6 @@ int dt;
     // clear all the labels
     for (IQLabelView *aLabelView in labels) {
         
-        NSLog(@"ABC");
         [aLabelView setHidden:YES];
     }
     labels = [[NSMutableArray alloc] init];

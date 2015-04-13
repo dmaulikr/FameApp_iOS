@@ -256,9 +256,10 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="postsTableView" destination="rqP-O9-Gv9" id="FvN-Dn-2lZ"/>
                         <outlet property="userDisplayNameLabel" destination="hMe-KB-hqI" id="zDU-mO-Oyx"/>
+                        <outlet property="userIdLabel" destination="5gF-6j-42Z" id="fGd-bC-CGW"/>
                         <outlet property="userImageView" destination="nlI-HX-HO4" id="byx-IK-gUE"/>
-                        <outlet property="usernameLabel" destination="5gF-6j-42Z" id="6El-FE-9Op"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C87-UW-fdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
