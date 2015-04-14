@@ -18,6 +18,8 @@
 
 @interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
 
+@property (nonatomic, strong) IBOutlet UIImageView *userImageView;
+@property (nonatomic, strong) IBOutlet UILabel *userDisplayName;
 @property (nonatomic, strong) IBOutlet UIImageView *contentView;
 @property (nonatomic, strong) IBOutlet UIButton *niceButton;
 @property (nonatomic, strong) IBOutlet UIButton *skipButton;

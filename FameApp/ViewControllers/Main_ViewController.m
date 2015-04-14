@@ -20,7 +20,7 @@ int dt;
 
 @implementation Main_ViewController
 
-@synthesize contentView;
+@synthesize userImageView, userDisplayName, contentView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
 @synthesize popup;
@@ -79,23 +79,98 @@ int dt;
     
     [UIHelper addShadowToView:niceButton];
     [UIHelper addShadowToView:skipButton];
-    [UIHelper addShadowToView:bidPostButton];
-    
     
     dt = [DeviceTypeHelper getDeviceType];
     
-    if (dt == IPHONE_6) {
+    if (dt != IPHONE_4x) {
+        
+        [UIHelper addShadowToView:bidPostButton];
+    }
+    
+    if (dt == IPHONE_6PLUS) {
+        
+        [self initSubViews_iPhone6Plus];
+    }
+    else if (dt == IPHONE_6) {
         
         [self initSubViews_iPhone6];
     }
+    else if (dt == IPHONE_5x) {
+        
+        [self initSubViews_iPhone5x];
+    }
+    else if (dt == IPHONE_4x) {
+        
+        [self initSubViews_iPhone4x];
+    }
 }
 
-- (void)initSubViews_iPhone6 {  // TODO: incomplete
+- (void)initSubViews_iPhone6Plus {
     
-//    [self.view viewWithTag:1000].frame = CGRectMake(5, 69, 365, 476);
-//    [self.view viewWithTag:1001].frame = CGRectMake(10, 57, 345, 336);
-//    
-//    [self.view viewWithTag:2000].frame = CGRectMake(5, 544, 365, 122);
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 414, 512);
+    userImageView.frame = CGRectMake(20, 10, 70, 70);
+    userDisplayName.frame = CGRectMake(100, 30, 184, 42);
+    [self.view viewWithTag:1001].frame = CGRectMake(319, 67, 87, 21);
+    contentView.frame = CGRectMake(10, 87, 394, 394);
+    niceButton.frame = CGRectMake(40, 431, 150, 40);
+    skipButton.frame = CGRectMake(224, 431, 150, 40);
+    [self.view viewWithTag:1002].frame = CGRectMake(238, 433, 35, 35);
+    
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 576-64, 414, 160);
+    [self.view viewWithTag:2001].frame = CGRectMake(39, 95, 144, 58);
+    [self.view viewWithTag:2002].frame = CGRectMake(205, 95, 175, 58);
+    [self.view viewWithTag:2003].frame = CGRectMake(90, 20, 235, 62);
+}
+
+- (void)initSubViews_iPhone6 {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 375, 476);
+    userImageView.frame = CGRectMake(20, 10, 50, 50);
+    userDisplayName.frame = CGRectMake(76, 16, 184, 42);
+    [self.view viewWithTag:1001].frame = CGRectMake(280, 45, 87, 21);
+    contentView.frame = CGRectMake(8, 65, 360, 360);
+    niceButton.frame = CGRectMake(40, 378, 130, 40);
+    skipButton.frame = CGRectMake(207, 378, 130, 40);
+    [self.view viewWithTag:1002].frame = CGRectMake(217, 381, 35, 35);
+    
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 506-64, 375, 161);
+    [self.view viewWithTag:2001].frame = CGRectMake(16, 98, 144, 58);
+    [self.view viewWithTag:2002].frame = CGRectMake(190, 98, 175, 58);
+    [self.view viewWithTag:2003].frame = CGRectMake(69, 25, 235, 62);
+}
+
+- (void)initSubViews_iPhone5x {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 446);
+    userImageView.frame = CGRectMake(20, 10, 50, 50);
+    userDisplayName.frame = CGRectMake(76, 16, 184, 42);
+    [self.view viewWithTag:1001].frame = CGRectMake(225, 45, 87, 21);
+    contentView.frame = CGRectMake(10, 65, 300, 300);
+    niceButton.frame = CGRectMake(20, 320, 130, 40);
+    skipButton.frame = CGRectMake(170, 320, 130, 40);
+    [self.view viewWithTag:1002].frame = CGRectMake(178, 323, 35, 35);
+    
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 441-64, 320, 160);
+    [self.view viewWithTag:2001].frame = CGRectMake(8, 72, 144, 58);
+    [self.view viewWithTag:2002].frame = CGRectMake(146, 73, 175, 58);
+    [self.view viewWithTag:2003].frame = CGRectMake(43, 8, 235, 62);
+}
+
+- (void)initSubViews_iPhone4x {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 446);
+    userImageView.frame = CGRectMake(6, 1, 30, 30);
+    userDisplayName.frame = CGRectMake(44, 2, 184, 26);
+    [self.view viewWithTag:1001].frame = CGRectMake(225, 14, 87, 21);
+    contentView.frame = CGRectMake(25, 33, 270, 270);
+    niceButton.frame = CGRectMake(29, 258, 116, 40);
+    skipButton.frame = CGRectMake(174, 258, 116, 40);
+    [self.view viewWithTag:1002].frame = CGRectMake(182, 261, 35, 35);
+    
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 370-64, 320, 160);
+    [self.view viewWithTag:2001].frame = CGRectMake(8, 59, 144, 58);
+    [self.view viewWithTag:2002].frame = CGRectMake(146, 60, 175, 58);
+    [self.view viewWithTag:2003].frame = CGRectMake(43, 4, 235, 62);
 }
 
 #pragma mark - Timer related

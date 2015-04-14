@@ -114,13 +114,24 @@ int dt;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row < [postsHistoryList count]) {
+    // show posts
+    if ([postsHistoryList count] > 0) {
         
-        return (CELL_HEIGHT__THE_VIEW + CELL_HEIGHT__THE_SEPARATOR);
+        // regular cell
+        if (indexPath.row < [postsHistoryList count]) {
+            
+            return (CELL_HEIGHT__THE_VIEW + CELL_HEIGHT__THE_SEPARATOR);
+        }
+        // footer padding cell
+        else {
+            
+            return CELL_HEIGHT__THE_VIEW / 2;
+        }
     }
+    // nothing to see
     else {
         
-        return CELL_HEIGHT__THE_VIEW / 2;
+        return CELL_HEIGHT__THE_VIEW;
     }
 }
 

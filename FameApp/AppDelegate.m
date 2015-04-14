@@ -25,13 +25,14 @@
     [[UINavigationBar appearance] setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                            [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20.0], NSFontAttributeName, nil]];
+                                                            [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     
     // TODO: DEBUG
     loginUser = [[UserInfo alloc] init];
     loginUser.userId = @"@number1";
     loginUser.userDisplayName = @"Number1";
     loginUser.userImageURL = @"http://";
+    loginUser.userEmail = @"eldare@gmail.com";
     [DataStorageHelper setLoginUserInfo:loginUser];
     
     return YES;
