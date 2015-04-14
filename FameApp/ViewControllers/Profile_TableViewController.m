@@ -64,6 +64,7 @@ int dt;
     [userDisplayNameLabel setText:loginUser.userDisplayName];
     [userIdLabel setText:loginUser.userId];
     // TODO: set user's 'imageURL' (with cache!! and maybe fade-in animation)
+    // TODO: if you tap the image, you will be able to edit it.
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
