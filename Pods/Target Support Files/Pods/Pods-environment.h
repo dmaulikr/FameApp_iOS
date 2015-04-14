@@ -10,7 +10,7 @@
 #define COCOAPODS_POD_AVAILABLE_ABMenuTableViewCell
 #define COCOAPODS_VERSION_MAJOR_ABMenuTableViewCell 1
 #define COCOAPODS_VERSION_MINOR_ABMenuTableViewCell 0
-#define COCOAPODS_VERSION_PATCH_ABMenuTableViewCell 1
+#define COCOAPODS_VERSION_PATCH_ABMenuTableViewCell 2
 
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking

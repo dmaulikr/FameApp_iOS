@@ -1,5 +1,5 @@
 PODS:
-  - ABMenuTableViewCell (1.0.1)
+  - ABMenuTableViewCell (1.0.2)
   - AFNetworking (2.5.2):
     - AFNetworking/NSURLConnection (= 2.5.2)
     - AFNetworking/NSURLSession (= 2.5.2)
@@ -36,7 +36,7 @@ PODS:
   - WPAttributedMarkup (1.0.0)
 
 DEPENDENCIES:
-  - ABMenuTableViewCell (~> 1.0.1)
+  - ABMenuTableViewCell (~> 1.0.2)
   - AFNetworking (~> 2.5.2)
   - DLRadioButton (~> 1.1.1)
   - IQKeyboardManager (~> 3.2.2)
@@ -47,7 +47,7 @@ DEPENDENCIES:
   - WPAttributedMarkup (~> 1.0.0)
 
 SPEC CHECKSUMS:
-  ABMenuTableViewCell: bdadf2c442881745131ad986d404a1f5964cde51
+  ABMenuTableViewCell: 9ae466fd77d467ae46963c60ad592d8af7637693
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52

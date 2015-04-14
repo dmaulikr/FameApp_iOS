@@ -15,11 +15,6 @@ const int CELL_HEIGHT__THE_SEPARATOR = 10;
 int dt;
 
 
-// TODO: tap on cell is the same as swipe left.
-
-// TODO: BUG - Swipe right issue: https://github.com/alexbumbu/ABMenuTableViewCell/issues/1
-
-
 @interface Profile_TableViewController ()
 @end
 
@@ -374,6 +369,20 @@ int dt;
     [popup dismiss:YES];
     
     [postsTableView reloadData];
+}
+
+#pragma mark - Keyboard related
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    NSLog(@"%@", textField.text);
+    
+    // TODO: save changed Display Name
+    // TODO:    1. save to server.
+    // TODO:    2. save to local db
+    
 }
 
 @end

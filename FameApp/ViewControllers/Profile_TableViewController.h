@@ -17,11 +17,11 @@
 #import "PostHistory.h"
 #import "FormattingHelper.h"
 
-@interface Profile_TableViewController : UITableViewController
+@interface Profile_TableViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
-@property (nonatomic, strong) IBOutlet UILabel *userDisplayNameLabel;
+@property (nonatomic, strong) IBOutlet UITextField *userDisplayNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *userIdLabel;
 @property (nonatomic, strong) IBOutlet UITableView *postsTableView;
 @property (nonatomic, strong) NSMutableArray *postsHistoryList;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KLCPopup.h"
 #import "Colors_Modal.h"
 #import "DataStorageHelper.h"
 #import "UserInfo.h"
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *userIdLabel;
 @property (nonatomic, strong) IBOutlet UILabel *userEmailLabel;
 @property (nonatomic, strong) IBOutlet UILabel *versionLabel;
+@property (nonatomic, strong) KLCPopup *popup;
 
 @end
 

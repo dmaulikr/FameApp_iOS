@@ -220,13 +220,6 @@
                                     <rect key="frame" x="87" y="21" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hMe-KB-hqI">
-                                    <rect key="frame" x="0.0" y="232" width="375" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="36"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@number1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gF-6j-42Z">
                                     <rect key="frame" x="0.0" y="280" width="375" height="21"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -242,6 +235,16 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Number1" textAlignment="center" minimumFontSize="17" id="a4N-Uf-Drm">
+                                    <rect key="frame" x="0.0" y="232" width="375" height="45"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="36"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="a9B-Xh-mUp" id="BYx-6e-pJ3"/>
+                                    </connections>
+                                </textField>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
@@ -260,7 +263,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="postsTableView" destination="rqP-O9-Gv9" id="FvN-Dn-2lZ"/>
-                        <outlet property="userDisplayNameLabel" destination="hMe-KB-hqI" id="zDU-mO-Oyx"/>
+                        <outlet property="userDisplayNameLabel" destination="a4N-Uf-Drm" id="Q56-jz-yem"/>
                         <outlet property="userIdLabel" destination="5gF-6j-42Z" id="fGd-bC-CGW"/>
                         <outlet property="userImageView" destination="nlI-HX-HO4" id="byx-IK-gUE"/>
                     </connections>
@@ -320,6 +323,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="efH-CJ-Cbn" kind="push" id="Wst-eA-ssh"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="gHy-DP-Xdc" detailTextLabel="Ykp-2R-oid" style="IBUITableViewCellStyleValue1" id="03p-Gb-Zdp">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -340,6 +346,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="gnW-hg-VcU" kind="push" id="piQ-QR-RL0"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="R9V-Ir-d8O" detailTextLabel="QSB-DX-A5U" style="IBUITableViewCellStyleValue1" id="ZSA-jM-KRA">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -446,6 +455,69 @@
             </objects>
             <point key="canvasLocation" x="1985.5" y="-148.5"/>
         </scene>
+        <!--YOUR PASSWORD-->
+        <scene sceneID="Ekj-IB-ew2">
+            <objects>
+                <viewController title="YOUR PASSWORD" id="gnW-hg-VcU" customClass="Password_ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RYT-zZ-dCj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="rfD-vu-c9n">
+                                <rect key="frame" x="0.0" y="180" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="17" id="qOt-MY-k3Q">
+                                        <rect key="frame" x="15" y="0.0" width="345" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="07Y-4r-CkK">
+                                <rect key="frame" x="0.0" y="108" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your Current Password" minimumFontSize="17" id="gFE-Qi-Uc0">
+                                        <rect key="frame" x="15" y="0.0" width="345" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here you can change your password" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1sY-V1-85c">
+                                <rect key="frame" x="92" y="26" width="190" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="YOUR PASSWORD" id="AkH-gE-ouJ">
+                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="JhS-4N-a53">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="gnW-hg-VcU" id="G24-J4-Jww"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="passwordCurrentTextField" destination="gFE-Qi-Uc0" id="yQY-uw-Rfk"/>
+                        <outlet property="passwordNewTextField" destination="qOt-MY-k3Q" id="KNv-BH-bvK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JyI-u9-b9b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2500.5" y="48.5"/>
+        </scene>
         <!--EDIT-->
         <scene sceneID="YbC-ao-8zv">
             <objects>
@@ -521,6 +593,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1B5-Hn-A8y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="241" y="255"/>
+        </scene>
+        <!--YOUR EMAIL-->
+        <scene sceneID="kVA-KU-4cw">
+            <objects>
+                <viewController title="YOUR EMAIL" id="efH-CJ-Cbn" customClass="Email_ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Lyb-ct-5ZN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="02b-76-4H0">
+                                <rect key="frame" x="0.0" y="108" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Email Address" minimumFontSize="17" id="I0M-iM-VDz">
+                                        <rect key="frame" x="15" y="0.0" width="345" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here you can change your email address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FCj-gF-Ody">
+                                <rect key="frame" x="92" y="29" width="190" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="YOUR EMAIL" id="DaN-BQ-YW5">
+                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="Anv-Ew-bYm">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="efH-CJ-Cbn" id="7lz-jl-ZaJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="emailNewTextField" destination="I0M-iM-VDz" id="RUO-Xx-Pev"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="17a-cm-UWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2500.5" y="-705.5"/>
         </scene>
     </scenes>
     <resources>

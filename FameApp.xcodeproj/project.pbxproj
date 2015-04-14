@@ -16,6 +16,8 @@
 		780BFCD11AC87F7B009E4DC9 /* FameAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 780BFCD01AC87F7B009E4DC9 /* FameAppTests.m */; };
 		781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781074CF1ADD37A700B02F4A /* Options_TableViewController.m */; };
 		781870131AD013C100988275 /* YCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781870121AD013C100988275 /* YCameraViewController.xib */; };
+		783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */; };
+		783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */; };
 		785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */; };
 		78674CA41AD0024900EE2956 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA31AD0024900EE2956 /* AVFoundation.framework */; };
 		78674CA61AD0025900EE2956 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA51AD0025900EE2956 /* ImageIO.framework */; };
@@ -84,6 +86,10 @@
 		781074CE1ADD37A700B02F4A /* Options_TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Options_TableViewController.h; path = ViewControllers/Options_TableViewController.h; sourceTree = "<group>"; };
 		781074CF1ADD37A700B02F4A /* Options_TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Options_TableViewController.m; path = ViewControllers/Options_TableViewController.m; sourceTree = "<group>"; };
 		781870121AD013C100988275 /* YCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YCameraViewController.xib; sourceTree = "<group>"; };
+		783AD1161ADDCCDA00D7DC1B /* Password_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Password_ViewController.h; path = ViewControllers/Password_ViewController.h; sourceTree = "<group>"; };
+		783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Password_ViewController.m; path = ViewControllers/Password_ViewController.m; sourceTree = "<group>"; };
+		783AD11A1ADDD53200D7DC1B /* Email_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Email_ViewController.h; path = ViewControllers/Email_ViewController.h; sourceTree = "<group>"; };
+		783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Email_ViewController.m; path = ViewControllers/Email_ViewController.m; sourceTree = "<group>"; };
 		785E284F1AD3F06200A8EBEB /* Profile_TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Profile_TableViewController.h; path = ViewControllers/Profile_TableViewController.h; sourceTree = "<group>"; };
 		785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Profile_TableViewController.m; path = ViewControllers/Profile_TableViewController.m; sourceTree = "<group>"; };
 		78674CA31AD0024900EE2956 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -264,6 +270,8 @@
 		781074CD1ADD377500B02F4A /* Options */ = {
 			isa = PBXGroup;
 			children = (
+				783AD1191ADDD4C100D7DC1B /* Email */,
+				783AD1151ADDCCA700D7DC1B /* Password */,
 				781074CE1ADD37A700B02F4A /* Options_TableViewController.h */,
 				781074CF1ADD37A700B02F4A /* Options_TableViewController.m */,
 			);
@@ -298,6 +306,24 @@
 				78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */,
 			);
 			name = "Colors Modal";
+			sourceTree = "<group>";
+		};
+		783AD1151ADDCCA700D7DC1B /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				783AD1161ADDCCDA00D7DC1B /* Password_ViewController.h */,
+				783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */,
+			);
+			name = Password;
+			sourceTree = "<group>";
+		};
+		783AD1191ADDD4C100D7DC1B /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				783AD11A1ADDD53200D7DC1B /* Email_ViewController.h */,
+				783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */,
+			);
+			name = Email;
 			sourceTree = "<group>";
 		};
 		78674CA91AD0031B00EE2956 /* nonPods */ = {
@@ -599,6 +625,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */,
+				783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */,
 				78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */,
 				787C1A921ACDD1D50072EF03 /* Main_ViewController.m in Sources */,
 				78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */,
