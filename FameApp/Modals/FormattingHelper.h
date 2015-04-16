@@ -11,6 +11,8 @@
 
 @interface FormattingHelper : NSObject
 
++ (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef;
++ (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name;
 + (NSString *)formatDateString:(NSDate *)aDate;
 
 @end

@@ -22,6 +22,7 @@ int dt;
 
 @synthesize userImageView, userDisplayName, contentView;
 @synthesize niceButton, skipButton, bidPostButton;
+@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
 @synthesize popup;
 
@@ -77,15 +78,7 @@ int dt;
     [niceButton setBackgroundColor:[Colors_Modal getUIColorForMain_5]];
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
-    [UIHelper addShadowToView:niceButton];
-    [UIHelper addShadowToView:skipButton];
-    
     dt = [DeviceTypeHelper getDeviceType];
-    
-    if (dt != IPHONE_4x) {
-        
-        [UIHelper addShadowToView:bidPostButton];
-    }
     
     if (dt == IPHONE_6PLUS) {
         
@@ -102,6 +95,16 @@ int dt;
     else if (dt == IPHONE_4x) {
         
         [self initSubViews_iPhone4x];
+    }
+    
+    [UIHelper addShadowToView:niceButton];
+    [UIHelper addShadowToView:skipButton];
+    
+    dt = [DeviceTypeHelper getDeviceType];
+    
+    if (dt != IPHONE_4x) {
+        
+        [UIHelper addShadowToView:bidPostButton];
     }
 }
 
@@ -228,7 +231,6 @@ int dt;
 
 -(void)didFinishPickingImage:(UIImage *)image {  // NEVER USED
     // Use image as per your need
-    
 }
 
 -(void)yCameraControllerdidSkipped {
@@ -375,19 +377,173 @@ int dt;
     [textView resignFirstResponder];
 }
 
+#pragma mark - 'Invite Friends' related
+- (IBAction)inviteFriendsButtonPressed:(id)sender {
+    
+    [self showInviteFriendsPopup];
+}
+
+- (void)openContacts {
+    
+    KBContactsSelectionViewController *vc = [KBContactsSelectionViewController contactsSelectionViewControllerWithConfiguration:^(KBContactsSelectionConfiguration *configuration) {
+        
+        configuration.mode = KBContactsSelectionModeMessages;
+        configuration.shouldShowNavigationBar = NO;
+        configuration.title = @"YOUR CONTACTS";
+        configuration.tintColor = [Colors_Modal getUIColorForMain_1];
+        configuration.skipUnnamedContacts = YES;
+        configuration.selectButtonTitle = @"";
+        configuration.customSelectButtonHandler = ^(NSArray *contacts) {
+            
+//            // SMS
+//            
+//            if([MFMessageComposeViewController canSendText] == NO) {
+//                
+//                // TODO: ERROR - SMS is not supported on this device.
+//                return;
+//            }
+//            
+//            NSMutableArray *recipents = [[NSMutableArray alloc] init];
+//            for (APContact *aContact in contacts) {
+//                
+//                [recipents addObject:((APPhoneWithLabel *)[aContact.phonesWithLabels objectAtIndex:0]).phone];
+//            }
+//            NSString *message = [FormattingHelper formatSMSInviteGeneralMessage:0];
+//            
+//            MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+//            messageController.messageComposeDelegate = self;
+//            [messageController setRecipients:recipents];
+//            [messageController setBody:message];
+//            
+//            // Present message view controller on screen
+//            [self presentViewController:messageController animated:YES completion:nil];
+        };
+    }];
+    
+    // work around.
+    // for some weird reason this overrides the issue
+    // with tintColor configuration of the controller,
+    // and uses the app's tintColor in the navigation bar. HOORAY!!!
+    UILabel * instructionsLabel = [[UILabel alloc] init];
+    instructionsLabel.text = @"";
+    vc.additionalInfoView = instructionsLabel;
+    
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void) didSelectContact:(APContact *)contact {
+    
+    // SMS
+    
+    if([MFMessageComposeViewController canSendText] == NO) {
+        
+        // TODO: ERROR - SMS is not supported on this device.
+        return;
+    }
+    
+    NSArray *recipents = [[NSMutableArray alloc] initWithObjects:((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone, nil];
+    
+    NSString *contactName = @"Hey there";
+    if (contact.firstName != nil) {
+        contactName = contact.firstName;
+    }
+    else if (contact.lastName != nil) {
+        contactName = contact.lastName;
+    }
+    NSString *message = [FormattingHelper formatSMSInvitePersonalMessage:0 name:contactName];
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setRecipients:recipents];
+    [messageController setBody:message];
+    
+    // Present message view controller on screen
+    [self presentViewController:messageController animated:YES completion:nil];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    
+    // TODO: there is no way to know to whom the user actually sent the SMS
+    // TODO: it's important since we give bonus points for every user invited.
+    
+    if (result == MessageComposeResultCancelled) {
+        
+        NSLog(@"SMS cancelled");  // TODO: incomplete
+    }
+    else if (result == MessageComposeResultFailed) {
+        
+        NSLog(@"SMS failed");  // TODO: incomplete
+    }
+    else if (result == MessageComposeResultSent) {
+        
+        NSLog(@"SMS sent");  // TODO: incomplete
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)showInviteFriendsPopup {
+    
+    // Generate content view to present
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 240)];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    popupView.backgroundColor = [Colors_Modal getUIColorForMain_1];
+    popupView.layer.borderColor = [UIColor whiteColor].CGColor;
+    popupView.layer.borderWidth = 3.0;
+    popupView.layer.cornerRadius = 8.0;
+    popupView.tag = 666;
+    
+    // TODO: make the label with styles to make the right words stand out.
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 270, 140)];
+    label1.text = @"Want to increase your odds to\nget published to the masses?\nyou do :)\n\nInvite your friends\nand get bonuses...";
+    label1.textColor = [UIColor whiteColor];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
+    label1.numberOfLines = 7;
+    label1.textAlignment = NSTextAlignmentCenter;
+    [popupView addSubview:label1];
+    
+    
+    // action buttons
+    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 185, 120, 40)];
+    cancelButton.backgroundColor = [Colors_Modal getUIColorForMain_7];
+    cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+    [cancelButton setTitle:@"Maybe Later" forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:@selector(cancelButtonPressed_inviteFriends:) forControlEvents:UIControlEventTouchUpInside];
+    [popupView addSubview:cancelButton];
+    
+    UIButton *reportButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 185, 120, 40)];
+    reportButton.backgroundColor = [Colors_Modal getUIColorForNavigationBar_backgroundColor];
+    reportButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+    [reportButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
+    [reportButton addTarget:self action:@selector(inviteButtonPressed_inviteFriends:) forControlEvents:UIControlEventTouchUpInside];
+    [popupView addSubview:reportButton];
+    
+    
+    // Show in popup
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
+    
+    popup = [KLCPopup popupWithContentView:popupView
+                                  showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
+                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
+                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
+                  dismissOnBackgroundTouch:NO
+                     dismissOnContentTouch:NO];
+    
+    [popup showWithLayout:layout];
+}
+
+- (void)cancelButtonPressed_inviteFriends:(UIButton *)aButton {
+    
+    [popup dismiss:YES];
+}
+
+- (void)inviteButtonPressed_inviteFriends:(UIButton *)aButton {
+    
+    [self openContacts];
+    [popup dismiss:NO];
+}
+
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

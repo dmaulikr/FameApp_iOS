@@ -21,6 +21,9 @@ PODS:
   - AFNetworking/UIKit (2.5.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - APAddressBook (0.1.5):
+    - APAddressBook/Core (= 0.1.5)
+  - APAddressBook/Core (0.1.5)
   - DLRadioButton (1.1.1)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
@@ -29,6 +32,8 @@ PODS:
     - FMDB/common
   - IQKeyboardManager (3.2.2)
   - IQLabelView (0.1.5)
+  - KBContactsSelection (1.2.3):
+    - APAddressBook (~> 0.1)
   - KLCPopup (1.0)
   - NVDate (0.0.2)
   - SQPersist (1.0.3):
@@ -41,6 +46,7 @@ DEPENDENCIES:
   - DLRadioButton (~> 1.1.1)
   - IQKeyboardManager (~> 3.2.2)
   - IQLabelView (~> 0.1.5)
+  - KBContactsSelection (~> 1.2.3)
   - KLCPopup (~> 1.0)
   - NVDate (~> 0.0.2)
   - SQPersist (~> 1.0.3)
@@ -49,10 +55,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ABMenuTableViewCell: 9ae466fd77d467ae46963c60ad592d8af7637693
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  APAddressBook: c72fec93464d57f39966ce28c107c10253fa7d39
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
+  KBContactsSelection: 575a3abea841a05732157a84f77f7b0556e41e7a
   KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
   NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01

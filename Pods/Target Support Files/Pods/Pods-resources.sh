@@ -53,10 +53,14 @@ install_resource()
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "IQLabelView/IQLabelView/IQLabelView.bundle"
+  install_resource "KBContactsSelection/KBContactsSelection/KBContactCell.xib"
+  install_resource "KBContactsSelection/KBContactsSelection/KBContactsSelectionViewController.xib"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "IQLabelView/IQLabelView/IQLabelView.bundle"
+  install_resource "KBContactsSelection/KBContactsSelection/KBContactCell.xib"
+  install_resource "KBContactsSelection/KBContactsSelection/KBContactsSelectionViewController.xib"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

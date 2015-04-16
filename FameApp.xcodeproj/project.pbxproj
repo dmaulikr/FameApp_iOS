@@ -53,6 +53,7 @@
 		7887E7E01ADB34E80088109C /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DE1ADB34E80088109C /* UserInfo.m */; };
 		78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D436F41AD81DC800B9D05A /* KKProgressTimer.m */; };
 		78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB087D1ADC169100AA60FD /* FormattingHelper.m */; };
+		78DE09101ADF25F300E745FB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DE090F1ADF25F300E745FB /* MessageUI.framework */; };
 		78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */; };
 		78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38E1ACDD29200FD5CB0 /* DeviceTypeHelper.m */; };
 /* End PBXBuildFile section */
@@ -137,6 +138,7 @@
 		78D436F41AD81DC800B9D05A /* KKProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKProgressTimer.m; sourceTree = "<group>"; };
 		78DB087C1ADC169100AA60FD /* FormattingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormattingHelper.h; path = Modals/FormattingHelper.h; sourceTree = "<group>"; };
 		78DB087D1ADC169100AA60FD /* FormattingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormattingHelper.m; path = Modals/FormattingHelper.m; sourceTree = "<group>"; };
+		78DE090F1ADF25F300E745FB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		78E0A38A1ACDD28000FD5CB0 /* Colors_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colors_Modal.h; path = Modals/Colors_Modal.h; sourceTree = "<group>"; };
 		78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Colors_Modal.m; path = Modals/Colors_Modal.m; sourceTree = "<group>"; };
 		78E0A38D1ACDD29200FD5CB0 /* DeviceTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceTypeHelper.h; path = Modals/DeviceTypeHelper.h; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78DE09101ADF25F300E745FB /* MessageUI.framework in Frameworks */,
 				787E01061AD7550F000139E2 /* libsqlite3.dylib in Frameworks */,
 				78674CA81AD0026600EE2956 /* CoreMotion.framework in Frameworks */,
 				78674CA61AD0025900EE2956 /* ImageIO.framework in Frameworks */,
@@ -169,6 +172,7 @@
 		5E0282AF918A061B4386C83C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78DE090F1ADF25F300E745FB /* MessageUI.framework */,
 				787E01051AD7550F000139E2 /* libsqlite3.dylib */,
 				78674CA71AD0026600EE2956 /* CoreMotion.framework */,
 				78674CA51AD0025900EE2956 /* ImageIO.framework */,

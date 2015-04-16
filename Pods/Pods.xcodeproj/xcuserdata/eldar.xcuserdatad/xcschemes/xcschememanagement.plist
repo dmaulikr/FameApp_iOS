@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-APAddressBook.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-DLRadioButton.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -30,6 +35,11 @@
 			<false/>
 		</dict>
 		<key>Pods-IQLabelView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-KBContactsSelection.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,57 +72,67 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>025CBFD4AE2831329B23CDDD</key>
+		<key>0076AC2C10EA675A1F352CCA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>08232814D178D8DB83B61938</key>
+		<key>1D1997755833107BA404CFB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6EA94EA6C3DCF1F7C49B8B77</key>
+		<key>2C71E6789880FB4099E67CA8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>78FEF331C78923C405C067AE</key>
+		<key>35F68274837F2CD938F9FD2B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>848A319BEEB37C01F3F24C9E</key>
+		<key>44BF03FC5A9B87DE4EEC6BD4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9CC0FD478DC553D67E71AEDE</key>
+		<key>676A65FA740D391397F95583</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B396F7FB4460D5A9F75A3629</key>
+		<key>72D2337990D7DE00122C452A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8CAD8DD14CDD280E0B3ADB9</key>
+		<key>8695EF57D8C51830E9C88035</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CDC45D74A9BFE624D4697242</key>
+		<key>8EA42F11615FD82A79696D85</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEF70D4A5FE41DB25EFB393C</key>
+		<key>A9AD54E92FE702697AA15F38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC3418F176939C26CDE280F5</key>
+		<key>B235B22CD27429B3991A2232</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E576013CBBC4AD0A30DB1F6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBCF6A2E74B60677FED5BD63</key>
 		<dict>
 			<key>primary</key>
 			<true/>

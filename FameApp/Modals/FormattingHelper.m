@@ -10,6 +10,48 @@
 
 @implementation FormattingHelper
 
+/*!
+ @param sourceRef - <br/>
+                    0: From main screen.<br/>
+                    1: From lost fame screen.
+ */
++ (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef {   // TODO: incomplete
+    
+    if (sourceRef == 0) {
+        
+        return @"You must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0";
+    }
+    else if (sourceRef == 1) {
+        
+        return @"You must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=1";
+    }
+    else {
+        
+        return @"Have you head of Fame app?\nhttp://xxxxxxxx.co";
+    }
+}
+
+/*!
+ @param sourceRef - <br/>
+ 0: From main screen.<br/>
+ 1: From lost fame screen.
+ */
++ (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name {   // TODO: incomplete
+    
+    if (sourceRef == 0) {
+        
+        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0", name];
+    }
+    else if (sourceRef == 1) {
+        
+        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0", name];
+    }
+    else {
+        
+        return [NSString stringWithFormat:@"%@, have you head of Fame app?\nhttp://xxxxxxxx.co", name];
+    }
+}
+
 + (NSString *)formatDateString:(NSDate *)aDate {
     
     if (aDate == nil) {

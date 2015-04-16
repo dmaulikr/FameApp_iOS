@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
 #import "UIHelper.h"
@@ -14,9 +15,13 @@
 #import "KKProgressTimer.h"
 #import "KLCPopup.h"
 #import "DLRadioButton.h"
+#import "FormattingHelper.h"
+#import "KBContactsSelectionViewController.h"
+#import "APAddressBook.h"
+#import "APPhoneWithLabel.h"
 
 
-@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
+@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate, KBContactsSelectionViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UILabel *userDisplayName;
@@ -24,6 +29,9 @@
 @property (nonatomic, strong) IBOutlet UIButton *niceButton;
 @property (nonatomic, strong) IBOutlet UIButton *skipButton;
 @property (nonatomic, strong) IBOutlet UIButton *bidPostButton;
+@property (nonatomic, strong) IBOutlet UILabel *oddsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *oddsBonusLabel;
+@property (nonatomic, strong) IBOutlet UIButton *inviteFriendsButton;
 
 @property (nonatomic, strong) KKProgressTimer *timerController;
 @property (nonatomic) CGFloat timerPercentCount;

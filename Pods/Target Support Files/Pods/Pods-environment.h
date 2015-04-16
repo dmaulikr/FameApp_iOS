@@ -54,6 +54,18 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 2
 
+// APAddressBook
+#define COCOAPODS_POD_AVAILABLE_APAddressBook
+#define COCOAPODS_VERSION_MAJOR_APAddressBook 0
+#define COCOAPODS_VERSION_MINOR_APAddressBook 1
+#define COCOAPODS_VERSION_PATCH_APAddressBook 5
+
+// APAddressBook/Core
+#define COCOAPODS_POD_AVAILABLE_APAddressBook_Core
+#define COCOAPODS_VERSION_MAJOR_APAddressBook_Core 0
+#define COCOAPODS_VERSION_MINOR_APAddressBook_Core 1
+#define COCOAPODS_VERSION_PATCH_APAddressBook_Core 5
+
 // DLRadioButton
 #define COCOAPODS_POD_AVAILABLE_DLRadioButton
 #define COCOAPODS_VERSION_MAJOR_DLRadioButton 1
@@ -89,6 +101,12 @@
 #define COCOAPODS_VERSION_MAJOR_IQLabelView 0
 #define COCOAPODS_VERSION_MINOR_IQLabelView 1
 #define COCOAPODS_VERSION_PATCH_IQLabelView 5
+
+// KBContactsSelection
+#define COCOAPODS_POD_AVAILABLE_KBContactsSelection
+#define COCOAPODS_VERSION_MAJOR_KBContactsSelection 1
+#define COCOAPODS_VERSION_MINOR_KBContactsSelection 2
+#define COCOAPODS_VERSION_PATCH_KBContactsSelection 3
 
 // KLCPopup
 #define COCOAPODS_POD_AVAILABLE_KLCPopup

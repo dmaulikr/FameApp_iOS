@@ -26,7 +26,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.14117647058823529" green="0.8666666666666667" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
-                                        <state key="normal" title="Nice !">
+                                        <state key="normal" title="Nice !!!">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
@@ -84,13 +84,6 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Want More?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i84-gH-2tQ">
-                                                <rect key="frame" x="65" y="30.5" width="104" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="21"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L6a-Pc-OOs">
                                                 <rect key="frame" x="25" y="7.5" width="67" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -105,6 +98,18 @@
                                                 <color key="textColor" red="0.18806703629999999" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UF8-XF-FIt">
+                                                <rect key="frame" x="25" y="28" width="142" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="22"/>
+                                                <state key="normal" title="Want More?">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="inviteFriendsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SlP-yh-LOH"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -182,7 +187,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="FAME APP" id="DeV-Kz-Hjs">
+                    <navigationItem key="navigationItem" id="DeV-Kz-Hjs">
                         <barButtonItem key="rightBarButtonItem" title="YOU" id="Ffc-Is-aO8">
                             <connections>
                                 <segue destination="a9B-Xh-mUp" kind="push" id="SJI-8b-0Ia"/>
@@ -193,7 +198,10 @@
                     <connections>
                         <outlet property="bidPostButton" destination="dMU-v2-paU" id="Jfz-mB-PRy"/>
                         <outlet property="contentView" destination="2KQ-C7-1fJ" id="8od-K8-yet"/>
+                        <outlet property="inviteFriendsButton" destination="UF8-XF-FIt" id="cgb-bH-DQf"/>
                         <outlet property="niceButton" destination="2rY-xk-Y4a" id="Ju3-TX-jqO"/>
+                        <outlet property="oddsBonusLabel" destination="L6a-Pc-OOs" id="BiU-uY-H8I"/>
+                        <outlet property="oddsLabel" destination="ExA-j7-x7L" id="0Rr-ZB-txJ"/>
                         <outlet property="skipButton" destination="tvS-6w-1GL" id="3ea-o4-Nvl"/>
                         <outlet property="userDisplayName" destination="YOc-R1-ywv" id="8Rm-GH-KdG"/>
                         <outlet property="userImageView" destination="1im-zy-eys" id="Loi-dA-2ls"/>
@@ -270,7 +278,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C87-UW-fdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1395.5" y="-148.5"/>
+            <point key="canvasLocation" x="1539.5" y="-626.5"/>
         </scene>
         <!--OPTIONS-->
         <scene sceneID="DHF-KP-0Dq">
@@ -453,7 +461,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JJA-jw-aFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1985.5" y="-148.5"/>
+            <point key="canvasLocation" x="2129.5" y="-626.5"/>
         </scene>
         <!--YOUR PASSWORD-->
         <scene sceneID="Ekj-IB-ew2">
@@ -516,7 +524,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JyI-u9-b9b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2500.5" y="48.5"/>
+            <point key="canvasLocation" x="2644.5" y="-429.5"/>
         </scene>
         <!--EDIT-->
         <scene sceneID="YbC-ao-8zv">
@@ -574,7 +582,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZIv-cs-0Ti" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1395.5" y="655.5"/>
+            <point key="canvasLocation" x="1539.5" y="1123.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pq1-5L-ZRG">
@@ -640,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17a-cm-UWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2500.5" y="-705.5"/>
+            <point key="canvasLocation" x="2644.5" y="-1183.5"/>
         </scene>
     </scenes>
     <resources>
