@@ -363,8 +363,9 @@ int dt;
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_DELETE);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
     
-    [postsHistoryList removeObjectAtIndex:cellIndex];
-    [DataStorageHelper deletePostHistory:aPost.postId];
+    [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
+    [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
+    [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
     
     [popup dismiss:YES];
     
@@ -377,12 +378,15 @@ int dt;
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
-    NSLog(@"%@", textField.text);
-    
-    // TODO: save changed Display Name
-    // TODO:    1. save to server.
-    // TODO:    2. save to local db
-    
+    // save User Display Name
+    if (textField == userDisplayNameLabel) {
+        
+        NSLog(@"%@", textField.text);
+        
+        // TODO: save changed Display Name
+        // TODO:    1. save to server.
+        // TODO:    2. save to local db
+    }
 }
 
 @end

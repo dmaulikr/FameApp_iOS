@@ -14,6 +14,7 @@
 @implementation AppDelegate
 
 @synthesize loginUser;
+@synthesize lastLocation;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -33,6 +34,7 @@
     loginUser.userDisplayName = @"Number1";
     loginUser.userImageURL = @"http://";
     loginUser.userEmail = @"eldare@gmail.com";
+    loginUser.userToken = @"token123";
     [DataStorageHelper setLoginUserInfo:loginUser];
     
     return YES;

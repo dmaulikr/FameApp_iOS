@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *userDisplayName;
 @property (nonatomic, strong) NSString *userImageURL;
 @property (nonatomic, strong) NSString *userEmail;
+@property (nonatomic, strong) NSString *userToken;
 
 // TODO: need to add access token
 

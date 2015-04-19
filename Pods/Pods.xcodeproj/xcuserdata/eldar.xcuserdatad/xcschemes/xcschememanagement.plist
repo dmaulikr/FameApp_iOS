@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-INTULocationManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,67 +77,72 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0076AC2C10EA675A1F352CCA</key>
+		<key>128938C435964B8754BA10B6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1D1997755833107BA404CFB0</key>
+		<key>23C847147ECC9B12802755F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2C71E6789880FB4099E67CA8</key>
+		<key>31E146D33455D177FDBA29DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>35F68274837F2CD938F9FD2B</key>
+		<key>3E29662C4A03E30E43A29DB1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>44BF03FC5A9B87DE4EEC6BD4</key>
+		<key>4CF9FCC562E585E922991EC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>676A65FA740D391397F95583</key>
+		<key>5896C5E78209B2AD05C36D57</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>72D2337990D7DE00122C452A</key>
+		<key>694EAE3111409585665E2C21</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8695EF57D8C51830E9C88035</key>
+		<key>7C24CF590B523A37F8D8DD8B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8EA42F11615FD82A79696D85</key>
+		<key>7DDF091797E7A44D5B1FFF92</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9AD54E92FE702697AA15F38</key>
+		<key>8F77E8B04DA3F3327D186A8C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B235B22CD27429B3991A2232</key>
+		<key>A5B05FCBEAF6532AE53CC179</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E576013CBBC4AD0A30DB1F6D</key>
+		<key>AB11F957B885A8F8CA1FCCBC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EBCF6A2E74B60677FED5BD63</key>
+		<key>E85703A7A3AA88505DF30250</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC90CA872B78FCA8D3F3E777</key>
 		<dict>
 			<key>primary</key>
 			<true/>

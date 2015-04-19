@@ -25,6 +25,7 @@
 + (void)setLoginUserInfo:(UserInfo *)aUser {
     
     UserInfo *existingUser = [DataStorageHelper getLoginUserInfo];
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     // update existing user
     if (existingUser != nil) {
@@ -33,8 +34,11 @@
         existingUser.userDisplayName = aUser.userDisplayName;
         existingUser.userImageURL = aUser.userImageURL;
         existingUser.userEmail = aUser.userEmail;
+        existingUser.userToken = aUser.userToken;
         
         [existingUser SQPSaveEntity];
+        
+        appDelegateInst.loginUser = existingUser;
     }
     // insert new user
     else {
@@ -44,8 +48,11 @@
         newUser.userDisplayName = aUser.userDisplayName;
         newUser.userImageURL = aUser.userImageURL;
         newUser.userEmail = aUser.userEmail;
+        newUser.userToken = aUser.userToken;
         
         [newUser SQPSaveEntity];
+        
+        appDelegateInst.loginUser = newUser;
     }
 }
 

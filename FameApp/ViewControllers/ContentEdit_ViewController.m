@@ -57,6 +57,11 @@ int dt;
     [self initSubViews];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+}
+
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
     
@@ -67,14 +72,55 @@ int dt;
     
     dt = [DeviceTypeHelper getDeviceType];
     
-    if (dt == IPHONE_6) {
+    if (dt == IPHONE_6PLUS) {
+        
+        [self initSubViews_iPhone6Plus];
+    }
+    else if (dt == IPHONE_6) {
         
         [self initSubViews_iPhone6];
     }
+    else if (dt == IPHONE_5x) {
+        
+        [self initSubViews_iPhone5x];
+    }
+    else if (dt == IPHONE_4x) {
+        
+        [self initSubViews_iPhone4x];
+    }
 }
 
-- (void)initSubViews_iPhone6 {  // TODO: incomplete
+- (void)initSubViews_iPhone6Plus {
     
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 414, 414);
+    [self.view viewWithTag:1002].frame = CGRectMake(0, 0, 414, 414);
+    [self.view viewWithTag:1001].frame = CGRectMake(0, 444, 414, 101);
+    [self.view viewWithTag:1003].frame = CGRectMake(0, 586, 414, 50);
+}
+
+- (void)initSubViews_iPhone6 {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 375, 375);
+    [self.view viewWithTag:1002].frame = CGRectMake(0, 0, 375, 375);
+    [self.view viewWithTag:1001].frame = CGRectMake(0, 395, 375, 101);
+    [self.view viewWithTag:1003].frame = CGRectMake(0, 537, 375, 50);
+}
+
+- (void)initSubViews_iPhone5x {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 320);
+    [self.view viewWithTag:1002].frame = CGRectMake(0, 0, 320, 320);
+    [self.view viewWithTag:1001].frame = CGRectMake(0, 343, 320, 79);
+    [self.view viewWithTag:1003].frame = CGRectMake(0, 455, 320, 50);
+}
+
+- (void)initSubViews_iPhone4x {
+    
+    [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 320);
+    [self.view viewWithTag:1002].frame = CGRectMake(0, 0, 320, 320);
+    [self.view viewWithTag:1001].frame = CGRectMake(0, 329, 320, 79);
+    
+    [self.view viewWithTag:1003].hidden = YES;
 }
 
 #pragma mark - Save related
@@ -91,7 +137,7 @@ int dt;
             NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
             
             
-            // TODO: DEBUG - should be a global var.
+            // TODO: DEBUG - should be a global var.  -> get from AppDelegateInst
             // TODO:    here will be only 'userId' and 'contentFileName'
             PostHistory *currentPost = [[PostHistory alloc] init];
             currentPost.userId = userId;
@@ -162,8 +208,16 @@ int dt;
 - (void)setColorForAddCaptionButton {
     
     // TODO: use better colors
-    NSArray *textColors = [NSArray arrayWithObjects:[UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], nil];
-    NSArray *backgroundColors = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor whiteColor], [UIColor blueColor], nil];
+    NSArray *textColors = [NSArray arrayWithObjects:
+                                           [Colors_Modal getUIColorForContentLabel_3],
+                                           [Colors_Modal getUIColorForContentLabel_1],
+                                           [Colors_Modal getUIColorForContentLabel_2],
+                                           nil];
+    NSArray *backgroundColors = [NSArray arrayWithObjects:
+                                                 [Colors_Modal getUIColorForContentLabel_5],
+                                                 [Colors_Modal getUIColorForContentLabel_4],
+                                                 [Colors_Modal getUIColorForContentLabel_6],
+                                                 nil];
     
     while (YES) {
         

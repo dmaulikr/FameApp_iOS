@@ -11,14 +11,9 @@
 
 @interface ImageStorageHelper : NSObject
 
-/*!
- @param fileName - Only the name of the file, not the full path.
- */
 + (UIImage *)loadImageFromLocalDirectory:(NSString *)fileName;
-/*!
- return Local Image Path OR nil.
- */
 + (NSString *)saveImageToLocalDirectory:(UIImage *)aImage aUsername:(NSString *)aUserId;
++ (void)deleteImageFromLocalDirectory:(NSString *)fileName;
 
 @end
 

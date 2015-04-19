@@ -46,6 +46,27 @@
     }
 }
 
+/*!
+ @param fileName - Only the name of the file, not the full path.
+ */
++ (void)deleteImageFromLocalDirectory:(NSString *)fileName {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    if (success) {
+        
+        NSLog(@"File deleted: %@", filePath);
+    }
+    else {
+        
+        NSLog(@"Could not delete file: %@", [error localizedDescription]);
+    }
+}
+
 #pragma mark - Private Methods
 + (NSString *)constructSaveFileName:(NSString *)aUsername {
     

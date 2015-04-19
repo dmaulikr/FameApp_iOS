@@ -10,11 +10,13 @@
 #import "DataStorageHelper.h"
 #import "UserInfo.h"
 #import "Colors_Modal.h"
+#import "INTULocationManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UserInfo *loginUser;
+@property (nonatomic, strong) CLLocation *lastLocation;
 
 @end
 

@@ -31,4 +31,18 @@
 /*! just GRAY */
 + (UIColor *) getUIColorForMain_7; 
 
+#pragma mark - Content Colors
+/*! CYAN */
++ (UIColor *) getUIColorForContentLabel_1;
+/*! RED */
++ (UIColor *) getUIColorForContentLabel_2;
+/*! YELLOW */
++ (UIColor *) getUIColorForContentLabel_3;
+/*! DARK GRAY */
++ (UIColor *) getUIColorForContentLabel_4;
+/*! BLACK */
++ (UIColor *) getUIColorForContentLabel_5;
+/*! WHITE */
++ (UIColor *) getUIColorForContentLabel_6;
+
 @end

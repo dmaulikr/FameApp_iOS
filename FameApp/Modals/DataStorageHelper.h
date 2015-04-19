@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
 #import "SQPersist.h"
 #import "UserInfo.h"
 #import "PostHistory.h"

@@ -59,6 +59,37 @@
     return [UIColor grayColor];
 }
 
+#pragma mark - Content Colors
++ (UIColor *) getUIColorForContentLabel_1 {
+    
+    return [[Colors_Modal colorWithHexString:@"#2ca5ac"] colorWithAlphaComponent:1.0f];  // CYAN
+}
+
++ (UIColor *) getUIColorForContentLabel_2 {
+    
+    return [[Colors_Modal colorWithHexString:@"#ed4440"] colorWithAlphaComponent:1.0f];  // RED
+}
+
++ (UIColor *) getUIColorForContentLabel_3 {
+    
+    return [[Colors_Modal colorWithHexString:@"#fead2f"] colorWithAlphaComponent:1.0f];  // YELLOW
+}
+
++ (UIColor *) getUIColorForContentLabel_4 {
+    
+    return [[Colors_Modal colorWithHexString:@"#353131"] colorWithAlphaComponent:1.0f];  // DARK GRAY
+}
+
++ (UIColor *) getUIColorForContentLabel_5 {
+    
+    return [UIColor blackColor];  // BLACK
+}
+
++ (UIColor *) getUIColorForContentLabel_6 {
+    
+    return [UIColor whiteColor];  // WHITE
+}
+
 #pragma mark -
 #pragma mark - Private Helper Methods
 // Converts HEX color to UIColor - takes @"#123456"

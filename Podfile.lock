@@ -30,6 +30,7 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
+  - INTULocationManager (3.0.1)
   - IQKeyboardManager (3.2.2)
   - IQLabelView (0.1.5)
   - KBContactsSelection (1.2.3):
@@ -44,6 +45,7 @@ DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.2)
   - AFNetworking (~> 2.5.2)
   - DLRadioButton (~> 1.1.1)
+  - INTULocationManager (~> 3.0.1)
   - IQKeyboardManager (~> 3.2.2)
   - IQLabelView (~> 0.1.5)
   - KBContactsSelection (~> 1.2.3)
@@ -58,6 +60,7 @@ SPEC CHECKSUMS:
   APAddressBook: c72fec93464d57f39966ce28c107c10253fa7d39
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  INTULocationManager: c27483113e1bbc5952ead6417f9b39824a240ebb
   IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
   KBContactsSelection: 575a3abea841a05732157a84f77f7b0556e41e7a

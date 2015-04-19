@@ -1,6 +1,7 @@
 platform :ios, '7.0'
 
 pod 'AFNetworking',                 '~> 2.5.2'
+pod 'INTULocationManager',          '~> 3.0.1'
 pod 'SQPersist',                    '~> 1.0.3'
 pod 'IQKeyboardManager',            '~> 3.2.2'
 pod 'NVDate',                       '~> 0.0.2'

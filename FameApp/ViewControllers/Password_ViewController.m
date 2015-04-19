@@ -47,7 +47,7 @@
     // TODO: send to server
     
     // TODO: and show popup
-    [self showPopup:@"MESSAGE FROM SERVER"];  // TODO:
+    [self showStatusPopup:NO message:@"MESSAGE FROM SERVER"];  // TODO:
 }
 
 - (void)initSubViews {
@@ -58,49 +58,38 @@
     [passwordCurrentTextField becomeFirstResponder];
 }
 
-#pragma mark - Alert Popup related
-- (void)showPopup:(NSString *)messageFromServer {
-
+#pragma mark - Status Popup related
+- (void)showStatusPopup:(BOOL)status message:(NSString *)message {
+    
     // Generate content view to present
-    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 150)];
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     popupView.translatesAutoresizingMaskIntoConstraints = NO;
-    popupView.backgroundColor = [Colors_Modal getUIColorForMain_1];
-    popupView.layer.borderColor = [UIColor whiteColor].CGColor;
-    popupView.layer.borderWidth = 3.0;
-    popupView.layer.cornerRadius = 8.0;
-    popupView.tag = 666;
-
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 300, 60)];
-    label1.text = messageFromServer;
+    popupView.backgroundColor = (status) ? [Colors_Modal getUIColorForMain_5] : [Colors_Modal getUIColorForMain_4];
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width-20, 35)];
+    label1.text = message;
     label1.textAlignment = NSTextAlignmentCenter;
     label1.textColor = [UIColor whiteColor];
-    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:18.0];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
     label1.numberOfLines = 2;
     [popupView addSubview:label1];
-
-    // action buttons
-    UIButton *noButton = [[UIButton alloc] initWithFrame:CGRectMake(90, 90, 120, 40)];
-    noButton.backgroundColor = [Colors_Modal getUIColorForMain_7];
-    noButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
-    [noButton setTitle:@"OK" forState:UIControlStateNormal];
-    [noButton addTarget:self action:@selector(okButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [popupView addSubview:noButton];
-
+    
     // Show in popup
-    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
-
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutBottom);
+    
     popup = [KLCPopup popupWithContentView:popupView
-                                  showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
-                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
-                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
+                                  showType:(KLCPopupShowType)KLCPopupShowTypeSlideInFromBottom
+                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeSlideOutToBottom
+                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeNone
                   dismissOnBackgroundTouch:NO
                      dismissOnContentTouch:NO];
-
+    
     [popup showWithLayout:layout];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
 }
 
-- (void)okButtonPressed:(UIButton *)aButton {
-
+- (void)dismissStatusPopup:(NSTimer *)aTimer {
+    
     [popup dismiss:YES];
 }
 

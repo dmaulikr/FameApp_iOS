@@ -36,17 +36,7 @@ int dt;
     
     [super viewDidLoad];
     
-//    // DEBUG
-//    NSLog(@"%@", [DataStorageHelper getLoginUserInfo]);
-//    
-//    NSString *TEMP = [DataStorageHelper testCreate];
-//    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
-//                                                    message:TEMP
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"OK"
-//                                          otherButtonTitles:nil];
-//    [alert show];
+    [self initLocationService];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,8 +89,6 @@ int dt;
     
     [UIHelper addShadowToView:niceButton];
     [UIHelper addShadowToView:skipButton];
-    
-    dt = [DeviceTypeHelper getDeviceType];
     
     if (dt != IPHONE_4x) {
         
@@ -467,6 +455,8 @@ int dt;
     // TODO: there is no way to know to whom the user actually sent the SMS
     // TODO: it's important since we give bonus points for every user invited.
     
+    // TODO: show a drop-in with cool success messages
+    
     if (result == MessageComposeResultCancelled) {
         
         NSLog(@"SMS cancelled");  // TODO: incomplete
@@ -545,5 +535,34 @@ int dt;
     [popup dismiss:NO];
 }
 
+#pragma mark - Location Service related
+- (void)initLocationService {
+    
+    INTULocationManager *locMgr = [INTULocationManager sharedInstance];
+    [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyCity timeout:10.0 delayUntilAuthorized:YES
+        block:^(CLLocation *currentLocation, INTULocationAccuracy achievedAccuracy, INTULocationStatus status) {
+            
+            if (status == INTULocationStatusSuccess) {
+                // Request succeeded, meaning achievedAccuracy is at least the requested accuracy, and
+                // currentLocation contains the device's current location.
+                
+                // got a new location. save it.
+                AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                appDelegateInst.lastLocation = currentLocation;
+            }
+            else if (status == INTULocationStatusTimedOut) {
+                // Wasn't able to locate the user with the requested accuracy within the timeout interval.
+                // However, currentLocation contains the best location available (if any) as of right now,
+                // and achievedAccuracy has info on the accuracy/recency of the location in currentLocation.
+            }
+            else {
+                // An error occurred, more info is available by looking at the specific status returned.
+                
+                NSLog(@"LOC ERROR 2");  // TODO: need to try again, next time the app opens
+            }
+        }];
+}
+
 @end
+
 
