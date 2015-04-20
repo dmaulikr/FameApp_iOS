@@ -207,7 +207,6 @@ int dt;
 
 - (void)setColorForAddCaptionButton {
     
-    // TODO: use better colors
     NSArray *textColors = [NSArray arrayWithObjects:
                                            [Colors_Modal getUIColorForContentLabel_3],
                                            [Colors_Modal getUIColorForContentLabel_1],

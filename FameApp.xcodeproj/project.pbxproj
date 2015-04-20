@@ -56,6 +56,9 @@
 		78DE09101ADF25F300E745FB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DE090F1ADF25F300E745FB /* MessageUI.framework */; };
 		78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */; };
 		78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E0A38E1ACDD29200FD5CB0 /* DeviceTypeHelper.m */; };
+		78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1B1AE4028800CF01A1 /* SignUp_ViewController.m */; };
+		78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */; };
+		78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +146,12 @@
 		78E0A38B1ACDD28000FD5CB0 /* Colors_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Colors_Modal.m; path = Modals/Colors_Modal.m; sourceTree = "<group>"; };
 		78E0A38D1ACDD29200FD5CB0 /* DeviceTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceTypeHelper.h; path = Modals/DeviceTypeHelper.h; sourceTree = "<group>"; };
 		78E0A38E1ACDD29200FD5CB0 /* DeviceTypeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceTypeHelper.m; path = Modals/DeviceTypeHelper.m; sourceTree = "<group>"; };
+		78E1CE1A1AE4028800CF01A1 /* SignUp_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUp_ViewController.h; path = ViewControllers/SignUp_ViewController.h; sourceTree = "<group>"; };
+		78E1CE1B1AE4028800CF01A1 /* SignUp_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUp_ViewController.m; path = ViewControllers/SignUp_ViewController.m; sourceTree = "<group>"; };
+		78E1CE1D1AE44F2400CF01A1 /* PreLogin_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreLogin_ViewController.h; path = ViewControllers/PreLogin_ViewController.h; sourceTree = "<group>"; };
+		78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreLogin_ViewController.m; path = ViewControllers/PreLogin_ViewController.m; sourceTree = "<group>"; };
+		78E1CE211AE4572B00CF01A1 /* Login_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login_ViewController.h; path = ViewControllers/Login_ViewController.h; sourceTree = "<group>"; };
+		78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login_ViewController.m; path = ViewControllers/Login_ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,6 +399,7 @@
 		787C1A8B1ACDD0D80072EF03 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				78E1CE191AE4025B00CF01A1 /* Pre Login */,
 				787C1A901ACDD1D50072EF03 /* Main_ViewController.h */,
 				787C1A911ACDD1D50072EF03 /* Main_ViewController.m */,
 				7804E4761AD1E7A400A611C2 /* Profile */,
@@ -462,6 +472,35 @@
 				78DB087D1ADC169100AA60FD /* FormattingHelper.m */,
 			);
 			name = "Formatting Helper";
+			sourceTree = "<group>";
+		};
+		78E1CE181AE4025200CF01A1 /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				78E1CE1A1AE4028800CF01A1 /* SignUp_ViewController.h */,
+				78E1CE1B1AE4028800CF01A1 /* SignUp_ViewController.m */,
+			);
+			name = "Sign Up";
+			sourceTree = "<group>";
+		};
+		78E1CE191AE4025B00CF01A1 /* Pre Login */ = {
+			isa = PBXGroup;
+			children = (
+				78E1CE1D1AE44F2400CF01A1 /* PreLogin_ViewController.h */,
+				78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */,
+				78E1CE181AE4025200CF01A1 /* Sign Up */,
+				78E1CE201AE4570C00CF01A1 /* Log In */,
+			);
+			name = "Pre Login";
+			sourceTree = "<group>";
+		};
+		78E1CE201AE4570C00CF01A1 /* Log In */ = {
+			isa = PBXGroup;
+			children = (
+				78E1CE211AE4572B00CF01A1 /* Login_ViewController.h */,
+				78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */,
+			);
+			name = "Log In";
 			sourceTree = "<group>";
 		};
 		863FD918D9CB255FAFE27EAA /* Pods */ = {
@@ -631,6 +670,7 @@
 			files = (
 				783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */,
 				783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */,
+				78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */,
 				78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */,
 				787C1A921ACDD1D50072EF03 /* Main_ViewController.m in Sources */,
 				78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */,
@@ -638,6 +678,7 @@
 				787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */,
 				7804E4731AD1C94C00A611C2 /* UIHelper.m in Sources */,
 				7887E7E01ADB34E80088109C /* UserInfo.m in Sources */,
+				78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */,
 				78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */,
 				78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */,
 				7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */,
@@ -647,6 +688,7 @@
 				787E00F91AD719CA000139E2 /* ImageStorageHelper.m in Sources */,
 				780BFCB71AC87F7B009E4DC9 /* main.m in Sources */,
 				78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */,
+				78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

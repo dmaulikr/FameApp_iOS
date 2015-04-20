@@ -13,6 +13,7 @@
 
 @implementation Email_ViewController
 
+@synthesize saveButton;
 @synthesize emailNewTextField;
 @synthesize popup;
 
@@ -37,24 +38,59 @@
     self.navigationItem.title = @"YOUR EMAIL";
     
     [self initSubViews];
-    
-    [emailNewTextField becomeFirstResponder];
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
     
     [emailNewTextField resignFirstResponder];
+    [[self.view viewWithTag:1001] setBackgroundColor:[UIColor whiteColor]];
+    [saveButton setEnabled:NO];
     
     // TODO: send to server
     
     // TODO: and show popup
-    [self showStatusPopup:NO message:@"MESSAGE FROM SERVER"];  // TODO:
+    
+    // TODO: incomplete
+    
+    // TODO: send to server to see if everything is OK.
+    // TODO:    1. email does not already exists.
+    
+    // TODO: the below is when the server retuns error on input verification:
+    // TOOD: EXAMPLE:
+    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+    [self showStatusPopup:NO message:@"Email already exists"];  // TODO:  message from server
 }
 
 - (void)initSubViews {
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
     [(UILabel *)[self.view viewWithTag:1000] setTextColor:[Colors_Modal getUIColorForMain_1]];
+    
+    [self initTextFields];
+}
+
+#pragma mark - TextFields related
+- (void)initTextFields {
+    
+    [emailNewTextField becomeFirstResponder];
+    [emailNewTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)verifyIsAllValidInput {
+    
+    if ([emailNewTextField.text isEqualToString:@""]) {
+        
+        [saveButton setEnabled:NO];
+    }
+    else {
+        
+        [saveButton setEnabled:YES];
+    }
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    
+    [self verifyIsAllValidInput];
 }
 
 #pragma mark - Status Popup related

@@ -10,8 +10,9 @@
 #import "Colors_Modal.h"
 #import "KLCPopup.h"
 
-@interface Email_ViewController : UIViewController
+@interface Email_ViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, strong) IBOutlet UITextField *emailNewTextField;
 @property (nonatomic, strong) KLCPopup *popup;
 

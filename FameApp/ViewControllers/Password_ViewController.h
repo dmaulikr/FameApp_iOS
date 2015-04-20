@@ -12,6 +12,7 @@
 
 @interface Password_ViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, strong) IBOutlet UITextField *passwordCurrentTextField;
 @property (nonatomic, strong) IBOutlet UITextField *passwordNewTextField;
 @property (nonatomic, strong) KLCPopup *popup;

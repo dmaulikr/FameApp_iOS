@@ -9,8 +9,8 @@
 #import "Options_TableViewController.h"
 
 // TODO: need to connect screens:
-// TODO:    1. Privacy.
-// TODO:    2. Terms.
+// TODO:    1. Privacy --> do the same way as in the SIGN UP screen
+// TODO:    2. Terms   --> do the same way as in the SIGN UP screen
 
 @interface Options_TableViewController ()
 @end

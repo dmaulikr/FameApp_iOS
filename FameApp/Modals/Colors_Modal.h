@@ -29,7 +29,9 @@
 /*! GRAY 'light' */
 + (UIColor *) getUIColorForMain_6;
 /*! just GRAY */
-+ (UIColor *) getUIColorForMain_7; 
++ (UIColor *) getUIColorForMain_7;
+/*! BLUE */
++ (UIColor *) getUIColorForMain_8;
 
 #pragma mark - Content Colors
 /*! CYAN */

@@ -13,6 +13,7 @@
 
 @implementation Password_ViewController
 
+@synthesize saveButton;
 @synthesize passwordCurrentTextField, passwordNewTextField;
 @synthesize popup;
 
@@ -43,11 +44,25 @@
     
     [passwordCurrentTextField resignFirstResponder];
     [passwordNewTextField resignFirstResponder];
+    [[self.view viewWithTag:1001] setBackgroundColor:[UIColor whiteColor]];
+    [[self.view viewWithTag:1002] setBackgroundColor:[UIColor whiteColor]];
+    [saveButton setEnabled:NO];
     
     // TODO: send to server
     
     // TODO: and show popup
-    [self showStatusPopup:NO message:@"MESSAGE FROM SERVER"];  // TODO:
+    
+    // TODO: incomplete
+    
+    
+    // TODO: send to server to see if everything is OK.
+    // TODO:    1. verify existing password is good.
+    // TODO:    2. verify new password is by our standard.
+    
+    // TODO: the below is when the server retuns error on input verification:
+    // TOOD: EXAMPLE:
+    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+    [self showStatusPopup:NO message:@"Wrong Password !!"];  // TODO:  message from server
 }
 
 - (void)initSubViews {
@@ -55,7 +70,33 @@
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
     [(UILabel *)[self.view viewWithTag:1000] setTextColor:[Colors_Modal getUIColorForMain_1]];
     
+    [self initTextFields];
+}
+
+#pragma mark - TextFields related
+- (void)initTextFields {
+    
     [passwordCurrentTextField becomeFirstResponder];
+    [passwordCurrentTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [passwordNewTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)verifyIsAllValidInput {
+    
+    if (([passwordCurrentTextField.text isEqualToString:@""])
+        || ([passwordNewTextField.text isEqualToString:@""])) {
+        
+        [saveButton setEnabled:NO];
+    }
+    else {
+        
+        [saveButton setEnabled:YES];
+    }
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    
+    [self verifyIsAllValidInput];
 }
 
 #pragma mark - Status Popup related

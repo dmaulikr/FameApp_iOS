@@ -37,6 +37,13 @@ int dt;
     [super viewDidLoad];
     
     [self initLocationService];
+    
+    // logo image on top of the navigation bar
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,0,40)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.clipsToBounds = NO;
+    imageView.image = [UIImage imageNamed:@"Logo"];
+    self.navigationItem.titleView = imageView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -46,6 +53,13 @@ int dt;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    
+//    // logo image on top of the navigation bar
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,0,40)];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    imageView.clipsToBounds = NO;
+//    imageView.image = [UIImage imageNamed:@"Logo"];
+//    self.navigationItem.titleView = imageView;
     
     [self initSubViews];
     [self initTimerView];
@@ -474,6 +488,7 @@ int dt;
 }
 
 
+// TODO: make this message in seperate screen
 - (void)showInviteFriendsPopup {
     
     // Generate content view to present

@@ -56,7 +56,12 @@
 
 + (UIColor *) getUIColorForMain_7 {
     
-    return [UIColor grayColor];
+    return [UIColor grayColor];  // just gray
+}
+
++ (UIColor *) getUIColorForMain_8 {
+    
+    return [[Colors_Modal colorWithHexString:@"#3399ff"] colorWithAlphaComponent:1.0f];  // BLUE
 }
 
 #pragma mark - Content Colors

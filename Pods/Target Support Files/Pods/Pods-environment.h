@@ -96,6 +96,13 @@
 #define COCOAPODS_VERSION_MINOR_INTULocationManager 0
 #define COCOAPODS_VERSION_PATCH_INTULocationManager 1
 
+// IQDropDownTextField
+#define COCOAPODS_POD_AVAILABLE_IQDropDownTextField
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.0.4.1.
+
 // IQKeyboardManager
 #define COCOAPODS_POD_AVAILABLE_IQKeyboardManager
 #define COCOAPODS_VERSION_MAJOR_IQKeyboardManager 3
@@ -131,6 +138,12 @@
 #define COCOAPODS_VERSION_MAJOR_SQPersist 1
 #define COCOAPODS_VERSION_MINOR_SQPersist 0
 #define COCOAPODS_VERSION_PATCH_SQPersist 3
+
+// TOWebViewController
+#define COCOAPODS_POD_AVAILABLE_TOWebViewController
+#define COCOAPODS_VERSION_MAJOR_TOWebViewController 2
+#define COCOAPODS_VERSION_MINOR_TOWebViewController 0
+#define COCOAPODS_VERSION_PATCH_TOWebViewController 14
 
 // WPAttributedMarkup
 #define COCOAPODS_POD_AVAILABLE_WPAttributedMarkup

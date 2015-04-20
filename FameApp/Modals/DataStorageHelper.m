@@ -12,7 +12,7 @@
 
 + (void)setupDB {
     
-    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb_2.db"];  // TODO: this is not the final DB name
+    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb_5.db"];  // TODO: this is not the final DB name
 }
 
 #pragma mark - UserInfo related
