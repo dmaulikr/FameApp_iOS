@@ -19,6 +19,7 @@
 
 @interface Profile_TableViewController : UITableViewController <UITextFieldDelegate>
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UITextField *userDisplayNameLabel;

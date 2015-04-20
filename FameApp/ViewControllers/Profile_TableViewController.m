@@ -21,6 +21,7 @@ int dt;
 
 @implementation Profile_TableViewController
 
+@synthesize appDelegateInst;
 @synthesize labelAttributeStyle1;
 @synthesize userImageView, userDisplayNameLabel, userIdLabel;
 @synthesize postsTableView, postsHistoryList;
@@ -34,6 +35,8 @@ int dt;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,10 +57,9 @@ int dt;
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
     
-    // TODO: set userId, display name, and load from ImageURL
-    UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
-    [userDisplayNameLabel setText:loginUser.userDisplayName];
-    [userIdLabel setText:loginUser.userId];
+    [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
+    [userIdLabel setText:appDelegateInst.loginUser.userId];
+    // TODO: load from ImageURL
     // TODO: set user's 'imageURL' (with cache!! and maybe fade-in animation)
     // TODO: if you tap the image, you will be able to edit it.
     
@@ -66,19 +68,6 @@ int dt;
     [postsTableView setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
     
     dt = [DeviceTypeHelper getDeviceType];
-    
-    if (dt == IPHONE_6) {
-        
-        [self initSubViews_iPhone6];
-    }
-}
-
-- (void)initSubViews_iPhone6 {  // TODO: incomplete
-    
-    //    [self.view viewWithTag:1000].frame = CGRectMake(5, 69, 365, 476);
-    //    [self.view viewWithTag:1001].frame = CGRectMake(10, 57, 345, 336);
-    //
-    //    [self.view viewWithTag:2000].frame = CGRectMake(5, 544, 365, 122);
 }
 
 #pragma mark - Table View related
@@ -383,9 +372,10 @@ int dt;
         
         NSLog(@"%@", textField.text);
         
+        appDelegateInst.loginUser.userDisplayName = textField.text;
+        
         // TODO: save changed Display Name
         // TODO:    1. save to server.
-        // TODO:    2. save to local db
     }
 }
 

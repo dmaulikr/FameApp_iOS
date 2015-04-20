@@ -14,6 +14,8 @@ pod 'KLCPopup',                     '~> 1.0'
 pod 'DLRadioButton',                '~> 1.1.1'
 pod 'KBContactsSelection',          '~> 1.2.3'
 
+
+
 ## Directly from Git
 #pod 'TOWebViewController',          '~> 2.0.14'
 pod 'TOWebViewController', :git => 'https://github.com/TimOliver/TOWebViewController.git'
@@ -24,4 +26,5 @@ pod 'TOWebViewController', :git => 'https://github.com/TimOliver/TOWebViewContro
 
 
 ## Maybe later
-#pod 'DAScratchPad',     '~> 0.4'
+#pod 'DAScratchPad',                 '~> 0.4'
+#pod 'FLAnimatedImage',              '~> 1.0.8'

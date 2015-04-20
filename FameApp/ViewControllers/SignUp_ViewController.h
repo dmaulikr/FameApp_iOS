@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "AppDelegate.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
@@ -19,6 +20,7 @@
 
 @interface SignUp_ViewController : UIViewController <IQDropDownTextFieldDelegate, UITextFieldDelegate>
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *createNewUserButton;
 @property (nonatomic, strong) IBOutlet UITextField *userIdField;
 @property (nonatomic, strong) IBOutlet UITextField *emailField;

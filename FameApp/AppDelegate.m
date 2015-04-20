@@ -13,21 +13,32 @@
 
 @implementation AppDelegate
 
+@synthesize webLinks;
 @synthesize loginUser;
 @synthesize lastLocation;
+@synthesize isAfterLogin;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [DataStorageHelper setupDB];
+    webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
+                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use real links
+                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"PRIVACY_POLICY",  // TODO: use real links
+                nil];
     
+    // global UI appearance
     [[UINavigationBar appearance] setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     [[UINavigationBar appearance] setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [UIColor whiteColor], NSForegroundColorAttributeName,
                                                             [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     
+    // connect to DB
+    [DataStorageHelper setupDB];
+    
+    // TODO: collect login UserInfo
+    // TODO:
     // TODO: DEBUG
     loginUser = [[UserInfo alloc] init];
     loginUser.userId = @"@number1";
@@ -36,6 +47,8 @@
     loginUser.userEmail = @"eldare@gmail.com";
     loginUser.userToken = @"token123";
     [DataStorageHelper setLoginUserInfo:loginUser];
+    
+    // TODO: set 'isAfterLogin' accordingly
     
     return YES;
 }

@@ -283,10 +283,10 @@
 		781074CD1ADD377500B02F4A /* Options */ = {
 			isa = PBXGroup;
 			children = (
-				783AD1191ADDD4C100D7DC1B /* Email */,
-				783AD1151ADDCCA700D7DC1B /* Password */,
 				781074CE1ADD37A700B02F4A /* Options_TableViewController.h */,
 				781074CF1ADD37A700B02F4A /* Options_TableViewController.m */,
+				783AD1191ADDD4C100D7DC1B /* Email */,
+				783AD1151ADDCCA700D7DC1B /* Password */,
 			);
 			name = Options;
 			sourceTree = "<group>";

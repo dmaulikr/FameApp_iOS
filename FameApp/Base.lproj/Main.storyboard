@@ -520,7 +520,7 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="YOUR PASSWORD" id="AkH-gE-ouJ">
-                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="JhS-4N-a53">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="SAVE" id="JhS-4N-a53">
                             <connections>
                                 <action selector="saveButtonPressed:" destination="gnW-hg-VcU" id="G24-J4-Jww"/>
                             </connections>
@@ -719,7 +719,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                         <connections>
-                                            <outlet property="delegate" destination="Fto-Yn-yxs" id="fhY-za-6xQ"/>
+                                            <outlet property="delegate" destination="ihW-re-LFi" id="Wh3-yz-LjN"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R8P-Tl-4qL">
@@ -751,6 +751,7 @@
                         <outlet property="emailField" destination="377-c6-0jZ" id="T0l-Ub-5BF"/>
                         <outlet property="passwordField" destination="mWG-YM-gDc" id="HO4-wf-sQe"/>
                         <outlet property="termsLabel" destination="LuV-hj-Z1W" id="RVc-8K-Jwp"/>
+                        <outlet property="userIdField" destination="MNo-Wn-NS3" id="11e-fu-fBX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84f-b7-ymb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -813,7 +814,7 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="YOUR EMAIL" id="DaN-BQ-YW5">
-                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="Anv-Ew-bYm">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="SAVE" id="Anv-Ew-bYm">
                             <connections>
                                 <action selector="saveButtonPressed:" destination="efH-CJ-Cbn" id="7lz-jl-ZaJ"/>
                             </connections>

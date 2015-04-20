@@ -69,11 +69,42 @@
         
         [self showPopup_logout];
     }
+    // info
+    else if (indexPath.section == 1) {
+        
+        AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        // Privacy Policy
+        if (indexPath.row == 0) {
+            
+            [self showWebPage:[appDelegateInst.webLinks objectForKey:@"PRIVACY_POLICY"] title:@"PRIVACY POLICY"];
+        }
+        // Terms of Use
+        else if (indexPath.row == 1) {
+            
+            [self showWebPage:[appDelegateInst.webLinks objectForKey:@"TERMS_OF_USE"] title:@"TERMS OF USE"];
+        }
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - Alert Popup related
+#pragma mark - Terms & Privacy Policy related
+- (void)showWebPage:(NSString *)url title:(NSString *)title {
+    
+    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURLString:url];
+    webViewController.title = title;
+    webViewController.disableContextualPopupMenu = YES;
+    webViewController.showPageTitles = NO;
+    webViewController.showLoadingBar = NO;
+    webViewController.showUrlWhileLoading = NO;
+    webViewController.navigationButtonsHidden = YES;
+    webViewController.showActionButton = NO;
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+#pragma mark - Logout Popup related
 - (void)showPopup_logout {
     
     // Generate content view to present
@@ -126,7 +157,7 @@
     [popup dismiss:YES];
     
     // TODO: send to server.
-    // TODO: go to Login Screen
+    // TODO: go to Pre-Login Screen
 }
 
 - (void)cancelLogoutButtonPressed:(UIButton *)aButton {

@@ -16,6 +16,7 @@ int dt;
 
 @implementation SignUp_ViewController
 
+@synthesize appDelegateInst;
 @synthesize createNewUserButton;
 @synthesize userIdField, emailField, passwordField, bdayField;
 @synthesize termsLabel;
@@ -30,6 +31,8 @@ int dt;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,18 +108,14 @@ int dt;
 - (void)initTermsLabel {
     
     NSDictionary *labelAttributeStyle1 = @{
-                        @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7]],
+                        @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7] ],
                         @"termsLink":[WPAttributedStyleAction styledActionWithAction:^{
                             
-                            NSLog(@"TERMS LINK PRESSED");  // TODO: incomplete
-                            
-                            [self showWebPage:@"http://google.com" title:@"TERMS OF USE"];  // TODO: incomplete - change URL
+                            [self showWebPage:[appDelegateInst.webLinks objectForKey:@"TERMS_OF_USE"] title:@"TERMS OF USE"];
                         }],
                         @"privacyLink":[WPAttributedStyleAction styledActionWithAction:^{
                             
-                            NSLog(@"PRIVACY LINK PRESSED");  // TODO:
-                            
-                            [self showWebPage:@"http://ynet.co.il" title:@"PRIVACY POLICY"];  // TODO: incomplete - change URL
+                            [self showWebPage:[appDelegateInst.webLinks objectForKey:@"PRIVACY_POLICY"] title:@"PRIVACY POLICY"];
                         }],
                         @"link":@[ [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
                      };

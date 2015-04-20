@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 #import "KLCPopup.h"
 #import "Colors_Modal.h"
 #import "DataStorageHelper.h"
 #import "UserInfo.h"
+#import "TOWebViewController.h"
 
 @interface Options_TableViewController : UITableViewController
 

@@ -8,9 +8,6 @@
 
 #import "Main_ViewController.h"
 
-#import "DataStorageHelper.h"  // TODO:
-#import "UserInfo.h" // TODO:
-
 int dt;
 
 
@@ -22,9 +19,9 @@ int dt;
 
 @synthesize userImageView, userDisplayName, contentView;
 @synthesize niceButton, skipButton, bidPostButton;
-@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use
+@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use 'oddsBonusLabel' & 'oddsLabel' with reply from server
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
-@synthesize popup;
+@synthesize popup, popupStatus;
 
 
 - (void)didReceiveMemoryWarning {
@@ -54,13 +51,6 @@ int dt;
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
-//    // logo image on top of the navigation bar
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,0,40)];
-//    imageView.contentMode = UIViewContentModeScaleAspectFit;
-//    imageView.clipsToBounds = NO;
-//    imageView.image = [UIImage imageNamed:@"Logo"];
-//    self.navigationItem.titleView = imageView;
-    
     [self initSubViews];
     [self initTimerView];
 }
@@ -69,7 +59,7 @@ int dt;
     
     [super viewDidAppear:animated];
     
-    [self startTimer:0 finishSeconds:15];
+    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
 }
 
 #pragma mark - Subviews init by device type
@@ -213,6 +203,7 @@ int dt;
 - (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
     
     if (percentage >= 1) {
+        
         [progressTimer stop];
     }
 }
@@ -353,8 +344,7 @@ int dt;
 
 - (void)reportButtonPressed_reportThis:(UIButton *)aButton {
     
-    // TODO: incomplete
-    NSLog(@"report now pressed");
+    [popup dismiss:YES];
     
     
     // TODO: collect:
@@ -362,6 +352,9 @@ int dt;
     // TODO:    2. msg from user
     // TODO:    3. reported content ID.
     
+    // TODO: send to server
+    // TODO:    - once the server replies show PopupStatus:
+    [self showStatusPopup:YES message:@"Content reported.\nThank you."];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -396,29 +389,6 @@ int dt;
         configuration.skipUnnamedContacts = YES;
         configuration.selectButtonTitle = @"";
         configuration.customSelectButtonHandler = ^(NSArray *contacts) {
-            
-//            // SMS
-//            
-//            if([MFMessageComposeViewController canSendText] == NO) {
-//                
-//                // TODO: ERROR - SMS is not supported on this device.
-//                return;
-//            }
-//            
-//            NSMutableArray *recipents = [[NSMutableArray alloc] init];
-//            for (APContact *aContact in contacts) {
-//                
-//                [recipents addObject:((APPhoneWithLabel *)[aContact.phonesWithLabels objectAtIndex:0]).phone];
-//            }
-//            NSString *message = [FormattingHelper formatSMSInviteGeneralMessage:0];
-//            
-//            MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-//            messageController.messageComposeDelegate = self;
-//            [messageController setRecipients:recipents];
-//            [messageController setBody:message];
-//            
-//            // Present message view controller on screen
-//            [self presentViewController:messageController animated:YES completion:nil];
         };
     }];
     
@@ -434,7 +404,7 @@ int dt;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void) didSelectContact:(APContact *)contact {
+- (void)contactsSelection:(KBContactsSelectionViewController *)selection didSelectContact:(APContact *)contact {
     
     // SMS
     
@@ -469,19 +439,22 @@ int dt;
     // TODO: there is no way to know to whom the user actually sent the SMS
     // TODO: it's important since we give bonus points for every user invited.
     
-    // TODO: show a drop-in with cool success messages
-    
     if (result == MessageComposeResultCancelled) {
         
-        NSLog(@"SMS cancelled");  // TODO: incomplete
+        // do nothing
+        NSLog(@"SMS cancelled");
     }
     else if (result == MessageComposeResultFailed) {
         
-        NSLog(@"SMS failed");  // TODO: incomplete
+        // do nothing
+        NSLog(@"SMS failed");
     }
     else if (result == MessageComposeResultSent) {
         
-        NSLog(@"SMS sent");  // TODO: incomplete
+        NSLog(@"SMS sent");
+        
+        // TODO: incomplete
+        // TODO: show a drop-in with cool success messages
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -548,6 +521,39 @@ int dt;
     
     [self openContacts];
     [popup dismiss:NO];
+}
+
+#pragma mark - Status Popup related
+- (void)showStatusPopup:(BOOL)status message:(NSString *)message {
+    
+    // Generate content view to present
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    popupView.backgroundColor = (status) ? [Colors_Modal getUIColorForMain_5] : [Colors_Modal getUIColorForMain_4];
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width-20, 35)];
+    label1.text = message;
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.textColor = [UIColor whiteColor];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
+    label1.numberOfLines = 2;
+    [popupView addSubview:label1];
+    
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutBottom);
+    popupStatus = [KLCPopup popupWithContentView:popupView
+                                  showType:(KLCPopupShowType)KLCPopupShowTypeSlideInFromBottom
+                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeSlideOutToBottom
+                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeNone
+                  dismissOnBackgroundTouch:NO
+                     dismissOnContentTouch:NO];
+    
+    [popupStatus showWithLayout:layout];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
+}
+
+- (void)dismissStatusPopup:(NSTimer *)aTimer {
+    
+    [popupStatus dismiss:YES];
 }
 
 #pragma mark - Location Service related

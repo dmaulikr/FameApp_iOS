@@ -98,13 +98,11 @@
  */
 + (NSMutableArray *)getAllPostHistory {
     
-    // TODO: reverse the order: new -> old
-    
     UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
     if (loginUser != nil) {
         
         NSString *query = [NSString stringWithFormat:@"userId = '%@'", loginUser.userId];
-        return [PostHistory SQPFetchAllWhere:query];
+        return [PostHistory SQPFetchAllWhere:query orderBy:@"timestamp DESC"];
     }
     else {
         

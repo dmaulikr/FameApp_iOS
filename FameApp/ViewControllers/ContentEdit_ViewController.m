@@ -21,6 +21,7 @@ int dt;
 @synthesize image, imageView;
 @synthesize currentlyEditingLabel, labels;
 
+
 - (BOOL)prefersStatusBarHidden {
     
     return YES;
@@ -126,14 +127,22 @@ int dt;
 #pragma mark - Save related
 - (void)saveImage {
     
+    // hide the keyboard,
+    // otherwise the app will crash
+    [[self view] endEditing:YES];
+    
     // save image
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         UIImage *imageToSave = [self visibleImage];
         if (imageToSave != nil) {
             
-            NSString *userId = @"@number1";  // TODO: get userId
+            // TODO:
+            // TODO: here the bidding process starts
+            // TODO:
             
+            
+            NSString *userId = @"@number1";  // TODO: get userId
             NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
             
             
@@ -146,9 +155,8 @@ int dt;
             currentPost.countNices = 10000;
             currentPost.countViews = 100000;
             currentPost.timestamp = [[NSDate alloc] init];
-            currentPost.postId = @"123";
+            currentPost.postId = [NSString stringWithFormat:@"%@", [[NSDate alloc] init]]; // TODO: temp value - the real one will come from the server
             [DataStorageHelper addPostHistory:currentPost];
-            
             
         }
         else {
@@ -295,5 +303,4 @@ int dt;
 }
 
 @end
-
 

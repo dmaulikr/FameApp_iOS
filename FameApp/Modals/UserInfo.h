@@ -17,6 +17,5 @@
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userToken;
 
-// TODO: need to add access token
-
 @end
+

@@ -94,7 +94,11 @@
                                            @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7]],
                                            @"pass":[WPAttributedStyleAction styledActionWithAction:^{
                                                
-                                               NSLog(@"FORGOT PASS LINK PRESSED");  // TODO:
+                                               NSLog(@"FORGOT PASS LINK PRESSED");  // TODO: incomplete
+                                               // TODO: need to decide:
+                                               // TODO:     1. go with in app screen.
+                                               // TODO:    OR
+                                               // TODO:     2. go with a web page.
                                            }],
                                            @"link":@[ [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
                                            };
