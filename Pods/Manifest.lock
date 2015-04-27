@@ -37,6 +37,7 @@ PODS:
   - KBContactsSelection (1.2.3):
     - APAddressBook (~> 0.1)
   - KLCPopup (1.0)
+  - MTLog (0.6.1)
   - NVDate (0.0.2)
   - SQPersist (1.0.3):
     - FMDB (~> 2.4)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - IQLabelView (~> 0.1.5)
   - KBContactsSelection (~> 1.2.3)
   - KLCPopup (~> 1.0)
+  - MTLog
   - NVDate (~> 0.0.2)
   - SQPersist (~> 1.0.3)
   - TOWebViewController (from `https://github.com/TimOliver/TOWebViewController.git`)
@@ -79,6 +81,7 @@ SPEC CHECKSUMS:
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
   KBContactsSelection: 575a3abea841a05732157a84f77f7b0556e41e7a
   KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
+  MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01
   TOWebViewController: 2cfd0032d781cabd88a0995fbca9692c11f0797e

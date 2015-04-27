@@ -38,6 +38,12 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>Please allow access to contacts to be able to select which friends to to invite.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to photo library to be able to select photos to post.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to camera... well, because you want to take a photo and post it.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UIWindow *window;
 
+@property (nonatomic, strong) NSString *appAPIBaseURL;
 @property (nonatomic, strong) NSDictionary *webLinks;
 @property (nonatomic, strong) UserInfo *loginUser;
 @property (nonatomic, strong) CLLocation *lastLocation;

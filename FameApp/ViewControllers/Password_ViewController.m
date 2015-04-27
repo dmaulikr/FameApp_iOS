@@ -15,6 +15,7 @@
 
 @synthesize saveButton;
 @synthesize passwordCurrentTextField, passwordNewTextField;
+@synthesize forgotPasswordLabel;
 @synthesize popup;
 
 
@@ -56,7 +57,7 @@
     
     
     // TODO: send to server to see if everything is OK.
-    // TODO:    1. verify existing password is good.
+    // TODO:    1. verify current password is good.
     // TODO:    2. verify new password is by our standard.
     
     // TODO: the below is when the server retuns error on input verification:
@@ -70,13 +71,33 @@
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
     [(UILabel *)[self.view viewWithTag:1000] setTextColor:[Colors_Modal getUIColorForMain_1]];
     
+    [self initForgotPasswordLabel];
     [self initTextFields];
+}
+
+#pragma mark - Forgot Password label related
+- (void)initForgotPasswordLabel {
+    
+    NSDictionary *labelAttributeStyle1 = @{
+                                           @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7]],
+                                           @"pass":[WPAttributedStyleAction styledActionWithAction:^{
+                                               
+                                               NSLog(@"FORGOT PASS LINK PRESSED");  // TODO: incomplete
+                                               // TODO: need to decide:
+                                               // TODO:     1. go with in app screen.
+                                               // TODO:    OR
+                                               // TODO:     2. go with a web page.
+                                           }],
+                                           @"link":@[ [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                                           };
+    
+    [forgotPasswordLabel setNumberOfLines:1];
+    [forgotPasswordLabel setAttributedText:[@"<pass>Forgot your password?</pass>" attributedStringWithStyleBook:labelAttributeStyle1]];
 }
 
 #pragma mark - TextFields related
 - (void)initTextFields {
     
-    [passwordCurrentTextField becomeFirstResponder];
     [passwordCurrentTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [passwordNewTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }

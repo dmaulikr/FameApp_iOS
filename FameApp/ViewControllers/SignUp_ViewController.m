@@ -77,9 +77,44 @@ int dt;
     
     // TODO: the below is when the server retuns error on input verification:
     // TOOD: EXAMPLE:
-    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
-    [self showStatusPopup:NO message:@"Email already exists"];  // TODO:
+    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];  // use errorField from server
+    [self showStatusPopup:NO message:@"Email already exists"];  // TODO: use msg from server
     NSLog(@"CREATE");
+    
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    //    operationManager.securityPolicy.allowInvalidCertificates = YES;
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    // TODO: should we MD5 the password before sending ?
+    
+    NSArray *bdayArray = @[ [NSNumber numberWithInteger:bdayField.day],
+                            [NSNumber numberWithInteger:bdayField.month],
+                            [NSNumber numberWithInteger:bdayField.year] ];
+    NSArray *postReqInfo = [AppAPI_SignUp_Modal requestContruct_SignUp:userIdField.text password:passwordField.text email:emailField.text bday:bdayArray];
+    
+    NSLog(@"App API - Request: SignUp");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"App API - Reply: Signup [SUCCESS]");
+            NSDictionary *repDict = [AppAPI_SignUp_Modal processReply_SignUp:responseObject];
+            
+            // TODO: incomplete
+            
+            // TODO: use ENUM to get values from the 'repDict'
+            
+           
+        } // End of Request 'Success'
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           
+            NSLog(@"App API - Reply: Signup [FAILURE]");
+            NSLog(@"%@", error);
+           
+        } // End of Request 'Failure'
+     ];
+    
     
     
     // TODO: if everything is OK:
@@ -123,8 +158,6 @@ int dt;
     [termsLabel setTextAlignment:NSTextAlignmentJustified];
     [termsLabel setNumberOfLines:4];
     [termsLabel setAttributedText:[@"By tapping to create a new account, you are indicating that you agree to the <termsLink>Terms of Use</termsLink> and that you have read the <privacyLink>Privacy Policy</privacyLink>." attributedStringWithStyleBook:labelAttributeStyle1]];
-    
-    [self.view addSubview:termsLabel];
 }
 
 - (void)showWebPage:(NSString *)url title:(NSString *)title {

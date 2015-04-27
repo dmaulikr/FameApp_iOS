@@ -15,6 +15,8 @@
 + (UIColor *) getUIColorForNavigationBar_backgroundColor {
     
     return [[Colors_Modal colorWithHexString:@"#ff9870"] colorWithAlphaComponent:1.0f];
+    
+//    return [[Colors_Modal colorWithHexString:@"#f09e00"] colorWithAlphaComponent:1.0f];
 }
 
 + (UIColor *) getUIColorForNavigationBar_tintColor {
@@ -51,7 +53,7 @@
 
 + (UIColor *) getUIColorForMain_6 {
     
-    return [[Colors_Modal colorWithHexString:@"#d4d4d4"] colorWithAlphaComponent:1.0f];  // GRAY 'light'
+    return [[Colors_Modal colorWithHexString:@"#e4e4e4"] colorWithAlphaComponent:1.0f];  // GRAY 'light'
 }
 
 + (UIColor *) getUIColorForMain_7 {

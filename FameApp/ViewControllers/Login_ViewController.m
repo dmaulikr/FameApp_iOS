@@ -105,8 +105,6 @@
     
     [forgotPasswordLabel setNumberOfLines:1];
     [forgotPasswordLabel setAttributedText:[@"<pass>Forgot your password?</pass>" attributedStringWithStyleBook:labelAttributeStyle1]];
-    
-    [self.view addSubview:forgotPasswordLabel];
 }
 
 #pragma mark - Text Fields related

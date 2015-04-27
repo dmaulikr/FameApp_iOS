@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
-#import "AppDelegate.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
+#import "AppDelegate.h"
+#import "AFNetworking.h"
+#import "AppAPI_SignUp_Modal.h"
 #import "IQDropDownTextField.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"

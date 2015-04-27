@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import <MessageUI/MessageUI.h>
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
 #import "UIHelper.h"
@@ -16,14 +15,10 @@
 #import "KKProgressTimer.h"
 #import "KLCPopup.h"
 #import "DLRadioButton.h"
-#import "FormattingHelper.h"
-#import "KBContactsSelectionViewController.h"
-#import "APAddressBook.h"
-#import "APPhoneWithLabel.h"
 #import "INTULocationManager.h"
 
 
-@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate, KBContactsSelectionViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+@interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UILabel *userDisplayName;

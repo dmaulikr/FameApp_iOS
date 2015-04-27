@@ -14,7 +14,8 @@
 @implementation Email_ViewController
 
 @synthesize saveButton;
-@synthesize emailNewTextField;
+@synthesize passwordCurrentTextField, emailNewTextField;
+@synthesize forgotPasswordLabel;
 @synthesize popup;
 
 
@@ -53,7 +54,8 @@
     // TODO: incomplete
     
     // TODO: send to server to see if everything is OK.
-    // TODO:    1. email does not already exists.
+    // TODO:    1. verify current password.
+    // TODO:    2. email does not already exists.
     
     // TODO: the below is when the server retuns error on input verification:
     // TOOD: EXAMPLE:
@@ -66,19 +68,40 @@
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
     [(UILabel *)[self.view viewWithTag:1000] setTextColor:[Colors_Modal getUIColorForMain_1]];
     
+    [self initForgotPasswordLabel];
     [self initTextFields];
+}
+
+#pragma mark - Forgot Password label related
+- (void)initForgotPasswordLabel {
+    
+    NSDictionary *labelAttributeStyle1 = @{
+                                           @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7]],
+                                           @"pass":[WPAttributedStyleAction styledActionWithAction:^{
+                                               
+                                               NSLog(@"FORGOT PASS LINK PRESSED");  // TODO: incomplete
+                                               // TODO: need to decide:
+                                               // TODO:     1. go with in app screen.
+                                               // TODO:    OR
+                                               // TODO:     2. go with a web page.
+                                           }],
+                                           @"link":@[ [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                                           };
+    
+    [forgotPasswordLabel setNumberOfLines:1];
+    [forgotPasswordLabel setAttributedText:[@"<pass>Forgot your password?</pass>" attributedStringWithStyleBook:labelAttributeStyle1]];
 }
 
 #pragma mark - TextFields related
 - (void)initTextFields {
     
-    [emailNewTextField becomeFirstResponder];
     [emailNewTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)verifyIsAllValidInput {
     
-    if ([emailNewTextField.text isEqualToString:@""]) {
+    if (([emailNewTextField.text isEqualToString:@""])
+        || ([passwordCurrentTextField.text isEqualToString:@""])) {
         
         [saveButton setEnabled:NO];
     }

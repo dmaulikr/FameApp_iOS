@@ -51,6 +51,8 @@ int dt;
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
+    [self setSkipButtonStatus:NO];
+    
     [self initSubViews];
     [self initTimerView];
 }
@@ -172,7 +174,7 @@ int dt;
 - (void)initTimerView {
     
     timerController = [[KKProgressTimer alloc] initWithFrame:[self.view viewWithTag:1002].frame];
-    [self.view addSubview:timerController];
+    [[self.view viewWithTag:1000] addSubview:timerController];
     timerController.delegate = self;
 }
 
@@ -198,6 +200,10 @@ int dt;
         [timer invalidate];
         timer = nil;
     }
+    else if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
+        
+        [self setSkipButtonStatus:YES];
+    }
 }
 
 - (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
@@ -211,6 +217,74 @@ int dt;
 - (void)didStopProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
     
     NSLog(@"TIMER DONE.");
+    
+    // TODO: need to prepare new data before the TIMER is DONE.
+    
+    
+    [self setSkipButtonStatus:NO];
+    [self nextContent];
+}
+
+-(void)nextContent {  // TODO: incomplete
+    
+    UIView *aView = [self.view viewWithTag:1000];
+    
+    //fade out
+    [UIView animateWithDuration:1.5f animations:^{
+        
+        [aView setAlpha:0.2f];
+        
+    } completion:^(BOOL finished) {
+        
+        // TODO: set next content and related info:
+        // TODO:    1. content image (pre-loaded)
+        // TODO:    2. user image (pre-loaded)
+        // TODO:    3. user displayname.
+        
+        [contentView setImage:[UIImage imageNamed:@"Tests"]];  // TODO: DEBUG value
+        
+        // TODO: restart the TIMER
+        [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - example - need to use real values
+        
+        //fade in
+        [UIView animateWithDuration:0.5f animations:^{
+            
+            [aView setAlpha:1.0f];
+            
+        } completion:nil];
+        
+    }];
+}
+
+- (void)setSkipButtonStatus:(BOOL)newStatus {
+    
+    if (newStatus) {
+        
+        [skipButton setEnabled:YES];
+        [skipButton setAlpha:1.0f];
+    }
+    else {
+        
+        [skipButton setEnabled:NO];
+        [skipButton setAlpha:0.7f];
+    }
+}
+
+- (IBAction)skipButtonPressed:(id)sender {
+    
+    NSLog(@"SKIP PRESSED.");
+    
+    // once the timerController stops
+    // it triggers the 'didStopProgressTimer' method.
+    [timer invalidate];
+    timer = nil;
+    [timerController stop];
+
+}
+
+- (IBAction)niceButtonPressed:(id)sender {  // TODO: incomplete
+    
+    NSLog(@"NICE PRESSED.");
 }
 
 #pragma mark - Camera related
@@ -370,157 +444,6 @@ int dt;
     frame.origin.y -= 130;
     popup.bounds = frame;
     [textView resignFirstResponder];
-}
-
-#pragma mark - 'Invite Friends' related
-- (IBAction)inviteFriendsButtonPressed:(id)sender {
-    
-    [self showInviteFriendsPopup];
-}
-
-- (void)openContacts {
-    
-    KBContactsSelectionViewController *vc = [KBContactsSelectionViewController contactsSelectionViewControllerWithConfiguration:^(KBContactsSelectionConfiguration *configuration) {
-        
-        configuration.mode = KBContactsSelectionModeMessages;
-        configuration.shouldShowNavigationBar = NO;
-        configuration.title = @"YOUR CONTACTS";
-        configuration.tintColor = [Colors_Modal getUIColorForMain_1];
-        configuration.skipUnnamedContacts = YES;
-        configuration.selectButtonTitle = @"";
-        configuration.customSelectButtonHandler = ^(NSArray *contacts) {
-        };
-    }];
-    
-    // work around.
-    // for some weird reason this overrides the issue
-    // with tintColor configuration of the controller,
-    // and uses the app's tintColor in the navigation bar. HOORAY!!!
-    UILabel * instructionsLabel = [[UILabel alloc] init];
-    instructionsLabel.text = @"";
-    vc.additionalInfoView = instructionsLabel;
-    
-    vc.delegate = self;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)contactsSelection:(KBContactsSelectionViewController *)selection didSelectContact:(APContact *)contact {
-    
-    // SMS
-    
-    if([MFMessageComposeViewController canSendText] == NO) {
-        
-        // TODO: ERROR - SMS is not supported on this device.
-        return;
-    }
-    
-    NSArray *recipents = [[NSMutableArray alloc] initWithObjects:((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone, nil];
-    
-    NSString *contactName = @"Hey there";
-    if (contact.firstName != nil) {
-        contactName = contact.firstName;
-    }
-    else if (contact.lastName != nil) {
-        contactName = contact.lastName;
-    }
-    NSString *message = [FormattingHelper formatSMSInvitePersonalMessage:0 name:contactName];
-    
-    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-    messageController.messageComposeDelegate = self;
-    [messageController setRecipients:recipents];
-    [messageController setBody:message];
-    
-    // Present message view controller on screen
-    [self presentViewController:messageController animated:YES completion:nil];
-}
-
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
-    
-    // TODO: there is no way to know to whom the user actually sent the SMS
-    // TODO: it's important since we give bonus points for every user invited.
-    
-    if (result == MessageComposeResultCancelled) {
-        
-        // do nothing
-        NSLog(@"SMS cancelled");
-    }
-    else if (result == MessageComposeResultFailed) {
-        
-        // do nothing
-        NSLog(@"SMS failed");
-    }
-    else if (result == MessageComposeResultSent) {
-        
-        NSLog(@"SMS sent");
-        
-        // TODO: incomplete
-        // TODO: show a drop-in with cool success messages
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-// TODO: make this message in seperate screen
-- (void)showInviteFriendsPopup {
-    
-    // Generate content view to present
-    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 240)];
-    popupView.translatesAutoresizingMaskIntoConstraints = NO;
-    popupView.backgroundColor = [Colors_Modal getUIColorForMain_1];
-    popupView.layer.borderColor = [UIColor whiteColor].CGColor;
-    popupView.layer.borderWidth = 3.0;
-    popupView.layer.cornerRadius = 8.0;
-    popupView.tag = 666;
-    
-    // TODO: make the label with styles to make the right words stand out.
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 270, 140)];
-    label1.text = @"Want to increase your odds to\nget published to the masses?\nyou do :)\n\nInvite your friends\nand get bonuses...";
-    label1.textColor = [UIColor whiteColor];
-    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
-    label1.numberOfLines = 7;
-    label1.textAlignment = NSTextAlignmentCenter;
-    [popupView addSubview:label1];
-    
-    
-    // action buttons
-    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 185, 120, 40)];
-    cancelButton.backgroundColor = [Colors_Modal getUIColorForMain_7];
-    cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
-    [cancelButton setTitle:@"Maybe Later" forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelButtonPressed_inviteFriends:) forControlEvents:UIControlEventTouchUpInside];
-    [popupView addSubview:cancelButton];
-    
-    UIButton *reportButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 185, 120, 40)];
-    reportButton.backgroundColor = [Colors_Modal getUIColorForNavigationBar_backgroundColor];
-    reportButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
-    [reportButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
-    [reportButton addTarget:self action:@selector(inviteButtonPressed_inviteFriends:) forControlEvents:UIControlEventTouchUpInside];
-    [popupView addSubview:reportButton];
-    
-    
-    // Show in popup
-    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
-    
-    popup = [KLCPopup popupWithContentView:popupView
-                                  showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
-                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
-                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
-                  dismissOnBackgroundTouch:NO
-                     dismissOnContentTouch:NO];
-    
-    [popup showWithLayout:layout];
-}
-
-- (void)cancelButtonPressed_inviteFriends:(UIButton *)aButton {
-    
-    [popup dismiss:YES];
-}
-
-- (void)inviteButtonPressed_inviteFriends:(UIButton *)aButton {
-    
-    [self openContacts];
-    [popup dismiss:NO];
 }
 
 #pragma mark - Status Popup related

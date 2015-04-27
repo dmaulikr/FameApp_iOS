@@ -13,6 +13,7 @@
 
 @implementation AppDelegate
 
+@synthesize appAPIBaseURL;
 @synthesize webLinks;
 @synthesize loginUser;
 @synthesize lastLocation;
@@ -21,6 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    appAPIBaseURL = @"http://54.229.104.118:8080/FameApp/api/";
     
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
                 @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use real links

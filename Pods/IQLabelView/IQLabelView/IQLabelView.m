@@ -271,15 +271,12 @@ static IQLabelView *lastTouchedView;
     if (enableClose)       closeView.hidden = YES;
     if (enableRotate)      rotateView.hidden = YES;
     
-    if (textView != nil) {
-        
-        [textView resignFirstResponder];
-        
-        [self refresh];
-        
-        if([delegate respondsToSelector:@selector(labelViewDidHideEditingHandles:)]) {
-            [delegate labelViewDidHideEditingHandles:self];
-        }
+    [textView resignFirstResponder];
+    
+    [self refresh];
+    
+    if([delegate respondsToSelector:@selector(labelViewDidHideEditingHandles:)]) {
+        [delegate labelViewDidHideEditingHandles:self];
     }
 }
 
