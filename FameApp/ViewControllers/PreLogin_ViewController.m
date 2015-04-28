@@ -40,41 +40,31 @@
 
 - (void)initSubViews {
     
-    [self.view setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     
     [((UIButton *)[self.view viewWithTag:1001]) setBackgroundColor:[Colors_Modal getUIColorForMain_8]];
-    [((UIButton *)[self.view viewWithTag:1002]) setBackgroundColor:[Colors_Modal getUIColorForMain_5]];
-    
-    [self initParallax];
+    [((UIButton *)[self.view viewWithTag:1002]) setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
 }
 
-- (void)initParallax {
-    
-    NSLog(@"ddd");
-    
-    // Set vertical effect
-    UIInterpolatingMotionEffect *verticalMotionEffect =
-    [[UIInterpolatingMotionEffect alloc]
-     initWithKeyPath:@"center.y"
-     type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-    verticalMotionEffect.minimumRelativeValue = @(-100);
-    verticalMotionEffect.maximumRelativeValue = @(100);
-    
-    // Set horizontal effect
-    UIInterpolatingMotionEffect *horizontalMotionEffect =
-    [[UIInterpolatingMotionEffect alloc]
-     initWithKeyPath:@"center.x"
-     type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    horizontalMotionEffect.minimumRelativeValue = @(-100);
-    horizontalMotionEffect.maximumRelativeValue = @(100);
-    
-    // Create group to combine both
-    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
-    group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
-    
-    // Add both effects to your view
-    [[self.view viewWithTag:1000] addMotionEffect:group];
-}
+//- (void)initParallax {
+//    
+//    // parallax for iPhone4 (not iPhone4s!!)
+//    if ([DeviceTypeHelper isIPHONE4] == YES) {
+//        
+//        [self.view viewWithTag:2000].iOS6ParallaxIntensity = 17+2;
+//        [self.view viewWithTag:2001].iOS6ParallaxIntensity = 19+2;
+//        [self.view viewWithTag:2002].iOS6ParallaxIntensity = 15+2;
+//    }
+//    // other devices
+//    else {
+//        
+//        // TODO: incomplete
+//    }
+//}
 
 @end
+
+
+
+
 

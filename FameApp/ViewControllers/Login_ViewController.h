@@ -11,13 +11,16 @@
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
+#import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
 #import "KLCPopup.h"
+#import "TOWebViewController.h"
 
 @interface Login_ViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *continueButton;
 @property (nonatomic, strong) IBOutlet UITextField *userIdField;
 @property (nonatomic, strong) IBOutlet UITextField *passwordField;

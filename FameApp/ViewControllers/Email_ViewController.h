@@ -11,11 +11,14 @@
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
+#import "AppDelegate.h"
 #import "Colors_Modal.h"
 #import "KLCPopup.h"
+#import "TOWebViewController.h"
 
 @interface Email_ViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, strong) IBOutlet UITextField *passwordCurrentTextField;
 @property (nonatomic, strong) IBOutlet UITextField *emailNewTextField;

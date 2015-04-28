@@ -21,7 +21,7 @@ int dt;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use 'oddsBonusLabel' & 'oddsLabel' with reply from server
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
-@synthesize popup, popupStatus;
+@synthesize popup, radio1, popupStatus;
 
 
 - (void)didReceiveMemoryWarning {
@@ -282,7 +282,9 @@ int dt;
 
 }
 
-- (IBAction)niceButtonPressed:(id)sender {  // TODO: incomplete
+- (IBAction)niceButtonPressed:(id)sender {
+    
+    // TODO: send to server
     
     NSLog(@"NICE PRESSED.");
 }
@@ -327,7 +329,7 @@ int dt;
     [popupView addSubview:label1];
     
     // radio buttons
-    DLRadioButton *radio1 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 65, 280, 30)];
+    radio1 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 65, 280, 30)];
     radio1.buttonSideLength = 30;
     radio1.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.0];
     [radio1 setTitle:@"Illegal content\n(drugs, underage nudity, etc.)" forState:UIControlStateNormal];
@@ -336,6 +338,7 @@ int dt;
     radio1.circleColor = [UIColor whiteColor];
     radio1.indicatorColor = [UIColor whiteColor];
     radio1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    radio1.tag = 66601;
     [popupView addSubview:radio1];
     
     DLRadioButton *radio2 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 105, 280, 30)];
@@ -346,6 +349,7 @@ int dt;
     radio2.circleColor = [UIColor whiteColor];
     radio2.indicatorColor = [UIColor whiteColor];
     radio2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    radio2.tag = 66602;
     [popupView addSubview:radio2];
     
     DLRadioButton *radio3 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 145, 280, 30)];
@@ -356,6 +360,7 @@ int dt;
     radio3.circleColor = [UIColor whiteColor];
     radio3.indicatorColor = [UIColor whiteColor];
     radio3.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    radio3.tag = 66603;
     [popupView addSubview:radio3];
     
     DLRadioButton *radio4 = [[DLRadioButton alloc] initWithFrame:CGRectMake(15, 185, 280, 30)];
@@ -367,6 +372,7 @@ int dt;
     radio4.indicatorColor = [UIColor whiteColor];
     radio4.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [radio4 setSelected:YES];
+    radio4.tag = 66604;
     [popupView addSubview:radio4];
     
     NSMutableArray *otherRadioButtons = [[NSMutableArray alloc] init];
@@ -420,6 +426,31 @@ int dt;
     
     [popup dismiss:YES];
     
+    
+    // TODO: access_token
+    
+    // TODO: DEBUG
+    NSLog(@"%ld %ld %ld, %ld", radio1.tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:0]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:1]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:2]).tag);
+    
+//    if (radio1.isSelected == YES) {
+//        
+//        NSLog(@"1");
+//    }
+//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:0]).isSelected == YES) {
+//        
+//        NSLog(@"2");
+//    }
+//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:1]).isSelected == YES) {
+//        
+//        NSLog(@"3");
+//    }
+//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:2]).isSelected == YES) {
+//        
+//        NSLog(@"4");
+//    }
+//    else {
+//        NSLog(@"WTF?!");
+//    }
     
     // TODO: collect:
     // TODO:    1. selected radio button value.

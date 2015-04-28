@@ -87,8 +87,6 @@ int dt;
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    // TODO: should we MD5 the password before sending ?
-    
     NSArray *bdayArray = @[ [NSNumber numberWithInteger:bdayField.day],
                             [NSNumber numberWithInteger:bdayField.month],
                             [NSNumber numberWithInteger:bdayField.year] ];
@@ -101,25 +99,25 @@ int dt;
             NSLog(@"App API - Reply: Signup [SUCCESS]");
             NSDictionary *repDict = [AppAPI_SignUp_Modal processReply_SignUp:responseObject];
             
-            // TODO: incomplete
+            // TODO: if everything is OK:
+            // TODO:    1. save input to login UserInfo in the appDelegate + local DB
+            // TODO:    2. go to next screen: MAIN screen
             
-            // TODO: use ENUM to get values from the 'repDict'
+            // TODO: if everything is good, the go to MAIN
+            UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
+            [self presentViewController:myNavigationController animated:YES completion:nil];
             
            
         } // End of Request 'Success'
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-           
+            
             NSLog(@"App API - Reply: Signup [FAILURE]");
             NSLog(@"%@", error);
+            
+            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
            
         } // End of Request 'Failure'
      ];
-    
-    
-    
-    // TODO: if everything is OK:
-    // TODO:    1. save input to login UserInfo in the appDelegate + local DB
-    // TODO:    2. go to next screen: MAIN screen
 }
 
 - (void)initSubViews {

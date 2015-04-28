@@ -26,8 +26,9 @@
     appAPIBaseURL = @"http://54.229.104.118:8080/FameApp/api/";
     
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
-                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use real links
-                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"PRIVACY_POLICY",  // TODO: use real links
+                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use REAL path
+                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"PRIVACY_POLICY",  // TODO: use REAL path
+                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"FORGOT_PASSWORD",  // TODO: use REAL path
                 nil];
     
     // global UI appearance

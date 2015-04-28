@@ -36,6 +36,7 @@
 @property (nonatomic) NSInteger timerFinishSeconds;
 
 @property (nonatomic, strong) KLCPopup* popup;
+@property (nonatomic, strong) DLRadioButton *radio1;
 @property (nonatomic, strong) KLCPopup* popupStatus;
 
 

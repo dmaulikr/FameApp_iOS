@@ -12,10 +12,13 @@
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
 #import "Colors_Modal.h"
+#import "AppDelegate.h"
 #import "KLCPopup.h"
+#import "TOWebViewController.h"
 
 @interface Password_ViewController : UIViewController
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, strong) IBOutlet UITextField *passwordCurrentTextField;
 @property (nonatomic, strong) IBOutlet UITextField *passwordNewTextField;

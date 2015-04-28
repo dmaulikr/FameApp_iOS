@@ -706,7 +706,7 @@
                                     <segue destination="Fto-Yn-yxs" kind="push" id="os5-fE-ptg"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" tag="1000" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" id="Rnw-fR-ryf">
+                            <imageView userInteractionEnabled="NO" tag="2000" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starLogo" id="Rnw-fR-ryf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="439"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -939,7 +939,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Fwg-SN-XmR">
             <objects>
-                <navigationController storyboardIdentifier="LoginNav" automaticallyAdjustsScrollViewInsets="NO" id="egw-Ak-pPb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PreLoginNav" automaticallyAdjustsScrollViewInsets="NO" id="egw-Ak-pPb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
@@ -1042,9 +1042,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="340" height="96"/>
         <image name="Tests_1_2" width="704" height="704"/>
         <image name="Tests_2" width="474" height="474"/>
+        <image name="starLogo" width="171" height="171"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

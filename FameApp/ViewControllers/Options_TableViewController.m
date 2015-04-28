@@ -8,10 +8,6 @@
 
 #import "Options_TableViewController.h"
 
-// TODO: need to connect screens:
-// TODO:    1. Privacy --> do the same way as in the SIGN UP screen
-// TODO:    2. Terms   --> do the same way as in the SIGN UP screen
-
 @interface Options_TableViewController ()
 @end
 
@@ -157,7 +153,9 @@
     [popup dismiss:YES];
     
     // TODO: send to server.
-    // TODO: go to Pre-Login Screen
+    
+    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PreLoginNav"];
+    [self presentViewController:myNavigationController animated:YES completion:nil];
 }
 
 - (void)cancelLogoutButtonPressed:(UIButton *)aButton {

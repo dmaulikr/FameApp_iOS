@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Colors_Modal.h"
+#import "DeviceTypeHelper.h"
+#import "UIView+MWParallax.h"
 
 @interface PreLogin_ViewController : UIViewController
 

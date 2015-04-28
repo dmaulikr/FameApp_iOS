@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <sys/sysctl.h>
 
 enum DeviceType {
     
@@ -20,5 +21,7 @@ enum DeviceType {
 @interface DeviceTypeHelper : NSObject
 
 + (int)getDeviceType;
++ (BOOL)isIPHONE4;
 
 @end
+

@@ -13,6 +13,7 @@
 
 @implementation Email_ViewController
 
+@synthesize appDelegateInst;
 @synthesize saveButton;
 @synthesize passwordCurrentTextField, emailNewTextField;
 @synthesize forgotPasswordLabel;
@@ -27,6 +28,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +59,7 @@
     // TODO: send to server to see if everything is OK.
     // TODO:    1. verify current password.
     // TODO:    2. email does not already exists.
+    // TODO:    3. if all is good, save to appDelegate + DB
     
     // TODO: the below is when the server retuns error on input verification:
     // TOOD: EXAMPLE:
@@ -72,24 +76,34 @@
     [self initTextFields];
 }
 
-#pragma mark - Forgot Password label related
+#pragma mark - Forgot Password related
 - (void)initForgotPasswordLabel {
     
     NSDictionary *labelAttributeStyle1 = @{
                                            @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0], [Colors_Modal getUIColorForMain_7]],
                                            @"pass":[WPAttributedStyleAction styledActionWithAction:^{
                                                
-                                               NSLog(@"FORGOT PASS LINK PRESSED");  // TODO: incomplete
-                                               // TODO: need to decide:
-                                               // TODO:     1. go with in app screen.
-                                               // TODO:    OR
-                                               // TODO:     2. go with a web page.
+                                               [self showWebPage:[appDelegateInst.webLinks objectForKey:@"FORGOT_PASSWORD"] title:@"FORGOT PASSWORD?"];
                                            }],
                                            @"link":@[ [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
                                            };
     
     [forgotPasswordLabel setNumberOfLines:1];
     [forgotPasswordLabel setAttributedText:[@"<pass>Forgot your password?</pass>" attributedStringWithStyleBook:labelAttributeStyle1]];
+}
+
+- (void)showWebPage:(NSString *)url title:(NSString *)title {
+    
+    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURLString:url];
+    webViewController.title = title;
+    webViewController.disableContextualPopupMenu = YES;
+    webViewController.showPageTitles = NO;
+    webViewController.showLoadingBar = NO;
+    webViewController.showUrlWhileLoading = NO;
+    webViewController.navigationButtonsHidden = YES;
+    webViewController.showActionButton = NO;
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 #pragma mark - TextFields related

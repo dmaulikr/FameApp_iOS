@@ -17,6 +17,7 @@
 #import "IQDropDownTextField.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
+#import "FormattingHelper.h"
 #import "KLCPopup.h"
 #import "TOWebViewController.h"
 

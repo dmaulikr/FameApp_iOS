@@ -338,11 +338,14 @@ int dt;
     [popup dismiss:YES];
 }
 
-- (void)rePostAction:(UIButton *)aButton {  // TODO: incomplete
-    
-    // TODO: need to bind the tag of the button with the right PostHistory object.
+- (void)rePostAction:(UIButton *)aButton {
     
     NSLog(@"REPOST: %ld", (long)aButton.tag);
+    
+    long cellIndex = (aButton.tag - TAG_ID__BUTTON_REPOST);
+    PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
+    
+    // TODO: re-post
     
     [popup dismiss:YES];
 }

@@ -10,6 +10,7 @@
 
 @implementation FormattingHelper
 
+#pragma mark - Invite related
 /*!
  @param sourceRef - <br/>
                     0: From main screen.<br/>
@@ -52,6 +53,7 @@
     }
 }
 
+#pragma mark - Date Time related
 + (NSString *)formatDateString:(NSDate *)aDate {
     
     if (aDate == nil) {
@@ -82,6 +84,17 @@
         dateObj.dateFormatUsingString = @"yyyy/MM/dd";
         return [dateObj stringValue];
     }
+}
+
+#pragma mark - Generic Error Messages
++ (NSString *)formatGeneralErrorMessage {
+    
+    NSArray *amazingListOfErrors = @[
+                                        @"We realy screwed up this time...\nPlease try again.",
+                                        @"WHAAAAAAAT?! X_X\nPlease try again."
+                                    ];
+    
+    return [amazingListOfErrors objectAtIndex:(arc4random() % [amazingListOfErrors count])];
 }
 
 @end

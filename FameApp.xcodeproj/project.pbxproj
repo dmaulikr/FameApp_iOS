@@ -19,6 +19,7 @@
 		783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */; };
 		783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */; };
 		785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */; };
+		786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */ = {isa = PBXBuildFile; fileRef = 786534131AEFB26D00459A57 /* UIView+MWParallax.m */; };
 		78674CA41AD0024900EE2956 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA31AD0024900EE2956 /* AVFoundation.framework */; };
 		78674CA61AD0025900EE2956 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA51AD0025900EE2956 /* ImageIO.framework */; };
 		78674CA81AD0026600EE2956 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA71AD0026600EE2956 /* CoreMotion.framework */; };
@@ -98,6 +99,9 @@
 		783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Email_ViewController.m; path = ViewControllers/Email_ViewController.m; sourceTree = "<group>"; };
 		785E284F1AD3F06200A8EBEB /* Profile_TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Profile_TableViewController.h; path = ViewControllers/Profile_TableViewController.h; sourceTree = "<group>"; };
 		785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Profile_TableViewController.m; path = ViewControllers/Profile_TableViewController.m; sourceTree = "<group>"; };
+		786534111AEFB26D00459A57 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		786534121AEFB26D00459A57 /* UIView+MWParallax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MWParallax.h"; sourceTree = "<group>"; };
+		786534131AEFB26D00459A57 /* UIView+MWParallax.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MWParallax.m"; sourceTree = "<group>"; };
 		78674CA31AD0024900EE2956 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78674CA51AD0025900EE2956 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		78674CA71AD0026600EE2956 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -348,9 +352,20 @@
 			name = Email;
 			sourceTree = "<group>";
 		};
+		786534101AEFB26D00459A57 /* UIView+MWParallax */ = {
+			isa = PBXGroup;
+			children = (
+				786534111AEFB26D00459A57 /* LICENSE.md */,
+				786534121AEFB26D00459A57 /* UIView+MWParallax.h */,
+				786534131AEFB26D00459A57 /* UIView+MWParallax.m */,
+			);
+			path = "UIView+MWParallax";
+			sourceTree = "<group>";
+		};
 		78674CA91AD0031B00EE2956 /* nonPods */ = {
 			isa = PBXGroup;
 			children = (
+				786534101AEFB26D00459A57 /* UIView+MWParallax */,
 				78D436F21AD81DC800B9D05A /* KKProgressTimer */,
 				78674CAA1AD0031B00EE2956 /* YCameraView */,
 			);
@@ -713,6 +728,7 @@
 				7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */,
 				78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */,
 				781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */,
+				786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */,
 				785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */,
 				780BFCBA1AC87F7B009E4DC9 /* AppDelegate.m in Sources */,
 				787E00F91AD719CA000139E2 /* ImageStorageHelper.m in Sources */,

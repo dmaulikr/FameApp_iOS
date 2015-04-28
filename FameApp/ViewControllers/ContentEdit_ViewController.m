@@ -20,6 +20,7 @@ int dt;
 
 @synthesize image, imageView;
 @synthesize currentlyEditingLabel, labels;
+@synthesize popup;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -161,7 +162,7 @@ int dt;
         }
         else {
             
-            // TODO: handle the error
+            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
         }
     });
 }
@@ -300,6 +301,41 @@ int dt;
     
     // tap in text field and keyboard showing
     currentlyEditingLabel = label;
+}
+
+#pragma mark - Status Popup related
+- (void)showStatusPopup:(BOOL)status message:(NSString *)message {
+    
+    // Generate content view to present
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    popupView.backgroundColor = (status) ? [Colors_Modal getUIColorForMain_5] : [Colors_Modal getUIColorForMain_4];
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width-20, 35)];
+    label1.text = message;
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.textColor = [UIColor whiteColor];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
+    label1.numberOfLines = 2;
+    [popupView addSubview:label1];
+    
+    // Show in popup
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutBottom);
+    
+    popup = [KLCPopup popupWithContentView:popupView
+                                  showType:(KLCPopupShowType)KLCPopupShowTypeSlideInFromBottom
+                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeSlideOutToBottom
+                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeNone
+                  dismissOnBackgroundTouch:NO
+                     dismissOnContentTouch:NO];
+    
+    [popup showWithLayout:layout];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
+}
+
+- (void)dismissStatusPopup:(NSTimer *)aTimer {
+    
+    [popup dismiss:YES];
 }
 
 @end

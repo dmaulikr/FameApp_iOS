@@ -12,6 +12,9 @@
 @end
 
 
+// TODO: allow the user to share the
+
+
 @implementation Invite_ViewController
 
 @synthesize infoLabel;
