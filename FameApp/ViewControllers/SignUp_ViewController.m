@@ -186,9 +186,12 @@ int dt;
     [df setDateFormat:@"dd/MM/yyyy"];
     bdayField.dateFormatter = df;
     
-//    // Assign a minimum date and/or maximum date if you want
+    // Assign a minimum date and/or maximum date if you want
 //    bdayField.minimumDate = [NSDate date];
-//    bdayField.maximumDate = [NSDate date];
+    
+    NVDate *myNVDate = [[NVDate alloc] initUsingToday];
+    [myNVDate setYear:([myNVDate year] - 13)];
+    bdayField.maximumDate = [myNVDate date];
 }
 
 - (void)verifyIsAllValidInput {

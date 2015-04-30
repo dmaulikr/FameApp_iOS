@@ -37,6 +37,7 @@ PODS:
   - KBContactsSelection (1.2.3):
     - APAddressBook (~> 0.1)
   - KLCPopup (1.0)
+  - L360Confetti (1.1.1)
   - MTLog (0.6.1)
   - NVDate (0.0.2)
   - SQPersist (1.0.3):
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - IQLabelView (~> 0.1.5)
   - KBContactsSelection (~> 1.2.3)
   - KLCPopup (~> 1.0)
+  - L360Confetti (from `https://github.com/life360/confetti.git`)
   - MTLog
   - NVDate (~> 0.0.2)
   - SQPersist (~> 1.0.3)
@@ -61,10 +63,15 @@ DEPENDENCIES:
   - WPAttributedMarkup (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  L360Confetti:
+    :git: https://github.com/life360/confetti.git
   TOWebViewController:
     :git: https://github.com/TimOliver/TOWebViewController.git
 
 CHECKOUT OPTIONS:
+  L360Confetti:
+    :commit: f34d6da6a2292de1dd99f48178d4b96b594624b5
+    :git: https://github.com/life360/confetti.git
   TOWebViewController:
     :commit: 9c598e56d76e6f9e13db39659b75c2caf55e2fb9
     :git: https://github.com/TimOliver/TOWebViewController.git
@@ -81,6 +88,7 @@ SPEC CHECKSUMS:
   IQLabelView: 469f32c40f82e391c84b65d321d996cc4b51b6f7
   KBContactsSelection: 575a3abea841a05732157a84f77f7b0556e41e7a
   KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
+  L360Confetti: 57ac02ba415ce3723dd04d11a57880d30783e87a
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01

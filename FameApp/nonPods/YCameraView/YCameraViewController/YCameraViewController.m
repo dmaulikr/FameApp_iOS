@@ -14,6 +14,7 @@
 @interface YCameraViewController (){
     UIInterfaceOrientation orientationLast, orientationAfterProcess;
     CMMotionManager *motionManager;
+    BOOL isForProfile;
 }
 @end
 
@@ -29,7 +30,18 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
+        isForProfile = NO;
+    }
+    return self;
+}
+
+- (id)initForProfileWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+        isForProfile = YES;
     }
     return self;
 }
@@ -372,7 +384,7 @@
     //    assetOrientation = ALAssetOrientationUp;
     
     // adjust image orientation
-    NSLog(@"orientation: %d",orientationLast);
+    NSLog(@"orientation: %ld",orientationLast);
     orientationAfterProcess = orientationLast;
     switch (orientationLast) {
         case UIInterfaceOrientationPortrait:
@@ -519,17 +531,25 @@
 
 - (IBAction)donePhotoCapture:(id)sender{
     
-//    if ([delegate respondsToSelector:@selector(didFinishPickingImage:)]) {
-//        [delegate didFinishPickingImage:self.captureImage.image];
-//    }
-//    
-//    // Dismiss self view controller
-//    [self dismissViewControllerAnimated:NO completion:nil];
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ContentEdit_ViewController *myView = [storyBoard instantiateViewControllerWithIdentifier:@"ContentEditScreen"];
-    myView.image = [UIImage imageWithCGImage:self.theCaptureImage.CGImage];
-    [self.navigationController pushViewController:myView animated:YES];
+    if (isForProfile == YES) {
+        
+        if ([delegate respondsToSelector:@selector(didFinishPickingImage:)]) {
+//            [delegate didFinishPickingImage:self.captureImage.image];
+            [delegate didFinishPickingImage:[UIImage imageWithCGImage:self.theCaptureImage.CGImage]];
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+//        // Dismiss self view controller
+//        [self dismissViewControllerAnimated:NO completion:nil];
+    }
+    else {
+        
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ContentEdit_ViewController *myView = [storyBoard instantiateViewControllerWithIdentifier:@"ContentEditScreen"];
+        myView.image = [UIImage imageWithCGImage:self.theCaptureImage.CGImage];
+        [self.navigationController pushViewController:myView animated:YES];
+    }
 }
 
 - (IBAction)retakePhoto:(id)sender{

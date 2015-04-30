@@ -13,5 +13,7 @@
 @interface UIHelper : NSObject
 
 + (void)addShadowToView:(UIView *)aView;
++ (void) setRoundedCornersCircleToView:(UIView *)aView;
++ (void) setRoundedCornersToView:(UIView *)aView;
 
 @end

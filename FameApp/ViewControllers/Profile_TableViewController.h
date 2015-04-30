@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YCameraViewController.h"
 #import "ABMenuTableViewCell.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "KLCPopup.h"
@@ -16,8 +17,9 @@
 #import "DataStorageHelper.h"
 #import "PostHistory.h"
 #import "FormattingHelper.h"
+#import "UIHelper.h"
 
-@interface Profile_TableViewController : UITableViewController <UITextFieldDelegate>
+@interface Profile_TableViewController : UITableViewController <UITextFieldDelegate, YCameraViewControllerDelegate>
 
 @property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;

@@ -59,6 +59,7 @@ int dt;
     
     [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
     [userIdLabel setText:appDelegateInst.loginUser.userId];
+    [UIHelper setRoundedCornersCircleToView:userImageView];
     // TODO: load from ImageURL
     // TODO: set user's 'imageURL' (with cache!! and maybe fade-in animation)
     // TODO: if you tap the image, you will be able to edit it.
@@ -380,6 +381,30 @@ int dt;
         // TODO: save changed Display Name
         // TODO:    1. save to server.
     }
+}
+
+#pragma mark - Camera related
+- (IBAction)openCamera:(id)sender {
+    
+    YCameraViewController *camController = [[YCameraViewController alloc] initForProfileWithNibName:@"YCameraViewController" bundle:nil];
+    camController.delegate = self;
+    
+    [self.navigationController pushViewController:camController animated:YES];
+}
+
+-(void)didFinishPickingImage:(UIImage *)image {
+    
+    // TODO: upload the new profile image to the server
+    
+    [userImageView setImage:image];
+}
+
+-(void)yCameraControllerdidSkipped {
+    // Called when user clicks on Skip button on YCameraViewController view
+}
+
+-(void)yCameraControllerDidCancel {
+    // Called when user clicks on "X" button to close YCameraViewController
 }
 
 @end

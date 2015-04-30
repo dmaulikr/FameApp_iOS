@@ -20,8 +20,8 @@ pod 'KBContactsSelection',          '~> 1.2.3'
 
 
 ## Directly from Git
-#pod 'TOWebViewController',          '~> 2.0.14'
 pod 'TOWebViewController', :git => 'https://github.com/TimOliver/TOWebViewController.git'
+pod 'L360Confetti',        :git => 'https://github.com/life360/confetti.git'
 
 
 ## Non-Pods

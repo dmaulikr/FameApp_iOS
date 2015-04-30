@@ -70,6 +70,7 @@ int dt;
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:2000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
+    [UIHelper setRoundedCornersCircleToView:userImageView];
     
     [niceButton setBackgroundColor:[Colors_Modal getUIColorForMain_5]];
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
@@ -266,7 +267,7 @@ int dt;
     else {
         
         [skipButton setEnabled:NO];
-        [skipButton setAlpha:0.7f];
+        [skipButton setAlpha:0.6f];
     }
 }
 
@@ -288,6 +289,31 @@ int dt;
     
     NSLog(@"NICE PRESSED.");
 }
+
+//- (void)initConfetti {
+//    
+//    // Inset the view a bit to make sure that the point conversion is working properly on taps
+//    self.confettiView = [[L360ConfettiArea alloc] initWithFrame:CGRectMake(0.0,
+//                                                                           100.0,
+//                                                                           self.view.frame.size.width,
+//                                                                           self.view.frame.size.height - 100.0 - 100.0)];
+//    // make the boundaries of the area clear
+//    self.confettiView.layer.borderWidth = 1.0;
+//    self.confettiView.layer.borderColor = [UIColor blackColor].CGColor;
+//    self.confettiView.swayLength = 20.0;
+//    
+//    [self.view addSubview:self.confettiView];
+//}
+//
+//- (void)showConfetti {
+//    
+//    self.confettiView.blastSpread = 0.3;
+//    [self.confettiView blastFrom:[self.view convertPoint:niceButton.frame.origin toView:confettiView]
+//                         towards:M_PI / 2.0
+//                       withForce:500.0
+//                   confettiWidth:10.0
+//                numberOfConfetti:15.0];
+//}
 
 #pragma mark - Camera related
 - (IBAction)openCamera:(id)sender {

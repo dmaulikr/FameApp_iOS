@@ -53,9 +53,9 @@
 - (void)initInfoLabel {
     
     NSDictionary *labelAttributeStyle1 = @{ @"body":[UIFont fontWithName:@"HelveticaNeue" size:17.0],
-                                            @"one":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25.0],
+                                            @"one":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:25.0],
                                                       [UIColor blackColor]],
-                                            @"two":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0],
+                                            @"two":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0],
                                                       [Colors_Modal getUIColorForMain_8] ],
                                             @"three":@[ [UIFont fontWithName:@"HelveticaNeue" size:10.0],
                                                       [UIColor blackColor] ]

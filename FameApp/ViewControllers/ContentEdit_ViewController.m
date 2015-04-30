@@ -132,39 +132,42 @@ int dt;
     // otherwise the app will crash
     [[self view] endEditing:YES];
     
-    // save image
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        
-        UIImage *imageToSave = [self visibleImage];
-        if (imageToSave != nil) {
-            
-            // TODO:
-            // TODO: here the bidding process starts
-            // TODO:
-            
-            
-            NSString *userId = @"@number1";  // TODO: get userId
-            NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
-            
-            
-            // TODO: DEBUG - should be a global var.  -> get from AppDelegateInst
-            // TODO:    here will be only 'userId' and 'contentFileName'
-            PostHistory *currentPost = [[PostHistory alloc] init];
-            currentPost.userId = userId;
-            currentPost.contentFileName = imagePath;
-            currentPost.isPublished = true;
-            currentPost.countNices = 10000;
-            currentPost.countViews = 100000;
-            currentPost.timestamp = [[NSDate alloc] init];
-            currentPost.postId = [NSString stringWithFormat:@"%@", [[NSDate alloc] init]]; // TODO: temp value - the real one will come from the server
-            [DataStorageHelper addPostHistory:currentPost];
-            
-        }
-        else {
-            
-            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
-        }
-    });
+    UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+    [self presentViewController:myViewController animated:YES completion:nil];
+    
+//    // save image
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//        
+//        UIImage *imageToSave = [self visibleImage];
+//        if (imageToSave != nil) {
+//            
+//            // TODO:
+//            // TODO: here the bidding process starts
+//            // TODO:
+//            
+//            
+//            NSString *userId = @"@number1";  // TODO: get userId
+//            NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
+//            
+//            
+//            // TODO: DEBUG - should be a global var.  -> get from AppDelegateInst
+//            // TODO:    here will be only 'userId' and 'contentFileName'
+//            PostHistory *currentPost = [[PostHistory alloc] init];
+//            currentPost.userId = userId;
+//            currentPost.contentFileName = imagePath;
+//            currentPost.isPublished = true;
+//            currentPost.countNices = 10000;
+//            currentPost.countViews = 100000;
+//            currentPost.timestamp = [[NSDate alloc] init];
+//            currentPost.postId = [NSString stringWithFormat:@"%@", [[NSDate alloc] init]]; // TODO: temp value - the real one will come from the server
+//            [DataStorageHelper addPostHistory:currentPost];
+//            
+//        }
+//        else {
+//            
+//            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+//        }
+//    });
 }
 
 - (UIImage *)visibleImage {

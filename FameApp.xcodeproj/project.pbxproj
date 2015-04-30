@@ -20,6 +20,7 @@
 		783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */; };
 		785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */; };
 		786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */ = {isa = PBXBuildFile; fileRef = 786534131AEFB26D00459A57 /* UIView+MWParallax.m */; };
+		7865341A1AF0024800459A57 /* Post_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 786534191AF0024800459A57 /* Post_ViewController.m */; };
 		78674CA41AD0024900EE2956 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA31AD0024900EE2956 /* AVFoundation.framework */; };
 		78674CA61AD0025900EE2956 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA51AD0025900EE2956 /* ImageIO.framework */; };
 		78674CA81AD0026600EE2956 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA71AD0026600EE2956 /* CoreMotion.framework */; };
@@ -62,6 +63,7 @@
 		78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1B1AE4028800CF01A1 /* SignUp_ViewController.m */; };
 		78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */; };
 		78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */; };
+		78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,8 @@
 		786534111AEFB26D00459A57 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		786534121AEFB26D00459A57 /* UIView+MWParallax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MWParallax.h"; sourceTree = "<group>"; };
 		786534131AEFB26D00459A57 /* UIView+MWParallax.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MWParallax.m"; sourceTree = "<group>"; };
+		786534181AF0024800459A57 /* Post_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post_ViewController.h; path = ViewControllers/Post_ViewController.h; sourceTree = "<group>"; };
+		786534191AF0024800459A57 /* Post_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post_ViewController.m; path = ViewControllers/Post_ViewController.m; sourceTree = "<group>"; };
 		78674CA31AD0024900EE2956 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78674CA51AD0025900EE2956 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		78674CA71AD0026600EE2956 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -163,6 +167,9 @@
 		78E1CE211AE4572B00CF01A1 /* Login_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login_ViewController.h; path = ViewControllers/Login_ViewController.h; sourceTree = "<group>"; };
 		78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login_ViewController.m; path = ViewControllers/Login_ViewController.m; sourceTree = "<group>"; };
 		78F90DAE1AE70B17009A6F79 /* FameApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FameApp-Prefix.pch"; sourceTree = "<group>"; };
+		78FFF47C1AF24E6200E8C61D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		78FFF47D1AF24E6200E8C61D /* ZCSlotMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSlotMachine.h; sourceTree = "<group>"; };
+		78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSlotMachine.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,9 +369,28 @@
 			path = "UIView+MWParallax";
 			sourceTree = "<group>";
 		};
+		786534161AEFE5B500459A57 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				787C1A901ACDD1D50072EF03 /* Main_ViewController.h */,
+				787C1A911ACDD1D50072EF03 /* Main_ViewController.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		786534171AF0020A00459A57 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				786534181AF0024800459A57 /* Post_ViewController.h */,
+				786534191AF0024800459A57 /* Post_ViewController.m */,
+			);
+			name = Post;
+			sourceTree = "<group>";
+		};
 		78674CA91AD0031B00EE2956 /* nonPods */ = {
 			isa = PBXGroup;
 			children = (
+				78FFF47B1AF24E6200E8C61D /* ZCSlotMachine */,
 				786534101AEFB26D00459A57 /* UIView+MWParallax */,
 				78D436F21AD81DC800B9D05A /* KKProgressTimer */,
 				78674CAA1AD0031B00EE2956 /* YCameraView */,
@@ -424,12 +450,12 @@
 			isa = PBXGroup;
 			children = (
 				78E1CE191AE4025B00CF01A1 /* Pre Login */,
-				787C1A901ACDD1D50072EF03 /* Main_ViewController.h */,
-				787C1A911ACDD1D50072EF03 /* Main_ViewController.m */,
+				786534161AEFE5B500459A57 /* Main */,
 				7804E4761AD1E7A400A611C2 /* Profile */,
 				781074CD1ADD377500B02F4A /* Options */,
-				787C1A8C1ACDD0EE0072EF03 /* ContentEdit */,
 				78BB90121AED25700037FB00 /* Invite */,
+				787C1A8C1ACDD0EE0072EF03 /* ContentEdit */,
+				786534171AF0020A00459A57 /* Post */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -544,6 +570,16 @@
 				78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */,
 			);
 			name = "Log In";
+			sourceTree = "<group>";
+		};
+		78FFF47B1AF24E6200E8C61D /* ZCSlotMachine */ = {
+			isa = PBXGroup;
+			children = (
+				78FFF47C1AF24E6200E8C61D /* README.md */,
+				78FFF47D1AF24E6200E8C61D /* ZCSlotMachine.h */,
+				78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */,
+			);
+			path = ZCSlotMachine;
 			sourceTree = "<group>";
 		};
 		863FD918D9CB255FAFE27EAA /* Pods */ = {
@@ -712,6 +748,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */,
+				7865341A1AF0024800459A57 /* Post_ViewController.m in Sources */,
 				783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */,
 				78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */,
 				78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */,
@@ -726,6 +763,7 @@
 				78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */,
 				78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */,
 				7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */,
+				78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */,
 				78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */,
 				781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */,
 				786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */,
@@ -859,6 +897,7 @@
 			baseConfigurationReference = 2BCEA0813C2A4FE1825DD21B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FameApp/FameApp-Prefix.pch";
 				INFOPLIST_FILE = FameApp/Info.plist;
@@ -874,6 +913,7 @@
 			baseConfigurationReference = 0E78F39EFD7A5D22762E6493 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FameApp/FameApp-Prefix.pch";
 				INFOPLIST_FILE = FameApp/Info.plist;

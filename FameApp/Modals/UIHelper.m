@@ -21,4 +21,17 @@
     layer.shadowPath = [[UIBezierPath bezierPathWithRect:layer.bounds] CGPath];
 }
 
++ (void) setRoundedCornersCircleToView:(UIView *)aView {
+    
+    [aView.layer setMasksToBounds:YES];
+    [aView.layer setCornerRadius:aView.frame.size.width/2];
+}
+
++ (void) setRoundedCornersToView:(UIView *)aView {
+    
+    [aView.layer setMasksToBounds:YES];
+    [aView.layer setCornerRadius:7.5f];
+}
+
 @end
+

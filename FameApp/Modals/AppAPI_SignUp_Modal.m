@@ -26,9 +26,10 @@
     NSString *reqData_userId = userId;
     NSString *reqData_password = password;
     NSString *reqData_email = email;
-    NSDictionary *reqData_bday = @{ @"day":[[bday objectAtIndex:0] toValue],
-                                    @"month":[[bday objectAtIndex:1] toValue],
-                                    @"year":[[bday objectAtIndex:2] toValue] };
+    NSDictionary *reqData_bday = @{ @"day" : [bday objectAtIndex:0],
+                                    @"month" : [bday objectAtIndex:1],
+                                    @"year" : [bday objectAtIndex:2]
+                                  };
     
     NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 reqData_userId, @"userId",

@@ -20,6 +20,7 @@
 #import "FormattingHelper.h"
 #import "KLCPopup.h"
 #import "TOWebViewController.h"
+#import "NVDate.h"
 
 @interface SignUp_ViewController : UIViewController <IQDropDownTextFieldDelegate, UITextFieldDelegate>
 

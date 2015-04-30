@@ -45,6 +45,9 @@
     AVCaptureStillImageOutput *stillImageOutput;
     UIImage *croppedImageWithoutOrientation;
 }
+
+- (id)initForProfileWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+
 @property (nonatomic, readwrite) BOOL dontAllowResetRestaurant;
 
 @property (nonatomic, assign) id <YCameraViewControllerDelegate> delegate;
