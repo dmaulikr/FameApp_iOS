@@ -157,6 +157,12 @@
 #define COCOAPODS_VERSION_MINOR_TOWebViewController 0
 #define COCOAPODS_VERSION_PATCH_TOWebViewController 14
 
+// UINavigationItem+Loading
+#define COCOAPODS_POD_AVAILABLE_UINavigationItem_Loading
+#define COCOAPODS_VERSION_MAJOR_UINavigationItem_Loading 1
+#define COCOAPODS_VERSION_MINOR_UINavigationItem_Loading 1
+#define COCOAPODS_VERSION_PATCH_UINavigationItem_Loading 0
+
 // WPAttributedMarkup
 #define COCOAPODS_POD_AVAILABLE_WPAttributedMarkup
 #define COCOAPODS_VERSION_MAJOR_WPAttributedMarkup 1

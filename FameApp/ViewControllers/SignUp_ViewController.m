@@ -14,6 +14,9 @@ int dt;
 @end
 
 
+// TODO: after sign up -> show WELCOME screen (OR EVEN TUTORIAL) -> make a login request.
+
+
 @implementation SignUp_ViewController
 
 @synthesize appDelegateInst;
@@ -56,6 +59,8 @@ int dt;
 
 - (IBAction)createNewUserButtonPressed:(id)sender {
     
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
+    
     [userIdField resignFirstResponder];
     [emailField resignFirstResponder];
     [passwordField resignFirstResponder];
@@ -66,57 +71,78 @@ int dt;
     [[self.view viewWithTag:1002] setBackgroundColor:[UIColor whiteColor]];
     [createNewUserButton setEnabled:NO];
     
-    
-    // TODO: incomplete
-    
-    // TODO: send to server to see if everything is OK.
-    // TODO:    1. userId doesn't already exists.  (make sure to append '@' at the beginning of the userId, before sending to the server)
-    // TODO:    2. email does not already exists.
-    // TODO:    3. password is by standand
-    // TODO:    4. bday is OK.
-    
-    // TODO: the below is when the server retuns error on input verification:
-    // TOOD: EXAMPLE:
-    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];  // use errorField from server
-    [self showStatusPopup:NO message:@"Email already exists"];  // TODO: use msg from server
-    NSLog(@"CREATE");
-    
-    
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
-    //    operationManager.securityPolicy.allowInvalidCertificates = YES;
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     NSArray *bdayArray = @[ [NSNumber numberWithInteger:bdayField.day],
                             [NSNumber numberWithInteger:bdayField.month],
                             [NSNumber numberWithInteger:bdayField.year] ];
-    NSArray *postReqInfo = [AppAPI_SignUp_Modal requestContruct_SignUp:userIdField.text password:passwordField.text email:emailField.text bday:bdayArray];
+    NSString *userId = [NSString stringWithFormat:@"@%@", userIdField.text];
+    
+    NSArray *postReqInfo = [AppAPI_User_Modal requestContruct_SignUp:userId password:passwordField.text email:emailField.text bday:bdayArray];
     
     NSLog(@"App API - Request: SignUp");
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            NSLog(@"App API - Reply: Signup [SUCCESS]");
-            NSDictionary *repDict = [AppAPI_SignUp_Modal processReply_SignUp:responseObject];
-            
-            // TODO: if everything is OK:
-            // TODO:    1. save input to login UserInfo in the appDelegate + local DB
-            // TODO:    2. go to next screen: MAIN screen
-            
-            // TODO: if everything is good, the go to MAIN
-            UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
-            [self presentViewController:myNavigationController animated:YES completion:nil];
-            
-           
-        } // End of Request 'Success'
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            NSLog(@"App API - Reply: Signup [FAILURE]");
-            NSLog(@"%@", error);
-            
-            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
-           
-        } // End of Request 'Failure'
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: SignUp [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_User_Modal processReply_SignUp:responseObject];
+               
+               // Successful SignUp
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   appDelegateInst.loginUser = [[UserInfo alloc] init];
+                   appDelegateInst.loginUser.userId = userId;
+                   appDelegateInst.loginUser.userDisplayName = @"";
+                   appDelegateInst.loginUser.userImageURL = @"";
+                   appDelegateInst.loginUser.userEmail = emailField.text;
+                   appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
+                   appDelegateInst.loginUser.userPassword = passwordField.text;
+                   [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                   
+                   UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
+                   [self presentViewController:myNavigationController animated:YES completion:nil];
+               }
+               // Bad SignUp
+               else {
+                   
+                   NSString *errorField = [repDict objectForKey:@"errorField"];
+                   
+                   if ([errorField isEqualToString:@"userId"]) {
+                       
+                       [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   else if ([errorField isEqualToString:@"password"]) {
+                       
+                       [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   else if ([errorField isEqualToString:@"email"]) {
+                       
+                       [[self.view viewWithTag:1002] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   else if ([errorField isEqualToString:@"bday"]) {
+                       
+                       [[self.view viewWithTag:1003] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+              [self.navigationItem stopAnimating];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               [self.navigationItem stopAnimating];
+               
+               NSLog(@"App API - Reply: Signup [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
      ];
 }
 

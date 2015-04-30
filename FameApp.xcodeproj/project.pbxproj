@@ -53,7 +53,7 @@
 		788110941ACF6C8600F13E47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788110921ACF6C8600F13E47 /* Main.storyboard */; };
 		7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DD1ADB34E80088109C /* PostHistory.m */; };
 		7887E7E01ADB34E80088109C /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DE1ADB34E80088109C /* UserInfo.m */; };
-		789244DF1AEAB02D0071445C /* AppAPI_SignUp_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 789244DE1AEAB02D0071445C /* AppAPI_SignUp_Modal.m */; };
+		789244DF1AEAB02D0071445C /* AppAPI_User_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 789244DE1AEAB02D0071445C /* AppAPI_User_Modal.m */; };
 		78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BB90141AED25B00037FB00 /* Invite_ViewController.m */; };
 		78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D436F41AD81DC800B9D05A /* KKProgressTimer.m */; };
 		78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB087D1ADC169100AA60FD /* FormattingHelper.m */; };
@@ -64,6 +64,9 @@
 		78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */; };
 		78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */; };
 		78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */; };
+		78FFF4891AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF4881AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m */; };
+		78FFF48D1AF2D16F00E8C61D /* AppVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF48C1AF2D16F00E8C61D /* AppVersionHelper.m */; };
+		78FFF4911AF2D2AB00E8C61D /* NotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF4901AF2D2AB00E8C61D /* NotificationHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,8 +150,8 @@
 		7887E7DA1ADB340B0088109C /* PostHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostHistory.h; path = Modals/PostHistory.h; sourceTree = "<group>"; };
 		7887E7DD1ADB34E80088109C /* PostHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostHistory.m; path = Modals/PostHistory.m; sourceTree = "<group>"; };
 		7887E7DE1ADB34E80088109C /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = Modals/UserInfo.m; sourceTree = "<group>"; };
-		789244DD1AEAB02D0071445C /* AppAPI_SignUp_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_SignUp_Modal.h; path = Modals/AppAPI_SignUp_Modal.h; sourceTree = "<group>"; };
-		789244DE1AEAB02D0071445C /* AppAPI_SignUp_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_SignUp_Modal.m; path = Modals/AppAPI_SignUp_Modal.m; sourceTree = "<group>"; };
+		789244DD1AEAB02D0071445C /* AppAPI_User_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_User_Modal.h; path = Modals/AppAPI_User_Modal.h; sourceTree = "<group>"; };
+		789244DE1AEAB02D0071445C /* AppAPI_User_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_User_Modal.m; path = Modals/AppAPI_User_Modal.m; sourceTree = "<group>"; };
 		78BB90131AED25B00037FB00 /* Invite_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Invite_ViewController.h; path = ViewControllers/Invite_ViewController.h; sourceTree = "<group>"; };
 		78BB90141AED25B00037FB00 /* Invite_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Invite_ViewController.m; path = ViewControllers/Invite_ViewController.m; sourceTree = "<group>"; };
 		78D436F31AD81DC800B9D05A /* KKProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKProgressTimer.h; sourceTree = "<group>"; };
@@ -170,6 +173,12 @@
 		78FFF47C1AF24E6200E8C61D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		78FFF47D1AF24E6200E8C61D /* ZCSlotMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSlotMachine.h; sourceTree = "<group>"; };
 		78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSlotMachine.m; sourceTree = "<group>"; };
+		78FFF4871AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_GeneralInfo_Modal.h; path = Modals/AppAPI_GeneralInfo_Modal.h; sourceTree = "<group>"; };
+		78FFF4881AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_GeneralInfo_Modal.m; path = Modals/AppAPI_GeneralInfo_Modal.m; sourceTree = "<group>"; };
+		78FFF48B1AF2D16F00E8C61D /* AppVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppVersionHelper.h; path = Modals/AppVersionHelper.h; sourceTree = "<group>"; };
+		78FFF48C1AF2D16F00E8C61D /* AppVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppVersionHelper.m; path = Modals/AppVersionHelper.m; sourceTree = "<group>"; };
+		78FFF48F1AF2D2AB00E8C61D /* NotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationHelper.h; path = Modals/NotificationHelper.h; sourceTree = "<group>"; };
+		78FFF4901AF2D2AB00E8C61D /* NotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationHelper.m; path = Modals/NotificationHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +322,8 @@
 		782B746F1AC9920B00E18F7F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				78FFF48E1AF2D28F00E8C61D /* NotificationHelper */,
+				78FFF48A1AF2D13700E8C61D /* AppVersion Helper */,
 				787E00FA1AD72A23000139E2 /* Data Storage Helper */,
 				787E00F61AD71989000139E2 /* Image Storage Helper */,
 				78DB087B1ADC164500AA60FD /* Formatting Helper */,
@@ -510,8 +521,8 @@
 		789244DC1AEAAFBA0071445C /* App API Modals */ = {
 			isa = PBXGroup;
 			children = (
-				789244DD1AEAB02D0071445C /* AppAPI_SignUp_Modal.h */,
-				789244DE1AEAB02D0071445C /* AppAPI_SignUp_Modal.m */,
+				78FFF4861AF2C31F00E8C61D /* General Info Modal */,
+				78FFF4811AF2A53500E8C61D /* User Modal */,
 			);
 			name = "App API Modals";
 			sourceTree = "<group>";
@@ -580,6 +591,42 @@
 				78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */,
 			);
 			path = ZCSlotMachine;
+			sourceTree = "<group>";
+		};
+		78FFF4811AF2A53500E8C61D /* User Modal */ = {
+			isa = PBXGroup;
+			children = (
+				789244DD1AEAB02D0071445C /* AppAPI_User_Modal.h */,
+				789244DE1AEAB02D0071445C /* AppAPI_User_Modal.m */,
+			);
+			name = "User Modal";
+			sourceTree = "<group>";
+		};
+		78FFF4861AF2C31F00E8C61D /* General Info Modal */ = {
+			isa = PBXGroup;
+			children = (
+				78FFF4871AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.h */,
+				78FFF4881AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m */,
+			);
+			name = "General Info Modal";
+			sourceTree = "<group>";
+		};
+		78FFF48A1AF2D13700E8C61D /* AppVersion Helper */ = {
+			isa = PBXGroup;
+			children = (
+				78FFF48B1AF2D16F00E8C61D /* AppVersionHelper.h */,
+				78FFF48C1AF2D16F00E8C61D /* AppVersionHelper.m */,
+			);
+			name = "AppVersion Helper";
+			sourceTree = "<group>";
+		};
+		78FFF48E1AF2D28F00E8C61D /* NotificationHelper */ = {
+			isa = PBXGroup;
+			children = (
+				78FFF48F1AF2D2AB00E8C61D /* NotificationHelper.h */,
+				78FFF4901AF2D2AB00E8C61D /* NotificationHelper.m */,
+			);
+			name = NotificationHelper;
 			sourceTree = "<group>";
 		};
 		863FD918D9CB255FAFE27EAA /* Pods */ = {
@@ -751,6 +798,7 @@
 				7865341A1AF0024800459A57 /* Post_ViewController.m in Sources */,
 				783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */,
 				78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */,
+				78FFF4891AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m in Sources */,
 				78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */,
 				787C1A921ACDD1D50072EF03 /* Main_ViewController.m in Sources */,
 				78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */,
@@ -758,7 +806,8 @@
 				787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */,
 				7804E4731AD1C94C00A611C2 /* UIHelper.m in Sources */,
 				7887E7E01ADB34E80088109C /* UserInfo.m in Sources */,
-				789244DF1AEAB02D0071445C /* AppAPI_SignUp_Modal.m in Sources */,
+				78FFF48D1AF2D16F00E8C61D /* AppVersionHelper.m in Sources */,
+				789244DF1AEAB02D0071445C /* AppAPI_User_Modal.m in Sources */,
 				78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */,
 				78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */,
 				78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */,
@@ -771,6 +820,7 @@
 				780BFCBA1AC87F7B009E4DC9 /* AppDelegate.m in Sources */,
 				787E00F91AD719CA000139E2 /* ImageStorageHelper.m in Sources */,
 				780BFCB71AC87F7B009E4DC9 /* main.m in Sources */,
+				78FFF4911AF2D2AB00E8C61D /* NotificationHelper.m in Sources */,
 				78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */,
 				78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */,
 			);

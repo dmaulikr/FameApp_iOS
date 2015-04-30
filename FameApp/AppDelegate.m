@@ -13,7 +13,7 @@
 
 @implementation AppDelegate
 
-@synthesize appAPIBaseURL;
+@synthesize appAPIBaseURL, appAPIBaseUploaderURL;
 @synthesize webLinks;
 @synthesize loginUser;
 @synthesize lastLocation;
@@ -23,7 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    appAPIBaseURL = @"http://54.229.104.118:8080/FameApp/api/";
+    appAPIBaseURL = @"http://54.171.157.215:8080/FameApp/api/";   // TODO: change IP to domain
+    appAPIBaseUploaderURL = @"";   // TODO: change IP to domain
     
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
                 @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use REAL path
@@ -37,6 +38,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [UIColor whiteColor], NSForegroundColorAttributeName,
                                                             [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
+    [UIActivityIndicatorView appearanceWhenContainedIn:[UINavigationBar class], nil].color = [UIColor whiteColor];
     
     // connect to DB
     [DataStorageHelper setupDB];
@@ -50,6 +52,7 @@
     loginUser.userImageURL = @"http://";
     loginUser.userEmail = @"eldare@gmail.com";
     loginUser.userToken = @"token123";
+    loginUser.userPassword = @"qwertt";
     [DataStorageHelper setLoginUserInfo:loginUser];
     
     // TODO: set 'isAfterLogin' accordingly

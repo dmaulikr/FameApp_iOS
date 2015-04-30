@@ -49,7 +49,6 @@
     }
 }
 
-#pragma mark - Private methods
 + (NSString *)getDeviceTypeAdvanced {
     
     size_t size;
@@ -109,7 +108,13 @@
     if ([platform isEqualToString:@"AppleTV3,2"])   return @"Apple TV 3 (2013)";
     if ([platform isEqualToString:@"i386"])         return @"Simulator";
     if ([platform isEqualToString:@"x86_64"])       return @"Simulator";
+    
     return platform;
+}
+
++ (NSString *)getDeviceInfo {
+    
+    return [NSString stringWithFormat:@"%@: iOS%@", [DeviceTypeHelper getDeviceTypeAdvanced], [[UIDevice currentDevice] systemVersion]];
 }
 
 @end

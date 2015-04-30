@@ -54,31 +54,72 @@
 
 - (IBAction)continueButtonPressed:(id)sender {
     
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
+    
     [userIdField resignFirstResponder];
     [passwordField resignFirstResponder];
     [[self.view viewWithTag:1000] setBackgroundColor:[UIColor whiteColor]];
     [[self.view viewWithTag:1001] setBackgroundColor:[UIColor whiteColor]];
     [continueButton setEnabled:NO];
+
     
-    // TODO: incomplete
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    // TODO: send to server to see if everything is OK.
-    // TODO:    1. userId and password are correct.  (don't forget to attach '@' at the beginning of the userId, before sending to server)
+    NSString *userId = [NSString stringWithFormat:@"@%@", userIdField.text];
+    NSString *deviceInfo = [DeviceTypeHelper getDeviceInfo];
+    NSString *appVersion = [AppVersionHelper getAppVersion];
+    NSString *notificationToken = [NotificationHelper getNotificationToken];
     
-    // TODO: the below is when the server retuns error on input verification:
-    [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
-    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
-    [self showStatusPopup:NO message:@"Wrong Username or Password"];  // TODO: message from server
-    NSLog(@"CONTINUE");
+    NSArray *postReqInfo = [AppAPI_User_Modal requestContruct_LogIn:userId password:passwordField.text deviceInfo:deviceInfo appVersion:appVersion notificationToken:notificationToken];
     
-    
-    // TODO: if everything is OK:
-    // TODO:    1. save to login UserInfo in the appDelegate.   (don't forget to add the '@' at the beginning of the userId)
-    // TODO:    2. go to MAIN screen.
-    
-    // TODO: example how to go to MAIN
-    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
-    [self presentViewController:myNavigationController animated:YES completion:nil];
+    NSLog(@"App API - Request: LogIn");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: LogIn [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_User_Modal processReply_LogIn:responseObject];
+               
+               // Successful Login
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   appDelegateInst.loginUser = [[UserInfo alloc] init];
+                   appDelegateInst.loginUser.userId = userId;
+                   appDelegateInst.loginUser.userDisplayName = [repDict objectForKey:@"displayName"];
+                   appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
+                   appDelegateInst.loginUser.userEmail = [repDict objectForKey:@"email"];
+                   appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
+                   appDelegateInst.loginUser.userPassword = passwordField.text;
+                   [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                   
+                   UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
+                   [self presentViewController:myNavigationController animated:YES completion:nil];
+               }
+               // Bad Login
+               else {
+                   
+                   [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+              [self.navigationItem stopAnimating];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               [self.navigationItem stopAnimating];
+               
+               NSLog(@"App API - Reply: LogIn [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (void)initSubViews {

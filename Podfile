@@ -8,6 +8,7 @@ pod 'SQPersist',                    '~> 1.0.3'
 pod 'IQKeyboardManager',            '~> 3.2.2'
 pod 'IQDropDownTextField',          '~> 1.0.4.1'
 pod 'NVDate',                       '~> 0.0.2'
+pod 'UINavigationItem+Loading',     '~> 1.1'
 
 pod 'IQLabelView',                  '~> 0.1.5'
 

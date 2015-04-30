@@ -35,6 +35,7 @@
         existingUser.userImageURL = aUser.userImageURL;
         existingUser.userEmail = aUser.userEmail;
         existingUser.userToken = aUser.userToken;
+        existingUser.userPassword = aUser.userPassword;
         
         [existingUser SQPSaveEntity];
         
@@ -49,6 +50,7 @@
         newUser.userImageURL = aUser.userImageURL;
         newUser.userEmail = aUser.userEmail;
         newUser.userToken = aUser.userToken;
+        newUser.userPassword = aUser.userPassword;
         
         [newUser SQPSaveEntity];
         

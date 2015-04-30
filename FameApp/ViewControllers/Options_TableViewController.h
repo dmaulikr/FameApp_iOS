@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UINavigationItem+Loading.h>
+#import "AFNetworking.h"
+#import "AppVersionHelper.h"
+#import "AppAPI_User_Modal.h"
 #import "AppDelegate.h"
 #import "KLCPopup.h"
 #import "Colors_Modal.h"
@@ -16,6 +20,7 @@
 
 @interface Options_TableViewController : UITableViewController
 
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 @property (nonatomic, strong) IBOutlet UITableView *theTableView;
 @property (nonatomic, strong) IBOutlet UILabel *userIdLabel;
 @property (nonatomic, strong) IBOutlet UILabel *userEmailLabel;

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFNetworking.h"
+#import "AppAPI_User_Modal.h"
+#import "AppVersionHelper.h"
+#import "NotificationHelper.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
 #import "UIView+MWParallax.h"

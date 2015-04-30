@@ -13,6 +13,7 @@
 
 @implementation Options_TableViewController
 
+@synthesize appDelegateInst;
 @synthesize theTableView;
 @synthesize userIdLabel, userEmailLabel, versionLabel;
 @synthesize popup;
@@ -25,6 +26,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -44,10 +47,7 @@
     UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
     [userIdLabel setText:loginUser.userId];
     [userEmailLabel setText:loginUser.userEmail];
-    
-    [versionLabel setText:[NSString stringWithFormat:@"%@",
-     [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
-    
+    [versionLabel setText:[AppVersionHelper getAppVersion]];
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
 }
@@ -67,8 +67,6 @@
     }
     // info
     else if (indexPath.section == 1) {
-        
-        AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         
         // Privacy Policy
         if (indexPath.row == 0) {
@@ -150,9 +148,42 @@
 
 - (void)yesLogoutButtonPressed:(UIButton *)aButton {
     
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
+    
     [popup dismiss:YES];
     
-    // TODO: send to server.
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_User_Modal requestContruct_LogOut];
+    
+    NSLog(@"App API - Request: LogOut");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: LogOut [SUCCESS]");
+               
+               // do nothing
+               
+               [self.navigationItem stopAnimating];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               [self.navigationItem stopAnimating];
+               
+               NSLog(@"App API - Reply: LogOut [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // do nothing
+               
+           } // End of Request 'Failure'
+     ];
+    
+    [DataStorageHelper deleteLoginUserInfo];
+    appDelegateInst.loginUser = nil;
+    appDelegateInst.isAfterLogin = NO;
     
     UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PreLoginNav"];
     [self presentViewController:myNavigationController animated:YES completion:nil];

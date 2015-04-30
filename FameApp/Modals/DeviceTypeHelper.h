@@ -22,6 +22,8 @@ enum DeviceType {
 
 + (int)getDeviceType;
 + (BOOL)isIPHONE4;
++ (NSString *)getDeviceTypeAdvanced;
++ (NSString *)getDeviceInfo;
 
 @end
 

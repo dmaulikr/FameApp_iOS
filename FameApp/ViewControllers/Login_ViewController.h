@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UINavigationItem+Loading.h>
 #import <CoreText/CoreText.h>
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
 #import "AppDelegate.h"
+#import "AppAPI_User_Modal.h"
 #import "AFNetworking.h"
+#import "AppVersionHelper.h"
+#import "NotificationHelper.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
+#import "FormattingHelper.h"
 #import "KLCPopup.h"
 #import "TOWebViewController.h"
 

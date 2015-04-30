@@ -43,6 +43,7 @@ PODS:
   - SQPersist (1.0.3):
     - FMDB (~> 2.4)
   - TOWebViewController (2.0.14)
+  - UINavigationItem+Loading (1.1)
   - WPAttributedMarkup (1.0.0)
 
 DEPENDENCIES:
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - NVDate (~> 0.0.2)
   - SQPersist (~> 1.0.3)
   - TOWebViewController (from `https://github.com/TimOliver/TOWebViewController.git`)
+  - UINavigationItem+Loading (~> 1.1)
   - WPAttributedMarkup (~> 1.0.0)
 
 EXTERNAL SOURCES:
@@ -93,6 +95,7 @@ SPEC CHECKSUMS:
   NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01
   TOWebViewController: 2cfd0032d781cabd88a0995fbca9692c11f0797e
+  UINavigationItem+Loading: e61d7963495d8a19b6d3825d867ed60db9b218b6
   WPAttributedMarkup: eb50878af4ec647d8d2090f721a5cfe7d29c27fe
 
 COCOAPODS: 0.36.3
