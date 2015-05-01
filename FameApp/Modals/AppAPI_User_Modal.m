@@ -74,6 +74,33 @@
     return responseObject;
 }
 
+#pragma mark - Log In Verify
++ (NSArray *) requestContruct_LogInVerify:(NSString *)deviceInfo appVersion:(NSString *)appVersion notificationToken:(NSString *)notificationToken {
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSURL *baseURL = [NSURL URLWithString:appDelegateInst.appAPIBaseURL];
+    NSString *reqPath = @"user/loginVerify";
+    
+    // prepare params
+    NSString *reqData_deviceInfo = deviceInfo;
+    NSString *reqData_appVersion = appVersion;
+    NSString *reqData_notificationToken = notificationToken;
+    
+    NSDictionary *parameters = [AppAPI_GeneralInfo_Modal addGeneralRequestInfoDictOnlyAccessToken_toRequestDict:
+                                 [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 reqData_deviceInfo, @"deviceInfo",
+                                 reqData_appVersion, @"appVersion",
+                                 reqData_notificationToken, @"notificationToken",
+                                 nil]];
+    
+    return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@", baseURL, reqPath], parameters, nil];
+}
+
++ (NSDictionary *) processReply_LogInVerify:(NSDictionary *)responseObject {
+    
+    return responseObject;
+}
+
 #pragma mark - Log Out
 + (NSArray *) requestContruct_LogOut {
     

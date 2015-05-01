@@ -52,7 +52,6 @@
     loginUser.userImageURL = @"http://";
     loginUser.userEmail = @"eldare@gmail.com";
     loginUser.userToken = @"token123";
-    loginUser.userPassword = @"qwertt";
     [DataStorageHelper setLoginUserInfo:loginUser];
     
     // TODO: set 'isAfterLogin' accordingly

@@ -61,7 +61,9 @@
     [[self.view viewWithTag:1000] setBackgroundColor:[UIColor whiteColor]];
     [[self.view viewWithTag:1001] setBackgroundColor:[UIColor whiteColor]];
     [continueButton setEnabled:NO];
-
+    
+    appDelegateInst.loginUser = nil;
+    [DataStorageHelper deleteLoginUserInfo];
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -91,7 +93,6 @@
                    appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
                    appDelegateInst.loginUser.userEmail = [repDict objectForKey:@"email"];
                    appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
-                   appDelegateInst.loginUser.userPassword = passwordField.text;
                    [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                    
                    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];

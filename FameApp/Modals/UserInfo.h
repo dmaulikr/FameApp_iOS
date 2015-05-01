@@ -16,7 +16,6 @@
 @property (nonatomic, strong) NSString *userImageURL;
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userToken;
-@property (nonatomic, strong) NSString *userPassword;
 
 @end
 

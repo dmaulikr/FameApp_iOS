@@ -12,7 +12,7 @@
 
 + (void)setupDB {
     
-    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb_5.db"];  // TODO: this is not the final DB name
+    [[SQPDatabase sharedInstance] setupDatabaseWithName:@"mydb_6.db"];  // TODO: this is not the final DB name
 }
 
 #pragma mark - UserInfo related
@@ -35,7 +35,6 @@
         existingUser.userImageURL = aUser.userImageURL;
         existingUser.userEmail = aUser.userEmail;
         existingUser.userToken = aUser.userToken;
-        existingUser.userPassword = aUser.userPassword;
         
         [existingUser SQPSaveEntity];
         
@@ -50,7 +49,6 @@
         newUser.userImageURL = aUser.userImageURL;
         newUser.userEmail = aUser.userEmail;
         newUser.userToken = aUser.userToken;
-        newUser.userPassword = aUser.userPassword;
         
         [newUser SQPSaveEntity];
         

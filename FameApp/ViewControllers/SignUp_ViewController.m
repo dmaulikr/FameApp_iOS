@@ -14,7 +14,7 @@ int dt;
 @end
 
 
-// TODO: after sign up -> show WELCOME screen (OR EVEN TUTORIAL) -> make a login request.
+// TODO: after sign up -> show WELCOME screen (OR EVEN TUTORIAL) -> make a login verify request (to send all the additional info: deviceInfo, appVersion, notificationToken)
 
 
 @implementation SignUp_ViewController
@@ -71,6 +71,9 @@ int dt;
     [[self.view viewWithTag:1002] setBackgroundColor:[UIColor whiteColor]];
     [createNewUserButton setEnabled:NO];
     
+    appDelegateInst.loginUser = nil;
+    [DataStorageHelper deleteLoginUserInfo];
+    
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -99,7 +102,6 @@ int dt;
                    appDelegateInst.loginUser.userImageURL = @"";
                    appDelegateInst.loginUser.userEmail = emailField.text;
                    appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
-                   appDelegateInst.loginUser.userPassword = passwordField.text;
                    [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                    
                    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];

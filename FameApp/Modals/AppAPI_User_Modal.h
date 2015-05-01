@@ -20,6 +20,10 @@
 + (NSArray *) requestContruct_LogIn:(NSString *)userId password:(NSString *)password deviceInfo:(NSString *)deviceInfo appVersion:(NSString *)appVersion notificationToken:(NSString *)notificationToken;
 + (NSDictionary *) processReply_LogIn:(NSDictionary *)responseObject;
 
+#pragma mark - Log In Verify
++ (NSArray *) requestContruct_LogInVerify:(NSString *)deviceInfo appVersion:(NSString *)appVersion notificationToken:(NSString *)notificationToken;
++ (NSDictionary *) processReply_LogInVerify:(NSDictionary *)responseObject;
+
 #pragma mark - Log Out
 + (NSArray *) requestContruct_LogOut;
 + (NSDictionary *) processReply_LogOut:(NSDictionary *)responseObject;
