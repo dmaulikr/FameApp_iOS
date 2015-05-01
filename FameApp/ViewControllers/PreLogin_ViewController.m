@@ -43,12 +43,28 @@
 - (void)initSubViews {
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
+    
+    [((UIButton *)[self.view viewWithTag:1001]) setBackgroundColor:[Colors_Modal getUIColorForMain_8]];
+    [((UIButton *)[self.view viewWithTag:1001]) setHidden:YES];
+    [((UIButton *)[self.view viewWithTag:1002]) setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [((UIButton *)[self.view viewWithTag:1002]) setHidden:YES];
 }
 
 - (void)showButtons {
     
-    [((UIButton *)[self.view viewWithTag:1001]) setBackgroundColor:[Colors_Modal getUIColorForMain_8]];
-    [((UIButton *)[self.view viewWithTag:1002]) setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [((UIButton *)[self.view viewWithTag:1001]) setAlpha:0.0f];
+    [((UIButton *)[self.view viewWithTag:1001]) setHidden:NO];
+    
+    [((UIButton *)[self.view viewWithTag:1002]) setAlpha:0.0f];
+    [((UIButton *)[self.view viewWithTag:1002]) setHidden:NO];
+    
+    [UIView animateWithDuration:1.0f animations:^{
+        
+        [((UIButton *)[self.view viewWithTag:1001]) setAlpha:1.0f];
+        [((UIButton *)[self.view viewWithTag:1002]) setAlpha:1.0f];
+        
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)verifyLogin {
@@ -88,7 +104,7 @@
                    // Successful Login Verify
                    if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                        
-                       appDelegateInst.loginUser = [[UserInfo alloc] init];
+                       appDelegateInst.loginUser.userId = loginUser.userId;
                        appDelegateInst.loginUser.userDisplayName = [repDict objectForKey:@"displayName"];
                        appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
                        appDelegateInst.loginUser.userEmail = [repDict objectForKey:@"email"];

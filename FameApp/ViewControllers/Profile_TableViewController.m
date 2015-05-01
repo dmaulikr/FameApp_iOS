@@ -57,11 +57,17 @@ int dt;
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
     
-    [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
-    [userIdLabel setText:appDelegateInst.loginUser.userId];
     [UIHelper setRoundedCornersCircleToView:userImageView];
+    
+    if (((id)appDelegateInst.loginUser.userDisplayName != [NSNull null])
+        && ([appDelegateInst.loginUser.userDisplayName isEqualToString:@""] == NO)) {
+        
+        [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
+    }
+    [userIdLabel setText:appDelegateInst.loginUser.userId];
     // TODO: load from ImageURL
     // TODO: set user's 'imageURL' (with cache!! and maybe fade-in animation)
+    // TODO: make sure the image actually exists, or the app will crash.
     // TODO: if you tap the image, you will be able to edit it.
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];

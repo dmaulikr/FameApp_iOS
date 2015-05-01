@@ -11,6 +11,9 @@
 int dt;
 
 
+// TODO: left/right gestures for NICE/SKIP
+
+
 @interface Main_ViewController ()
 @end
 
@@ -286,34 +289,10 @@ int dt;
 - (IBAction)niceButtonPressed:(id)sender {
     
     // TODO: send to server
+    // TODO: indicate 'selection'
     
     NSLog(@"NICE PRESSED.");
 }
-
-//- (void)initConfetti {
-//    
-//    // Inset the view a bit to make sure that the point conversion is working properly on taps
-//    self.confettiView = [[L360ConfettiArea alloc] initWithFrame:CGRectMake(0.0,
-//                                                                           100.0,
-//                                                                           self.view.frame.size.width,
-//                                                                           self.view.frame.size.height - 100.0 - 100.0)];
-//    // make the boundaries of the area clear
-//    self.confettiView.layer.borderWidth = 1.0;
-//    self.confettiView.layer.borderColor = [UIColor blackColor].CGColor;
-//    self.confettiView.swayLength = 20.0;
-//    
-//    [self.view addSubview:self.confettiView];
-//}
-//
-//- (void)showConfetti {
-//    
-//    self.confettiView.blastSpread = 0.3;
-//    [self.confettiView blastFrom:[self.view convertPoint:niceButton.frame.origin toView:confettiView]
-//                         towards:M_PI / 2.0
-//                       withForce:500.0
-//                   confettiWidth:10.0
-//                numberOfConfetti:15.0];
-//}
 
 #pragma mark - Camera related
 - (IBAction)openCamera:(id)sender {
@@ -455,7 +434,7 @@ int dt;
     
     // TODO: access_token
     
-    // TODO: DEBUG
+    // TODO: DEBUG  --  NEED TO FIND HOW TO GET THE DAMN SELECTED VALUE FROM THE RADIO BUTTONS
     NSLog(@"%ld %ld %ld, %ld", radio1.tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:0]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:1]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:2]).tag);
     
 //    if (radio1.isSelected == YES) {
@@ -485,7 +464,7 @@ int dt;
     
     // TODO: send to server
     // TODO:    - once the server replies show PopupStatus:
-    [self showStatusPopup:YES message:@"Content reported.\nThank you."];
+    [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
