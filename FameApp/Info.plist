@@ -22,8 +22,14 @@
 	<string>0.0.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to camera... well, because you want to take a photo and post it.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Please allow access to contacts to be able to select which friends to to invite.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow location services to see location related content.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to photo library to be able to select photos to post.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -32,18 +38,14 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>Please allow access to contacts to be able to select which friends to to invite.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow access to photo library to be able to select photos to post.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Please allow access to camera... well, because you want to take a photo and post it.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

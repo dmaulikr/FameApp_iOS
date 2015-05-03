@@ -8,7 +8,12 @@
 
 #import "Post_ViewController.h"
 
-@interface Post_ViewController ()
+@interface Post_ViewController () {
+    
+    // TODO: DEBUG - REMOVE
+    float testPoint;
+    int testCount;
+}
 @end
 
 @implementation Post_ViewController
@@ -17,6 +22,7 @@
 @synthesize biddingView, winView, loseView;
 @synthesize mySlotMachine, slotIcons;
 @synthesize winningOddsLabel, bonusOddsLabel;  // TODO: need to use
+@synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel, labelAttributeStyle1;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -40,7 +46,7 @@
     
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
-    [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
+    [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     self.navigationItem.title = @"POSTING YOUR FAME...";
     
     [self initSubViews];
@@ -55,7 +61,7 @@
 
 - (void)initSubViews {
     
-    [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
+    [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [self initBiddingView];
 }
 
@@ -83,7 +89,7 @@
     mySlotMachine.center = CGPointMake(self.view.frame.size.width / 2, 120);
     mySlotMachine.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     mySlotMachine.contentInset = UIEdgeInsetsMake(5, 8, 5, 8);
-    mySlotMachine.backgroundColor = [Colors_Modal getUIColorForMain_2];
+    mySlotMachine.backgroundColor = [Colors_Modal getUIColorForMain_6];
     mySlotMachine.coverImage = [UIImage imageNamed:@"SlotMachineCover"];
     
     mySlotMachine.delegate = self;
@@ -99,15 +105,15 @@
 // TOOD: DEBUG - REMOVE
 - (void)test:(NSTimer *)timer {
      
-//     [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
-//                                   [NSNumber numberWithInteger:0],
-//                                   [NSNumber numberWithInteger:0],
-//                                   [NSNumber numberWithInteger:0],
-//                                   [NSNumber numberWithInteger:0],
-//                                   nil]];
+     [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:0],
+                                   nil]];
     
     
-        [self initWinViews];  // TODO: DEBUG - REMOVE
+//        [self initWinViews];  // TODO: DEBUG - REMOVE
  }
 
 - (void)startSlotMachine {
@@ -169,7 +175,14 @@
     // TODO: set winImageView
     // TODO: init the counters: nice & views
     
-    // TODO: maybe the winning background color should change to something HAPPY...
+    
+    [self initLabelStyles];
+    [self initGraphView];
+    
+    // TODO: DEBUG - REMOVE
+    testPoint = 0;
+    testCount = 0;
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(test2:) userInfo:nil repeats:YES];  // TODO: DEBUG
     
     [winView setAlpha:0.0f];
     [winView setHidden:NO];
@@ -212,6 +225,68 @@
                   withForce:500.0
               confettiWidth:10.0
            numberOfConfetti:15.0];
+}
+
+- (void)initGraphView {
+    
+    CGRect aFrame = winImageView.frame;
+    aFrame.size.width = 20;
+    aFrame.size.height = 20;
+    aFrame.origin.y += winImageView.frame.size.height - aFrame.size.height;
+    
+    winGraphView = [[GraphView alloc]initWithFrame:aFrame];
+    [winGraphView setBackgroundColor:[UIColor clearColor]];
+    [winGraphView setSpacing:20];
+    [winGraphView setFill:NO];
+    [winGraphView setStrokeColor:[UIColor whiteColor]];
+    [winGraphView setZeroLineStrokeColor:[UIColor clearColor]];
+    [winGraphView setLineWidth:4];
+    [winGraphView setCurvedLines:NO];
+    [winGraphView hideAxis:YES];
+    
+    [winView addSubview:winGraphView];
+}
+
+- (void)test2:(NSTimer *)timer {  // TODO: DEBUG - REMOVE
+    
+    testPoint += arc4random() % 10000;
+    testCount++;
+    
+    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/10) updateCount:testCount];
+}
+
+- (void)updateWinningGraphAndLabels:(int)viewsCount niceCount:(int)niceCount updateCount:(int)updateCount {
+    
+    [winGraphView setPoint:viewsCount];
+    
+    [winGraphView setNumberOfPointsInGraph:updateCount];
+    CGRect aFrame = winGraphView.frame;
+    if (aFrame.size.width < (winImageView.frame.size.width/1.2)) {
+        aFrame.size.width += 20;
+    }
+    if (aFrame.size.height < (winImageView.frame.size.height/1.2)) {
+        aFrame.size.height += 20;
+        aFrame.origin.y -= 20;
+    }
+    winGraphView.frame = aFrame;
+    
+    
+    NSString *niceLabelString = [NSString stringWithFormat:@"<niceNumber>%d</niceNumber> <niceText>loved it</niceText>", niceCount];
+    [winGraphNicesLabel setAttributedText:[niceLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
+    
+    NSString *viewsLabelString = [NSString stringWithFormat:@"<viewsText>seen by</viewsText> <viewsNumber>%d</viewsNumber>", viewsCount];
+    [winGraphViewsLabel setAttributedText:[viewsLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
+}
+
+- (void)initLabelStyles {
+    
+    labelAttributeStyle1 = @{
+                           @"body":[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:20.0],
+                           @"niceNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:50.0], [Colors_Modal getUIColorForMain_5]],
+                           @"niceText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [Colors_Modal getUIColorForMain_5]],
+                           @"viewsNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0], [UIColor whiteColor]],
+                           @"viewsText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [UIColor whiteColor]],
+                       };
 }
 
 #pragma mark - Losing related

@@ -90,7 +90,7 @@
 + (NSString *)formatGeneralErrorMessage {
     
     NSArray *amazingListOfErrors = @[
-                                        @"We realךy screwed up this time...\nPlease try again.",
+                                        @"We really screwed up this time...\nPlease try again.",
                                         @"WHAAAAAAAT?! X_X\nPlease try again."
                                     ];
     

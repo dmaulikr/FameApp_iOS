@@ -10,6 +10,8 @@
 
 int dt;
 
+// TODO: should be ask for the SEX ?
+
 @interface SignUp_ViewController ()
 @end
 

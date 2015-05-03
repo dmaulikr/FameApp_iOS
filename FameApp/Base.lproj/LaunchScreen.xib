@@ -8,22 +8,22 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" tag="2000" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starLogo" id="GSG-M1-cZd">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="374"/>
+                <imageView userInteractionEnabled="NO" tag="2000" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StarLogo" id="GSG-M1-cZd">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="439"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.99607843139999996" green="0.96470588239999999" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
     <resources>
-        <image name="starLogo" width="171" height="171"/>
+        <image name="StarLogo" width="171" height="171"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

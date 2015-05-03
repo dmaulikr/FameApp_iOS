@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ZCSlotMachine.h"
 #import "L360ConfettiArea.h"
+#import "GraphView.h"
 #import "Colors_Modal.h"
+#import "NSString+WPAttributedMarkup.h"
 
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource>
 
@@ -24,6 +26,10 @@
 @property (nonatomic, strong) IBOutlet UIView *winView;
 @property (nonatomic, strong) IBOutlet UILabel *winHeaderLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *winImageView;
+@property (nonatomic, strong) GraphView *winGraphView;
+@property (nonatomic, strong) IBOutlet UILabel *winGraphViewsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *winGraphNicesLabel;
+@property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 
 @property (nonatomic, strong) IBOutlet UIView *loseView;
 
