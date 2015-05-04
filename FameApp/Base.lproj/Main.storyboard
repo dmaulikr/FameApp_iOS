@@ -636,11 +636,11 @@
             <objects>
                 <viewController storyboardIdentifier="PostScreen" id="IDm-4G-lbT" customClass="Post_ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZuL-AB-d28">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" tag="2000" contentMode="scaleToFill" id="Ocm-U5-8Io">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                            <view tag="2000" contentMode="scaleToFill" id="Ocm-U5-8Io">
+                                <rect key="frame" x="2" y="0.0" width="375" height="623"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view tag="2002" contentMode="scaleToFill" id="Abp-Ep-AuJ">
@@ -706,11 +706,25 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="4001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lose label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1EC-yd-uNf" customClass="WPHotspotLabel">
+                                        <rect key="frame" x="42" y="51" width="291" height="170"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="4002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lose want more? label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vgb-Kb-wjO" customClass="WPHotspotLabel">
+                                        <rect key="frame" x="42" y="233" width="291" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view tag="3000" contentMode="scaleToFill" id="MRM-AC-mfV">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="3003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're Live To The Masses :)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AIa-KQ-ICd">
@@ -721,11 +735,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" tag="3001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tests" id="otT-Ct-LZf">
-                                        <rect key="frame" x="8" y="122" width="360" height="360"/>
+                                        <rect key="frame" x="8" y="122" width="360" height="375"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <view alpha="0.69999999999999996" tag="3002" contentMode="scaleToFill" id="ZbX-JR-YTB">
-                                        <rect key="frame" x="8" y="122" width="360" height="360"/>
+                                        <rect key="frame" x="8" y="122" width="360" height="375"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -751,12 +765,22 @@
                         </subviews>
                         <color key="backgroundColor" red="0.99607843139999996" green="0.96470588239999999" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xaO-N9-4At"/>
+                    <navigationItem key="navigationItem" id="xaO-N9-4At">
+                        <barButtonItem key="leftBarButtonItem" tag="666" enabled="NO" title="CLOSE" id="fww-g6-HGj">
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="IDm-4G-lbT" id="DGu-l2-JGR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="biddingView" destination="Ocm-U5-8Io" id="amR-zO-xw9"/>
                         <outlet property="bonusOddsLabel" destination="DHv-uo-ZiP" id="X4O-JK-I22"/>
+                        <outlet property="closeButton" destination="fww-g6-HGj" id="BYZ-6c-Efo"/>
+                        <outlet property="loseLabel" destination="1EC-yd-uNf" id="Cb3-3X-sas"/>
+                        <outlet property="loseWantMoreLabel" destination="vgb-Kb-wjO" id="vx0-Oa-zmx"/>
                         <outlet property="winGraphNicesLabel" destination="T78-1D-fPC" id="Ngd-ce-0q6"/>
                         <outlet property="winGraphViewsLabel" destination="gW9-cn-BG4" id="hUw-oB-OAf"/>
                         <outlet property="winHeaderLabel" destination="AIa-KQ-ICd" id="Ve9-RA-KMa"/>
@@ -810,7 +834,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.99607843139999996" green="0.96470588239999999" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="INVITE" id="SsB-PA-LBh"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -1125,7 +1149,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                         <connections>
                                             <outlet property="delegate" destination="Fto-Yn-yxs" id="t9O-OW-PWE"/>
                                         </connections>

@@ -16,13 +16,22 @@
 }
 @end
 
+
+// TODO: need to add timer for win.
+// TODO: for both lose & win: save the image with the meta data in the local DB.
+// TODO: update server on bonus earned ? (or the server already knows???)
+
+
 @implementation Post_ViewController
 
 @synthesize isWin;
-@synthesize biddingView, winView, loseView;
+@synthesize closeButton;
+@synthesize biddingView, winView;
 @synthesize mySlotMachine, slotIcons;
 @synthesize winningOddsLabel, bonusOddsLabel;  // TODO: need to use
-@synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel, labelAttributeStyle1;
+@synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel;
+@synthesize loseLabel, loseWantMoreLabel;
+@synthesize labelAttributeStyle1;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -46,9 +55,10 @@
     
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
-    [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
     self.navigationItem.title = @"POSTING YOUR FAME...";
     
+    [self initLabelStyles];
     [self initSubViews];
 }
 
@@ -57,6 +67,18 @@
     [super viewDidAppear:animated];
     
     [self startSlotMachine];
+}
+
+- (void)enableCloseButton {
+    
+    [closeButton setEnabled:YES];
+    // TODO: not the best solution - it's better if the button is not seen at all, until it's time to use it.
+    // TODO: http://stackoverflow.com/questions/10021748/how-do-i-show-hide-a-uibarbuttonitem
+}
+
+- (IBAction)closeButtonPressed:(id)sender {
+    
+    // TODO: incomplete - go to MainNav
 }
 
 - (void)initSubViews {
@@ -69,7 +91,8 @@
     
     [biddingView setHidden:NO];
     [winView setHidden:YES];
-    [loseView setHidden:YES];
+    [loseWantMoreLabel setHidden:YES];
+    [loseLabel setHidden:YES];
     
     // TODO: set the labels.
     // TODO: hide 'bonus' view if user has none.
@@ -99,7 +122,7 @@
     
     
     // TODO: DEBUG - REMOVE
-    [NSTimer scheduledTimerWithTimeInterval:5.5 target:self selector:@selector(test:) userInfo:nil repeats:NO];  // TODO: DEBUG
+    [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(test:) userInfo:nil repeats:NO];  // TODO: DEBUG
 }
 
 // TOOD: DEBUG - REMOVE
@@ -107,13 +130,10 @@
      
      [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
                                    [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:2],
+                                   [NSNumber numberWithInteger:3],
+                                   [NSNumber numberWithInteger:1],
                                    nil]];
-    
-    
-//        [self initWinViews];  // TODO: DEBUG - REMOVE
  }
 
 - (void)startSlotMachine {
@@ -135,13 +155,15 @@
     
     if (slotMachine.isReallyDone == YES) {
         
+        isWin = YES;  // TODO: DEBUG - REMOVE
+        
         if (isWin) {
             
             [self initWinViews];
         }
         else {
             
-            [self initWinViews];
+            [self initLoseViews];
         }
     }
 }
@@ -175,8 +197,6 @@
     // TODO: set winImageView
     // TODO: init the counters: nice & views
     
-    
-    [self initLabelStyles];
     [self initGraphView];
     
     // TODO: DEBUG - REMOVE
@@ -249,10 +269,10 @@
 
 - (void)test2:(NSTimer *)timer {  // TODO: DEBUG - REMOVE
     
-    testPoint += arc4random() % 10000;
+    testPoint += (arc4random() % 2) == 0 ? 0 : arc4random() % 10000;
     testCount++;
     
-    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/10) updateCount:testCount];
+    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/11) updateCount:testCount];
 }
 
 - (void)updateWinningGraphAndLabels:(int)viewsCount niceCount:(int)niceCount updateCount:(int)updateCount {
@@ -278,20 +298,75 @@
     [winGraphViewsLabel setAttributedText:[viewsLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
 }
 
-- (void)initLabelStyles {
-    
-    labelAttributeStyle1 = @{
-                           @"body":[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:20.0],
-                           @"niceNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:50.0], [Colors_Modal getUIColorForMain_5]],
-                           @"niceText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [Colors_Modal getUIColorForMain_5]],
-                           @"viewsNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0], [UIColor whiteColor]],
-                           @"viewsText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [UIColor whiteColor]],
-                       };
-}
-
 #pragma mark - Losing related
 - (void)initLoseViews {  // TODO: incomplete
     
+    self.navigationItem.title = @"NOT PUBLISHED :(";
+    
+    BOOL isEarnedBonus = YES;  // TODO: need to set the value using real results
+    NSString *earnedBonusString = @"%1.5";  // TODO: need to set from real result
+    
+    NSString *loseLabelString = @"";
+    NSString *loseWantMoreLabelString = @"";
+    if (isEarnedBonus == YES) {
+        
+        loseLabelString = [NSString stringWithFormat:@"You didn't win.\nBut you've earned a bonus for next time: <bonusOddsNumber>%@</bonusOddsNumber>", earnedBonusString];
+        loseWantMoreLabelString = @"<wantMoreLink>WANT MORE?</wantMoreLink>";
+    }
+    else {
+        
+        loseLabelString = [NSString stringWithFormat:@"So close...But no."];
+        loseWantMoreLabelString = @"<wantMoreLink>BOOST YOUR ODDS TO WIN NEXT TIME !!</wantMoreLink>";
+    }
+    [loseLabel setAttributedText:[loseLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
+    [loseWantMoreLabel setAttributedText:[loseWantMoreLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
+    
+    [loseLabel setHidden:NO];
+    
+    [UIView animateWithDuration:1.0f animations:^{
+        
+        mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
+        [[self.view viewWithTag:2001] setAlpha:0.0f];
+        [[self.view viewWithTag:2002] setAlpha:0.0f];
+        [[self.view viewWithTag:2003] setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        
+        [loseWantMoreLabel setHidden:NO];
+    }];
+    
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(showLoseViewWantMore:) userInfo:nil repeats:NO];
+}
+
+- (void)showLoseViewWantMore:(NSTimer *)timer {
+
+    [UIView animateWithDuration:1.0f animations:^{
+        
+        mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
+    } completion:^(BOOL finished) {
+        
+        [self enableCloseButton];
+    }];
+}
+
+#pragma mark - Label style related
+- (void)initLabelStyles {
+    
+    labelAttributeStyle1 = @{
+                             @"body":[UIFont fontWithName:@"HelveticaNeue" size:30.0],
+                             @"niceNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:50.0], [Colors_Modal getUIColorForMain_5]],
+                             @"niceText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [Colors_Modal getUIColorForMain_5]],
+                             @"viewsNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0], [UIColor whiteColor]],
+                             @"viewsText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [UIColor whiteColor]],
+                             
+                             @"bonusOddsNumber":@[[UIFont fontWithName:@"HelveticaNeue-Bold" size:40.0], [Colors_Modal getUIColorForContentLabel_1]],
+                             @"wantMoreLink":[WPAttributedStyleAction styledActionWithAction:^{
+                                 
+                                 // TODO: incomplete - go to invite friends screen
+                                 
+                                 NSLog(@"WANT MORE CLICKED");
+                             }],
+                             @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:40.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                            };
 }
 
 @end

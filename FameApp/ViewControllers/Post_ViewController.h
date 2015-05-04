@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
+#import "NSString+WPAttributedMarkup.h"
+#import "WPAttributedStyleAction.h"
+#import "WPHotspotLabel.h"
 #import "ZCSlotMachine.h"
 #import "L360ConfettiArea.h"
 #import "GraphView.h"
@@ -16,6 +20,8 @@
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource>
 
 @property (nonatomic) BOOL isWin;
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;
 
 @property (nonatomic, strong) IBOutlet UIView *biddingView;
 @property (nonatomic, strong) ZCSlotMachine *mySlotMachine;
@@ -31,7 +37,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *winGraphNicesLabel;
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 
-@property (nonatomic, strong) IBOutlet UIView *loseView;
+@property (nonatomic, strong) IBOutlet WPHotspotLabel *loseLabel;
+@property (nonatomic, strong) IBOutlet WPHotspotLabel *loseWantMoreLabel;
 
 @end
 

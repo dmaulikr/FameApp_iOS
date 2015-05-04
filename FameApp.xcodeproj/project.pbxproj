@@ -51,6 +51,7 @@
 		787E00FD1AD72A58000139E2 /* DataStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 787E00FC1AD72A58000139E2 /* DataStorageHelper.m */; };
 		787E01061AD7550F000139E2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 787E01051AD7550F000139E2 /* libsqlite3.dylib */; };
 		788110941ACF6C8600F13E47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788110921ACF6C8600F13E47 /* Main.storyboard */; };
+		788640481AF70521002342AD /* AppAPI_Options_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 788640471AF70521002342AD /* AppAPI_Options_Modal.m */; };
 		7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DD1ADB34E80088109C /* PostHistory.m */; };
 		7887E7E01ADB34E80088109C /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E7DE1ADB34E80088109C /* UserInfo.m */; };
 		789244DF1AEAB02D0071445C /* AppAPI_User_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 789244DE1AEAB02D0071445C /* AppAPI_User_Modal.m */; };
@@ -147,6 +148,8 @@
 		787E00FC1AD72A58000139E2 /* DataStorageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataStorageHelper.m; path = Modals/DataStorageHelper.m; sourceTree = "<group>"; };
 		787E01051AD7550F000139E2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		788110931ACF6C8600F13E47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		788640461AF70521002342AD /* AppAPI_Options_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_Options_Modal.h; path = Modals/AppAPI_Options_Modal.h; sourceTree = "<group>"; };
+		788640471AF70521002342AD /* AppAPI_Options_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_Options_Modal.m; path = Modals/AppAPI_Options_Modal.m; sourceTree = "<group>"; };
 		7887E7D71ADB2BEF0088109C /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfo.h; path = Modals/UserInfo.h; sourceTree = "<group>"; };
 		7887E7DA1ADB340B0088109C /* PostHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostHistory.h; path = Modals/PostHistory.h; sourceTree = "<group>"; };
 		7887E7DD1ADB34E80088109C /* PostHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostHistory.m; path = Modals/PostHistory.m; sourceTree = "<group>"; };
@@ -505,6 +508,15 @@
 			name = "Data Storage Helper";
 			sourceTree = "<group>";
 		};
+		788640451AF704F0002342AD /* Options Modal */ = {
+			isa = PBXGroup;
+			children = (
+				788640461AF70521002342AD /* AppAPI_Options_Modal.h */,
+				788640471AF70521002342AD /* AppAPI_Options_Modal.m */,
+			);
+			name = "Options Modal";
+			sourceTree = "<group>";
+		};
 		7887E7E11ADB34FE0088109C /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +540,7 @@
 			children = (
 				78FFF4861AF2C31F00E8C61D /* General Info Modal */,
 				78FFF4811AF2A53500E8C61D /* User Modal */,
+				788640451AF704F0002342AD /* Options Modal */,
 			);
 			name = "App API Modals";
 			sourceTree = "<group>";
@@ -828,6 +841,7 @@
 				78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */,
 				7887E7DF1ADB34E80088109C /* PostHistory.m in Sources */,
 				78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */,
+				788640481AF70521002342AD /* AppAPI_Options_Modal.m in Sources */,
 				78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */,
 				781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */,
 				78A452FC1AF693F0008DD84C /* GraphView.m in Sources */,

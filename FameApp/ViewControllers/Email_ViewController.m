@@ -48,23 +48,66 @@
     
     [emailNewTextField resignFirstResponder];
     [[self.view viewWithTag:1001] setBackgroundColor:[UIColor whiteColor]];
+    [[self.view viewWithTag:1002] setBackgroundColor:[UIColor whiteColor]];
     [saveButton setEnabled:NO];
     
-    // TODO: send to server
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
     
-    // TODO: and show popup
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    // TODO: incomplete
+    NSArray *postReqInfo = [AppAPI_Options_Modal requestContruct_ChangeEmail:emailNewTextField.text currentPassword:passwordCurrentTextField.text];
     
-    // TODO: send to server to see if everything is OK.
-    // TODO:    1. verify current password.
-    // TODO:    2. email does not already exists.
-    // TODO:    3. if all is good, save to appDelegate + DB
-    
-    // TODO: the below is when the server retuns error on input verification:
-    // TOOD: EXAMPLE:
-    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
-    [self showStatusPopup:NO message:@"Email already exists"];  // TODO:  message from server
+    NSLog(@"App API - Request: Change Email %@", postReqInfo);
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Change Email [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Options_Modal processReply_ChangeEmail:responseObject];
+               
+               // Success - changing email address
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   // update locally stored login user's email address
+                   appDelegateInst.loginUser.userEmail = emailNewTextField.text;
+                   [DataStorageHelper deleteLoginUserInfo];
+                   [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                   
+                   [self showStatusPopup:YES message:[repDict objectForKey:@"statusMsg"]];
+               }
+               // Error - changing email address
+               else {
+                   
+                   NSString *errorField = [repDict objectForKey:@"errorField"];
+                   
+                   if ([errorField isEqualToString:@"password"]) {
+                       
+                       [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   else if ([errorField isEqualToString:@"newEmail"]) {
+                       
+                       [[self.view viewWithTag:1002] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+              [self.navigationItem stopAnimating];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               [self.navigationItem stopAnimating];
+               
+               NSLog(@"App API - Reply: Change Email [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (void)initSubViews {

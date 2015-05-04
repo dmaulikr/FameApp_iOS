@@ -274,9 +274,11 @@ static const NSUInteger kMinTurn = 6;
         NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];
         NSLog(@"Done (%d). Execution Time: %f", state, executionTime);
         
-        _currentSlotResults = self.slotResults;
+//        _currentSlotResults = self.slotResults;
         
         if (state < 2) {
+            
+//            NSLog(@"%@", self.slotResults);
             
             if (_isFinalResultsSet == YES) {
                 
