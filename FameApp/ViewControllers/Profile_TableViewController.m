@@ -65,10 +65,13 @@ int dt;
         [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
     }
     [userIdLabel setText:appDelegateInst.loginUser.userId];
-    // TODO: load from ImageURL
-    // TODO: set user's 'imageURL' (with cache!! and maybe fade-in animation)
-    // TODO: make sure the image actually exists, or the app will crash.
-    // TODO: if you tap the image, you will be able to edit it.
+    
+    if ([appDelegateInst.loginUser.userImageURL isEqualToString:@""] == NO) {
+        
+        // TODO: this is sync CRAP!!
+        // TODO: instead, use async image load from URL - with AFNetworking
+        //[userImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:appDelegateInst.loginUser.userImageURL]]]];
+    }
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
@@ -369,6 +372,8 @@ int dt;
     [popup dismiss:YES];
     
     [postsTableView reloadData];
+    
+    // TODO: need to update server that the user deleted the post from local device.
 }
 
 #pragma mark - Keyboard related
@@ -380,12 +385,40 @@ int dt;
     // save User Display Name
     if (textField == userDisplayNameLabel) {
         
-        NSLog(@"%@", textField.text);
+        AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+        operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
         
-        appDelegateInst.loginUser.userDisplayName = textField.text;
+        NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_UpdateDisplayName:userDisplayNameLabel.text];
         
-        // TODO: save changed Display Name
-        // TODO:    1. save to server.
+        NSLog(@"App API - Request: Update Display Name");
+        [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   
+                   NSLog(@"App API - Reply: Update Display Name [SUCCESS]");
+                   
+                   NSDictionary *repDict = [AppAPI_Profile_Modal processReply_UpdateDisplayName:responseObject];
+                   
+                   // Success
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       appDelegateInst.loginUser.userDisplayName = userDisplayNameLabel.text;
+                       [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                   }
+                   // Failure
+                   else {
+                       
+                       // TODO: incomplete
+                   }
+                   
+               } // End of Request 'Success'
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   
+                   NSLog(@"App API - Reply: Update Display Name [FAILURE]");
+                   NSLog(@"%@", error);
+                   
+               } // End of Request 'Failure'
+         ];
     }
 }
 
@@ -400,9 +433,50 @@ int dt;
 
 -(void)didFinishPickingImage:(UIImage *)image {
     
-    // TODO: upload the new profile image to the server
-    
     [userImageView setImage:image];
+    
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSData *testData = UIImageJPEGRepresentation(image, 0.5f);
+    NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_UpdateProfileImage:[NSString stringWithFormat:@"%ld", (unsigned long)testData.length]];
+    
+    NSLog(@"App API - Request: Update Profile Image");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+         constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+         
+             [formData appendPartWithFileData:testData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
+             
+         }
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             NSLog(@"App API - Reply: Update Profile Image [SUCCESS]");
+             
+             NSDictionary *repDict = [AppAPI_Profile_Modal processReply_UpdateProfileImage:responseObject];
+             
+             // Success
+             if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                 
+                 appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
+                 [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+             }
+             // Failure
+             else {
+                 
+                 // TODO: incomplete
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+             NSLog(@"App API - Reply: Update Profile Image [FAILURE]");
+             NSLog(@"%@", error);
+             
+             // TODO: incomplete
+             
+         }
+     ];
 }
 
 -(void)yCameraControllerdidSkipped {

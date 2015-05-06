@@ -1,24 +1,24 @@
 PODS:
   - ABMenuTableViewCell (1.0.2)
-  - AFNetworking (2.5.2):
-    - AFNetworking/NSURLConnection (= 2.5.2)
-    - AFNetworking/NSURLSession (= 2.5.2)
-    - AFNetworking/Reachability (= 2.5.2)
-    - AFNetworking/Security (= 2.5.2)
-    - AFNetworking/Serialization (= 2.5.2)
-    - AFNetworking/UIKit (= 2.5.2)
-  - AFNetworking/NSURLConnection (2.5.2):
+  - AFNetworking (2.5.3):
+    - AFNetworking/NSURLConnection (= 2.5.3)
+    - AFNetworking/NSURLSession (= 2.5.3)
+    - AFNetworking/Reachability (= 2.5.3)
+    - AFNetworking/Security (= 2.5.3)
+    - AFNetworking/Serialization (= 2.5.3)
+    - AFNetworking/UIKit (= 2.5.3)
+  - AFNetworking/NSURLConnection (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.2):
+  - AFNetworking/NSURLSession (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.2)
-  - AFNetworking/Security (2.5.2)
-  - AFNetworking/Serialization (2.5.2)
-  - AFNetworking/UIKit (2.5.2):
+  - AFNetworking/Reachability (2.5.3)
+  - AFNetworking/Security (2.5.3)
+  - AFNetworking/Serialization (2.5.3)
+  - AFNetworking/UIKit (2.5.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - APAddressBook (0.1.5):
@@ -48,7 +48,7 @@ PODS:
 
 DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.2)
-  - AFNetworking (~> 2.5.2)
+  - AFNetworking (~> 2.5.3)
   - DLRadioButton (~> 1.1.1)
   - INTULocationManager (~> 3.0.1)
   - IQDropDownTextField (~> 1.0.4.1)
@@ -80,7 +80,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ABMenuTableViewCell: 9ae466fd77d467ae46963c60ad592d8af7637693
-  AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
   APAddressBook: c72fec93464d57f39966ce28c107c10253fa7d39
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52

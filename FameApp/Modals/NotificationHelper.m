@@ -12,7 +12,7 @@
 
 + (NSString *)getNotificationToken {  // TODO: incomplete
     
-    return @"";
+    return @"-1";
 }
 
 @end

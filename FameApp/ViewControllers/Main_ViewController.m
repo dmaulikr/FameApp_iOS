@@ -13,6 +13,8 @@ int dt;
 
 // TODO: left/right gestures for NICE/SKIP
 
+// TODO: need to test API calls with geo location blocked
+
 
 @interface Main_ViewController ()
 @end

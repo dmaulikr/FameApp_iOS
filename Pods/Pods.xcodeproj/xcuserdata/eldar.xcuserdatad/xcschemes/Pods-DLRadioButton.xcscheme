@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E957125F3D841CDB352C33EC"
+               BlueprintIdentifier = "D760130097CAD9F60CC31346"
                BuildableName = "libPods-DLRadioButton.a"
                BlueprintName = "Pods-DLRadioButton"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -16,11 +16,12 @@
 #import "GraphView.h"
 #import "Colors_Modal.h"
 #import "NSString+WPAttributedMarkup.h"
+#import "KKProgressTimer.h"
 
-@interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource>
+
+@interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource, KKProgressTimerDelegate>
 
 @property (nonatomic) BOOL isWin;
-
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;
 
 @property (nonatomic, strong) IBOutlet UIView *biddingView;
@@ -36,6 +37,10 @@
 @property (nonatomic, strong) IBOutlet UILabel *winGraphViewsLabel;
 @property (nonatomic, strong) IBOutlet UILabel *winGraphNicesLabel;
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
+@property (nonatomic, strong) KKProgressTimer *winTimerController;
+@property (nonatomic) CGFloat winTimerPercentCount;
+@property (nonatomic, strong) NSTimer *winTimer;
+@property (nonatomic) NSInteger winTimerFinishSeconds;
 
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseLabel;
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseWantMoreLabel;

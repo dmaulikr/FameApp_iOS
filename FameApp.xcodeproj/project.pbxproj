@@ -19,7 +19,6 @@
 		783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */; };
 		783AD11C1ADDD53200D7DC1B /* Email_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */; };
 		785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */; };
-		786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */ = {isa = PBXBuildFile; fileRef = 786534131AEFB26D00459A57 /* UIView+MWParallax.m */; };
 		7865341A1AF0024800459A57 /* Post_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 786534191AF0024800459A57 /* Post_ViewController.m */; };
 		78674CA41AD0024900EE2956 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA31AD0024900EE2956 /* AVFoundation.framework */; };
 		78674CA61AD0025900EE2956 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78674CA51AD0025900EE2956 /* ImageIO.framework */; };
@@ -65,6 +64,7 @@
 		78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1B1AE4028800CF01A1 /* SignUp_ViewController.m */; };
 		78E1CE1F1AE44F2400CF01A1 /* PreLogin_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */; };
 		78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */; };
+		78EBD94A1AF9861E007BFDCD /* AppAPI_Profile_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EBD9491AF9861E007BFDCD /* AppAPI_Profile_Modal.m */; };
 		78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF47E1AF24E6200E8C61D /* ZCSlotMachine.m */; };
 		78FFF4891AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF4881AF2C34B00E8C61D /* AppAPI_GeneralInfo_Modal.m */; };
 		78FFF48D1AF2D16F00E8C61D /* AppVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFF48C1AF2D16F00E8C61D /* AppVersionHelper.m */; };
@@ -106,9 +106,6 @@
 		783AD11B1ADDD53200D7DC1B /* Email_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Email_ViewController.m; path = ViewControllers/Email_ViewController.m; sourceTree = "<group>"; };
 		785E284F1AD3F06200A8EBEB /* Profile_TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Profile_TableViewController.h; path = ViewControllers/Profile_TableViewController.h; sourceTree = "<group>"; };
 		785E28501AD3F06200A8EBEB /* Profile_TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Profile_TableViewController.m; path = ViewControllers/Profile_TableViewController.m; sourceTree = "<group>"; };
-		786534111AEFB26D00459A57 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
-		786534121AEFB26D00459A57 /* UIView+MWParallax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MWParallax.h"; sourceTree = "<group>"; };
-		786534131AEFB26D00459A57 /* UIView+MWParallax.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MWParallax.m"; sourceTree = "<group>"; };
 		786534181AF0024800459A57 /* Post_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post_ViewController.h; path = ViewControllers/Post_ViewController.h; sourceTree = "<group>"; };
 		786534191AF0024800459A57 /* Post_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post_ViewController.m; path = ViewControllers/Post_ViewController.m; sourceTree = "<group>"; };
 		78674CA31AD0024900EE2956 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -176,6 +173,8 @@
 		78E1CE1E1AE44F2400CF01A1 /* PreLogin_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreLogin_ViewController.m; path = ViewControllers/PreLogin_ViewController.m; sourceTree = "<group>"; };
 		78E1CE211AE4572B00CF01A1 /* Login_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login_ViewController.h; path = ViewControllers/Login_ViewController.h; sourceTree = "<group>"; };
 		78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login_ViewController.m; path = ViewControllers/Login_ViewController.m; sourceTree = "<group>"; };
+		78EBD9481AF9861E007BFDCD /* AppAPI_Profile_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_Profile_Modal.h; path = Modals/AppAPI_Profile_Modal.h; sourceTree = "<group>"; };
+		78EBD9491AF9861E007BFDCD /* AppAPI_Profile_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_Profile_Modal.m; path = Modals/AppAPI_Profile_Modal.m; sourceTree = "<group>"; };
 		78F90DAE1AE70B17009A6F79 /* FameApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FameApp-Prefix.pch"; sourceTree = "<group>"; };
 		78FFF47C1AF24E6200E8C61D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		78FFF47D1AF24E6200E8C61D /* ZCSlotMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSlotMachine.h; sourceTree = "<group>"; };
@@ -377,16 +376,6 @@
 			name = Email;
 			sourceTree = "<group>";
 		};
-		786534101AEFB26D00459A57 /* UIView+MWParallax */ = {
-			isa = PBXGroup;
-			children = (
-				786534111AEFB26D00459A57 /* LICENSE.md */,
-				786534121AEFB26D00459A57 /* UIView+MWParallax.h */,
-				786534131AEFB26D00459A57 /* UIView+MWParallax.m */,
-			);
-			path = "UIView+MWParallax";
-			sourceTree = "<group>";
-		};
 		786534161AEFE5B500459A57 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,7 +399,6 @@
 			children = (
 				78A452F81AF693F0008DD84C /* DynamicGraphView */,
 				78FFF47B1AF24E6200E8C61D /* ZCSlotMachine */,
-				786534101AEFB26D00459A57 /* UIView+MWParallax */,
 				78D436F21AD81DC800B9D05A /* KKProgressTimer */,
 				78674CAA1AD0031B00EE2956 /* YCameraView */,
 			);
@@ -540,6 +528,7 @@
 			children = (
 				78FFF4861AF2C31F00E8C61D /* General Info Modal */,
 				78FFF4811AF2A53500E8C61D /* User Modal */,
+				78EBD9471AF985E7007BFDCD /* Profile Modal */,
 				788640451AF704F0002342AD /* Options Modal */,
 			);
 			name = "App API Modals";
@@ -609,6 +598,15 @@
 				78E1CE221AE4572B00CF01A1 /* Login_ViewController.m */,
 			);
 			name = "Log In";
+			sourceTree = "<group>";
+		};
+		78EBD9471AF985E7007BFDCD /* Profile Modal */ = {
+			isa = PBXGroup;
+			children = (
+				78EBD9481AF9861E007BFDCD /* AppAPI_Profile_Modal.h */,
+				78EBD9491AF9861E007BFDCD /* AppAPI_Profile_Modal.m */,
+			);
+			name = "Profile Modal";
 			sourceTree = "<group>";
 		};
 		78FFF47B1AF24E6200E8C61D /* ZCSlotMachine */ = {
@@ -830,6 +828,7 @@
 				78D436F51AD81DC800B9D05A /* KKProgressTimer.m in Sources */,
 				787C1A921ACDD1D50072EF03 /* Main_ViewController.m in Sources */,
 				78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */,
+				78EBD94A1AF9861E007BFDCD /* AppAPI_Profile_Modal.m in Sources */,
 				787E00FD1AD72A58000139E2 /* DataStorageHelper.m in Sources */,
 				787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */,
 				7804E4731AD1C94C00A611C2 /* UIHelper.m in Sources */,
@@ -845,7 +844,6 @@
 				78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */,
 				781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */,
 				78A452FC1AF693F0008DD84C /* GraphView.m in Sources */,
-				786534151AEFB26D00459A57 /* UIView+MWParallax.m in Sources */,
 				785E28511AD3F06200A8EBEB /* Profile_TableViewController.m in Sources */,
 				780BFCBA1AC87F7B009E4DC9 /* AppDelegate.m in Sources */,
 				787E00F91AD719CA000139E2 /* ImageStorageHelper.m in Sources */,

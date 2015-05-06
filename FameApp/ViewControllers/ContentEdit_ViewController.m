@@ -132,8 +132,14 @@ int dt;
     // otherwise the app will crash
     [[self view] endEditing:YES];
     
-    UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
-    [self presentViewController:myViewController animated:YES completion:nil];
+//    UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+//    [self presentViewController:myViewController animated:YES completion:nil];
+    
+    // TODO: incomplete
+    
+    
+    
+    
     
 //    // save image
 //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{

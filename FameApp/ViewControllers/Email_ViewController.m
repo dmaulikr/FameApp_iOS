@@ -72,7 +72,6 @@
                    
                    // update locally stored login user's email address
                    appDelegateInst.loginUser.userEmail = emailNewTextField.text;
-                   [DataStorageHelper deleteLoginUserInfo];
                    [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                    
                    [self showStatusPopup:YES message:[repDict objectForKey:@"statusMsg"]];

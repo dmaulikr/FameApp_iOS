@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFNetworking.h"
+#import "AppAPI_Profile_Modal.h"
 #import "YCameraViewController.h"
 #import "ABMenuTableViewCell.h"
 #import "NSString+WPAttributedMarkup.h"

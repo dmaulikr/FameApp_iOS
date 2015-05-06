@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+#import "AFNetworking.h"
 #import "IQLabelView.h"
 #import "DeviceTypeHelper.h"
 #import "ImageStorageHelper.h"

@@ -97,7 +97,7 @@
         [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   NSLog(@"App API - Reply: LogIn Verify [SUCCESS]");
+                   NSLog(@"App API - Reply: LogIn Verify [SUCCESS] %@", responseObject);
                    
                    NSDictionary *repDict = [AppAPI_User_Modal processReply_LogInVerify:responseObject];
                    
@@ -135,22 +135,6 @@
          ];
     }
 }
-
-//- (void)initParallax {
-//    
-//    // parallax for iPhone4 (not iPhone4s!!)
-//    if ([DeviceTypeHelper isIPHONE4] == YES) {
-//        
-//        [self.view viewWithTag:2000].iOS6ParallaxIntensity = 17+2;
-//        [self.view viewWithTag:2001].iOS6ParallaxIntensity = 19+2;
-//        [self.view viewWithTag:2002].iOS6ParallaxIntensity = 15+2;
-//    }
-//    // other devices
-//    else {
-//        
-//        // TODO: incomplete
-//    }
-//}
 
 @end
 

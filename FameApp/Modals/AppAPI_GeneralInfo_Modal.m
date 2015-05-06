@@ -8,6 +8,9 @@
 
 #import "AppAPI_GeneralInfo_Modal.h"
 
+// TODO: need to find a way to replace all NSNull CRAP with @""
+// TODO: NSNull is not the same as nil and it will CRASH the app !!!
+
 @implementation AppAPI_GeneralInfo_Modal
 
 #pragma mark - General Request Info Dict: Full

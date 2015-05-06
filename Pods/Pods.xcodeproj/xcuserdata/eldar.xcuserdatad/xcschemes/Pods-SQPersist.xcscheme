@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5D2CCFDD7BF3D5E189BF26CA"
+               BlueprintIdentifier = "C7B4DF2A5095D7B41D3B947F"
                BuildableName = "libPods-SQPersist.a"
                BlueprintName = "Pods-SQPersist"
                ReferencedContainer = "container:Pods.xcodeproj">

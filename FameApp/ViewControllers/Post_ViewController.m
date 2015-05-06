@@ -13,11 +13,11 @@
     // TODO: DEBUG - REMOVE
     float testPoint;
     int testCount;
+    NSTimer *test2Timer;
 }
 @end
 
 
-// TODO: need to add timer for win.
 // TODO: for both lose & win: save the image with the meta data in the local DB.
 // TODO: update server on bonus earned ? (or the server already knows???)
 
@@ -32,6 +32,7 @@
 @synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel;
 @synthesize loseLabel, loseWantMoreLabel;
 @synthesize labelAttributeStyle1;
+@synthesize winTimer, winTimerController, winTimerPercentCount, winTimerFinishSeconds;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -58,6 +59,7 @@
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
     self.navigationItem.title = @"POSTING YOUR FAME...";
     
+    [self setStateForCloseButton:NO];
     [self initLabelStyles];
     [self initSubViews];
 }
@@ -69,16 +71,22 @@
     [self startSlotMachine];
 }
 
-- (void)enableCloseButton {
+- (void)setStateForCloseButton:(BOOL)isVisible {
     
-    [closeButton setEnabled:YES];
-    // TODO: not the best solution - it's better if the button is not seen at all, until it's time to use it.
-    // TODO: http://stackoverflow.com/questions/10021748/how-do-i-show-hide-a-uibarbuttonitem
+    if (isVisible) {
+        
+        [self.navigationItem setLeftBarButtonItems:@[closeButton] animated:YES];
+    }
+    else {
+        
+        [self.navigationItem setLeftBarButtonItems:nil animated:NO];
+    }
 }
 
 - (IBAction)closeButtonPressed:(id)sender {
     
-    // TODO: incomplete - go to MainNav
+    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
+    [self presentViewController:myNavigationController animated:YES completion:nil];
 }
 
 - (void)initSubViews {
@@ -130,9 +138,9 @@
      
      [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
                                    [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:2],
-                                   [NSNumber numberWithInteger:3],
-                                   [NSNumber numberWithInteger:1],
+                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:0],
+                                   [NSNumber numberWithInteger:0],
                                    nil]];
  }
 
@@ -155,7 +163,7 @@
     
     if (slotMachine.isReallyDone == YES) {
         
-        isWin = YES;  // TODO: DEBUG - REMOVE
+        isWin = NO;  // TODO: DEBUG - REMOVE
         
         if (isWin) {
             
@@ -193,16 +201,18 @@
     
     [self showConfetti];
     
-    // TODO: set winHeaderLabel
+    // TODO: should the winHeaderLabel contain changing custom messages???
+    
     // TODO: set winImageView
-    // TODO: init the counters: nice & views
     
     [self initGraphView];
+    [self initTimerView];
+    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - should use real 'finishSeconds'
     
     // TODO: DEBUG - REMOVE
     testPoint = 0;
     testCount = 0;
-    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(test2:) userInfo:nil repeats:YES];  // TODO: DEBUG
+    test2Timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(test2:) userInfo:nil repeats:YES];  // TODO: DEBUG
     
     [winView setAlpha:0.0f];
     [winView setHidden:NO];
@@ -250,13 +260,13 @@
 - (void)initGraphView {
     
     CGRect aFrame = winImageView.frame;
-    aFrame.size.width = 20;
-    aFrame.size.height = 20;
+    aFrame.size.width = 15;
+    aFrame.size.height = 15;
     aFrame.origin.y += winImageView.frame.size.height - aFrame.size.height;
     
     winGraphView = [[GraphView alloc]initWithFrame:aFrame];
     [winGraphView setBackgroundColor:[UIColor clearColor]];
-    [winGraphView setSpacing:20];
+    [winGraphView setSpacing:15];
     [winGraphView setFill:NO];
     [winGraphView setStrokeColor:[UIColor whiteColor]];
     [winGraphView setZeroLineStrokeColor:[UIColor clearColor]];
@@ -272,7 +282,7 @@
     testPoint += (arc4random() % 2) == 0 ? 0 : arc4random() % 10000;
     testCount++;
     
-    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/11) updateCount:testCount];
+    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/13) updateCount:testCount];
 }
 
 - (void)updateWinningGraphAndLabels:(int)viewsCount niceCount:(int)niceCount updateCount:(int)updateCount {
@@ -282,11 +292,11 @@
     [winGraphView setNumberOfPointsInGraph:updateCount];
     CGRect aFrame = winGraphView.frame;
     if (aFrame.size.width < (winImageView.frame.size.width/1.2)) {
-        aFrame.size.width += 20;
+        aFrame.size.width += 15;
     }
     if (aFrame.size.height < (winImageView.frame.size.height/1.2)) {
-        aFrame.size.height += 20;
-        aFrame.origin.y -= 20;
+        aFrame.size.height += 15;
+        aFrame.origin.y -= 15;
     }
     winGraphView.frame = aFrame;
     
@@ -296,6 +306,75 @@
     
     NSString *viewsLabelString = [NSString stringWithFormat:@"<viewsText>seen by</viewsText> <viewsNumber>%d</viewsNumber>", viewsCount];
     [winGraphViewsLabel setAttributedText:[viewsLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
+}
+
+- (void)showWinFinalScore {
+    
+    [UIView animateWithDuration:1.0f animations:^{
+        
+        //mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
+        
+        winGraphNicesLabel.frame = CGRectOffset(winGraphNicesLabel.frame, 0, winGraphNicesLabel.frame.size.height);
+        winGraphViewsLabel.frame = CGRectOffset(winGraphViewsLabel.frame, 0, -winGraphViewsLabel.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+        [loseWantMoreLabel setHidden:NO];
+    }];
+}
+
+#pragma mark - Win Timer related
+- (void)initTimerView {
+    
+    CGRect aFrame = CGRectMake(winImageView.frame.origin.x + winImageView.frame.size.width - 50,
+                               winImageView.frame.origin.y + 15, 35, 35);
+    winTimerController = [[KKProgressTimer alloc] initWithFrame:aFrame];
+    [winView addSubview:winTimerController];
+    winTimerController.delegate = self;
+}
+
+- (void)startTimer:(NSInteger)startSeconds finishSeconds:(NSInteger)finishSeconds {
+    
+    if (winTimer != nil) {
+        [winTimer invalidate];
+    }
+    winTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(timerInverval:) userInfo:nil repeats:YES];
+    winTimerFinishSeconds = finishSeconds;
+    winTimerPercentCount = startSeconds;
+    [winTimerController startWithBlock:^CGFloat {
+        
+        return winTimerPercentCount / 100;
+    }];
+}
+
+- (void)timerInverval:(NSTimer *)aTimer {
+    
+    winTimerPercentCount += 100/(CGFloat)winTimerFinishSeconds/10;
+    
+    if (winTimerPercentCount >= 100) {
+        [winTimer invalidate];
+        winTimer = nil;
+    }
+}
+
+- (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    
+    if (percentage >= 1) {
+        
+        [progressTimer stop];
+    }
+}
+
+- (void)didStopProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    
+    NSLog(@"TIMER DONE.");
+    
+    [test2Timer invalidate];// TODO: DEBUG - REMOVE
+    test2Timer = nil;  // TODO: DEBUG - REMOVE
+    
+    // TODO: incomplete
+    
+    [self showWinFinalScore];
 }
 
 #pragma mark - Losing related
@@ -344,7 +423,7 @@
         mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
     } completion:^(BOOL finished) {
         
-        [self enableCloseButton];
+        [self setStateForCloseButton:YES];
     }];
 }
 
@@ -358,12 +437,11 @@
                              @"viewsNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0], [UIColor whiteColor]],
                              @"viewsText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [UIColor whiteColor]],
                              
-                             @"bonusOddsNumber":@[[UIFont fontWithName:@"HelveticaNeue-Bold" size:40.0], [Colors_Modal getUIColorForContentLabel_1]],
+                             @"bonusOddsNumber":@[[UIFont fontWithName:@"HelveticaNeue-Bold" size:50.0], [Colors_Modal getUIColorForContentLabel_1]],
                              @"wantMoreLink":[WPAttributedStyleAction styledActionWithAction:^{
                                  
-                                 // TODO: incomplete - go to invite friends screen
-                                 
-                                 NSLog(@"WANT MORE CLICKED");
+                                 UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
+                                 [self.navigationController pushViewController:myViewController animated:YES];
                              }],
                              @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:40.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
                             };

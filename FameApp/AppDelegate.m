@@ -24,7 +24,7 @@
     // Override point for customization after application launch.
     
     appAPIBaseURL = @"http://54.171.157.215:8080/FameApp/api/";   // TODO: change IP to domain
-    appAPIBaseUploaderURL = @"";   // TODO: change IP to domain
+    appAPIBaseUploaderURL = @"http://54.171.157.215:8080/Uploader/api/";   // TODO: change IP to domain
     
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
                 @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use REAL path
@@ -42,19 +42,6 @@
     
     // connect to DB
     [DataStorageHelper setupDB];
-    
-    // TODO: collect login UserInfo
-    // TODO:
-    // TODO: DEBUG
-    loginUser = [[UserInfo alloc] init];
-    loginUser.userId = @"@number1";
-    loginUser.userDisplayName = @"Number1";
-    loginUser.userImageURL = @"http://";
-    loginUser.userEmail = @"eldare@gmail.com";
-    loginUser.userToken = @"token123";
-    [DataStorageHelper setLoginUserInfo:loginUser];
-    
-    // TODO: set 'isAfterLogin' accordingly
     
     return YES;
 }
