@@ -19,5 +19,9 @@
 + (NSArray *) requestContruct_PostInfo:(NSString *)imageURL timer:(int)timer;
 + (NSDictionary *) processReply_PostInfo:(NSDictionary *)responseObject;
 
+#pragma mark - Post Status
++ (NSArray *) requestContruct_PostStatus:(NSString *)postId;
++ (NSDictionary *) processReply_PostStatus:(NSDictionary *)responseObject;
+
 @end
 

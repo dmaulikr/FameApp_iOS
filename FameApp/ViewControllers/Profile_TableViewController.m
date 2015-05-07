@@ -365,15 +365,85 @@ int dt;
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_DELETE);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
     
-    [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
-    [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
-    [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
+    // tell server the user deleted the post from the local device
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_DeletedPostHistory:aPost.postId];
+    
+    NSLog(@"App API - Request: Deleted Post History");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Deleted Post History [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Profile_Modal processReply_DeletedPostHistory:responseObject];
+               
+               // Success
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
+                   [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
+                   [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
+                   
+                   [popup dismiss:YES];
+                   
+                   [postsTableView reloadData];
+                   
+                   [self showStatusPopup:YES message:@"Post is gone forever."];
+               }
+               // Failure
+               else {
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Deleted Post History [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
+     ];
+}
+
+#pragma mark - Status Popup related
+- (void)showStatusPopup:(BOOL)status message:(NSString *)message {
+    
+    // Generate content view to present
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    popupView.backgroundColor = (status) ? [Colors_Modal getUIColorForMain_5] : [Colors_Modal getUIColorForMain_4];
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width-20, 35)];
+    label1.text = message;
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.textColor = [UIColor whiteColor];
+    label1.font = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
+    label1.numberOfLines = 2;
+    [popupView addSubview:label1];
+    
+    // Show in popup
+    KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutBottom);
+    
+    popup = [KLCPopup popupWithContentView:popupView
+                                  showType:(KLCPopupShowType)KLCPopupShowTypeSlideInFromBottom
+                               dismissType:(KLCPopupDismissType)KLCPopupDismissTypeSlideOutToBottom
+                                  maskType:(KLCPopupMaskType)KLCPopupMaskTypeNone
+                  dismissOnBackgroundTouch:NO
+                     dismissOnContentTouch:NO];
+    
+    [popup showWithLayout:layout];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
+}
+
+- (void)dismissStatusPopup:(NSTimer *)aTimer {
     
     [popup dismiss:YES];
-    
-    [postsTableView reloadData];
-    
-    // TODO: need to update server that the user deleted the post from local device.
 }
 
 #pragma mark - Keyboard related
@@ -404,11 +474,13 @@ int dt;
                        
                        appDelegateInst.loginUser.userDisplayName = userDisplayNameLabel.text;
                        [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                       
+                       [self showStatusPopup:YES message:@"Display name updated."];
                    }
                    // Failure
                    else {
                        
-                       // TODO: incomplete
+                       [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
                    }
                    
                } // End of Request 'Success'
@@ -416,6 +488,8 @@ int dt;
                    
                    NSLog(@"App API - Reply: Update Display Name [FAILURE]");
                    NSLog(@"%@", error);
+                   
+                   [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
                    
                } // End of Request 'Failure'
          ];
@@ -460,11 +534,13 @@ int dt;
                  
                  appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
                  [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                 
+                 [self showStatusPopup:YES message:@"Profile image updated."];
              }
              // Failure
              else {
                  
-                 // TODO: incomplete
+                 [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
              }
              
          }
@@ -473,8 +549,7 @@ int dt;
              NSLog(@"App API - Reply: Update Profile Image [FAILURE]");
              NSLog(@"%@", error);
              
-             // TODO: incomplete
-             
+             [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
          }
      ];
 }

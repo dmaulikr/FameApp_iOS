@@ -18,21 +18,26 @@
 #import "NSString+WPAttributedMarkup.h"
 #import "KKProgressTimer.h"
 #import "PostHistory.h"
+#import "AFNetworking.h"
+#import "AppAPI_Post_Modal.h"
 
 
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource, KKProgressTimerDelegate>
 
+@property (nonatomic, readwrite, copy) UIImage *contentImage;
 @property (nonatomic, readwrite, copy) PostHistory *currentPost;
 
 @property (nonatomic) BOOL isWin;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;
 
+@property (nonatomic, strong) NSTimer *sampleTimer_postStatus;
 @property (nonatomic, strong) IBOutlet UIView *biddingView;
 @property (nonatomic, strong) ZCSlotMachine *mySlotMachine;
 @property (nonatomic, strong) NSArray *slotIcons;
 @property (nonatomic, strong) IBOutlet UILabel *winningOddsLabel;
 @property (nonatomic, strong) IBOutlet UILabel *bonusOddsLabel;
 
+@property (nonatomic) BOOL isBeingPublished;
 @property (nonatomic, strong) IBOutlet UIView *winView;
 @property (nonatomic, strong) IBOutlet UILabel *winHeaderLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *winImageView;
@@ -44,6 +49,7 @@
 @property (nonatomic) CGFloat winTimerPercentCount;
 @property (nonatomic, strong) NSTimer *winTimer;
 @property (nonatomic) NSInteger winTimerFinishSeconds;
+@property (nonatomic) int sampleCount;
 
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseLabel;
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseWantMoreLabel;

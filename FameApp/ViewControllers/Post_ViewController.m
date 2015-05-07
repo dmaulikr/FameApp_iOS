@@ -8,17 +8,11 @@
 
 #import "Post_ViewController.h"
 
-@interface Post_ViewController () {
-    
-    // TODO: DEBUG - REMOVE
-    float testPoint;
-    int testCount;
-    NSTimer *test2Timer;
-}
+const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
+
+@interface Post_ViewController ()
 @end
 
-
-// TODO: for both lose & win: save the image with the meta data in the local DB.
 
 // TODO: update server on bonus earned ? (or the server already knows???)
 
@@ -29,16 +23,19 @@
 
 @implementation Post_ViewController
 
-@synthesize currentPost;  // TODO: need to use - update the fields: niceCount, viewsCount, publish_status  (saving image locally - part 3/3)
+@synthesize contentImage;
+@synthesize currentPost;
 @synthesize isWin;
 @synthesize closeButton;
+@synthesize sampleTimer_postStatus;
 @synthesize biddingView, winView;
 @synthesize mySlotMachine, slotIcons;
+@synthesize isBeingPublished;
 @synthesize winningOddsLabel, bonusOddsLabel;  // TODO: need to use
 @synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel;
 @synthesize loseLabel, loseWantMoreLabel;
 @synthesize labelAttributeStyle1;
-@synthesize winTimer, winTimerController, winTimerPercentCount, winTimerFinishSeconds;
+@synthesize winTimer, winTimerController, winTimerPercentCount, winTimerFinishSeconds, sampleCount;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -54,11 +51,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -68,6 +60,11 @@
     [self setStateForCloseButton:NO];
     [self initLabelStyles];
     [self initSubViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -134,20 +131,138 @@
     
     [biddingView addSubview:mySlotMachine];
     
-    
-    // TODO: DEBUG - REMOVE
-    [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(test:) userInfo:nil repeats:NO];  // TODO: DEBUG
+    // Sample for post status
+    sampleCount = 0;
+    sampleTimer_postStatus = [NSTimer scheduledTimerWithTimeInterval:POST_STATUS__SAMPLE_INTERVAL_SECONDS target:self selector:@selector(samplePostStatus:) userInfo:nil repeats:YES];
 }
 
-// TOOD: DEBUG - REMOVE
-- (void)test:(NSTimer *)timer {
-     
-    [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
-                                   [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
-                                   [NSNumber numberWithInteger:0],
-                                   nil]];
+- (void)samplePostStatus:(NSTimer *)timer {
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostStatus:currentPost.postId];
+    
+    NSLog(@"App API - Request: Post Status");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Post Status [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostStatus:responseObject];
+               
+               // Success
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   // LIMBO: waiting
+                   if ([[repDict objectForKey:@"postStatus"] intValue] == 0) {
+                       
+                       // do nothing for now
+                   }
+                   // WIN: published. WEEEE!!
+                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 2) {
+                       
+                       if (isBeingPublished == NO) {
+                           
+                           isWin = YES;
+                           isBeingPublished = YES;
+                           
+                           // set slotmachine to win
+                           [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+                                                           [NSNumber numberWithInteger:0],
+                                                           [NSNumber numberWithInteger:0],
+                                                           [NSNumber numberWithInteger:0],
+                                                           [NSNumber numberWithInteger:0],
+                                                           nil]];
+                           
+                           currentPost.isPublished = true;
+                       }
+                       
+                       currentPost.countViews = [[repDict objectForKey:@"totalViewsCount"] intValue];
+                       currentPost.countNices = [[repDict objectForKey:@"totalNiceCount"] intValue];
+                       
+                       [self updateWinningGraphAndLabels:currentPost.countViews niceCount:currentPost.countNices updateCount:sampleCount++];
+                   }
+                   // LOSE: will not be published
+                   else {
+                       
+                       isWin = NO;
+                       
+                       [sampleTimer_postStatus invalidate];
+                       sampleTimer_postStatus = nil;
+                       
+                       // set slotmachine to lose
+                       [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+                                                       [NSNumber numberWithInteger:0],  // TODO: incomplete - lose values are to be set by the server
+                                                       [NSNumber numberWithInteger:0],
+                                                       [NSNumber numberWithInteger:0],
+                                                       [NSNumber numberWithInteger:0],
+                                                       nil]];
+                       
+                       currentPost.isPublished = false;
+                       currentPost.countViews = 0;
+                       currentPost.countNices = 0;
+                       
+                       // saving image locally - part 3/3 (for lose)
+                       [DataStorageHelper addPostHistory:currentPost];
+                   }
+               }
+               // Failure
+               else {
+                   
+                   // for error, make it look like the user lost
+                   isWin = NO;
+                   
+                   [sampleTimer_postStatus invalidate];
+                   sampleTimer_postStatus = nil;
+                   
+                   // set slotmachine to win
+                   [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+                                                   [NSNumber numberWithInteger:3],
+                                                   [NSNumber numberWithInteger:3],
+                                                   [NSNumber numberWithInteger:3],
+                                                   [NSNumber numberWithInteger:3],
+                                                   nil]];
+                   // TODO: for lose, slotmachine values are set by the server
+                   
+                   currentPost.isPublished = false;
+                   currentPost.countViews = 0;
+                   currentPost.countNices = 0;
+                   
+                   // saving image locally - part 3/3 (for lose)
+                   [DataStorageHelper addPostHistory:currentPost];
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Post Status [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // for error, make it look like the user lost
+               isWin = NO;
+               
+               [sampleTimer_postStatus invalidate];
+               sampleTimer_postStatus = nil;
+               
+               // set slotmachine to win
+               [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+                                               [NSNumber numberWithInteger:3],
+                                               [NSNumber numberWithInteger:3],
+                                               [NSNumber numberWithInteger:3],
+                                               [NSNumber numberWithInteger:3],
+                                               nil]];
+               
+               currentPost.isPublished = false;
+               currentPost.countViews = 0;
+               currentPost.countNices = 0;
+               
+               // saving image locally - part 3/3 (for lose)
+               [DataStorageHelper addPostHistory:currentPost];
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (void)startSlotMachine {
@@ -168,8 +283,6 @@
 - (void)slotMachineDidEndSliding:(ZCSlotMachine *)slotMachine {
     
     if (slotMachine.isReallyDone == YES) {
-        
-        isWin = NO;  // TODO: DEBUG - REMOVE
         
         if (isWin) {
             
@@ -203,22 +316,17 @@
 }
 
 #pragma mark - Winning related
-- (void)initWinViews {  // TODO: incomplete
+- (void)initWinViews {
     
     [self showConfetti];
     
     // TODO: should the winHeaderLabel contain changing custom messages???
     
-    // TODO: set winImageView
+    [winImageView setImage:contentImage];
     
     [self initGraphView];
     [self initTimerView];
-    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - should use real 'finishSeconds'
-    
-    // TODO: DEBUG - REMOVE
-    testPoint = 0;
-    testCount = 0;
-    test2Timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(test2:) userInfo:nil repeats:YES];  // TODO: DEBUG
+    [self startTimer:0 finishSeconds:currentPost.timerMSec];
     
     [winView setAlpha:0.0f];
     [winView setHidden:NO];
@@ -283,14 +391,6 @@
     [winView addSubview:winGraphView];
 }
 
-- (void)test2:(NSTimer *)timer {  // TODO: DEBUG - REMOVE
-    
-    testPoint += (arc4random() % 2) == 0 ? 0 : arc4random() % 10000;
-    testCount++;
-    
-    [self updateWinningGraphAndLabels:testPoint niceCount:(testPoint/13) updateCount:testCount];
-}
-
 - (void)updateWinningGraphAndLabels:(int)viewsCount niceCount:(int)niceCount updateCount:(int)updateCount {
     
     [winGraphView setPoint:viewsCount];
@@ -318,14 +418,19 @@
     
     [UIView animateWithDuration:1.0f animations:^{
         
-        //mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
-        
         winGraphNicesLabel.frame = CGRectOffset(winGraphNicesLabel.frame, 0, winGraphNicesLabel.frame.size.height);
         winGraphViewsLabel.frame = CGRectOffset(winGraphViewsLabel.frame, 0, -winGraphViewsLabel.frame.size.height);
         
     } completion:^(BOOL finished) {
         
         [loseWantMoreLabel setHidden:NO];
+        [self setStateForCloseButton:YES];
+        
+        // TODO: do I need to get status one more time to get the FINAL SCORE?
+        
+        // TODO: Show a really cool message that the user is a fucking mega star!!!!
+        
+        // TODO: LATER - allow the user to share the score to SN.
     }];
 }
 
@@ -358,6 +463,7 @@
     winTimerPercentCount += 100/(CGFloat)winTimerFinishSeconds/10;
     
     if (winTimerPercentCount >= 100) {
+        
         [winTimer invalidate];
         winTimer = nil;
     }
@@ -375,21 +481,22 @@
     
     NSLog(@"TIMER DONE.");
     
-    [test2Timer invalidate];// TODO: DEBUG - REMOVE
-    test2Timer = nil;  // TODO: DEBUG - REMOVE
-    
-    // TODO: incomplete
+    [sampleTimer_postStatus invalidate];
+    sampleTimer_postStatus = nil;
     
     [self showWinFinalScore];
+    
+    // saving image locally - part 3/3 (for win)
+    [DataStorageHelper addPostHistory:currentPost];
 }
 
 #pragma mark - Losing related
-- (void)initLoseViews {  // TODO: incomplete
+- (void)initLoseViews {
     
     self.navigationItem.title = @"NOT PUBLISHED :(";
     
     BOOL isEarnedBonus = YES;  // TODO: need to set the value using real results
-    NSString *earnedBonusString = @"%1.5";  // TODO: need to set from real result
+    NSString *earnedBonusString = @"1.5%";  // TODO: need to set from real result
     
     NSString *loseLabelString = @"";
     NSString *loseWantMoreLabelString = @"";

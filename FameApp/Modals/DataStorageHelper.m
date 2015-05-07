@@ -87,6 +87,7 @@
         newPost.isPublished = aPost.isPublished;
         newPost.countViews = aPost.countViews;
         newPost.countNices = aPost.countNices;
+        newPost.timerMSec = aPost.timerMSec;
         
         [newPost SQPSaveEntity];
     }

@@ -21,7 +21,6 @@
 @property (nonatomic, strong) NSDictionary *webLinks;
 @property (nonatomic, strong) UserInfo *loginUser;
 @property (nonatomic, strong) CLLocation *lastLocation;
-@property (nonatomic) BOOL isAfterLogin;
 
 @end
 

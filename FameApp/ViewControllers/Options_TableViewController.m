@@ -183,7 +183,6 @@
     
     [DataStorageHelper deleteLoginUserInfo];
     appDelegateInst.loginUser = nil;
-    appDelegateInst.isAfterLogin = NO;
     
     UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PreLoginNav"];
     [self presentViewController:myNavigationController animated:YES completion:nil];

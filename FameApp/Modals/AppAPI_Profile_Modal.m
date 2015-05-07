@@ -56,5 +56,28 @@
     return responseObject;
 }
 
+#pragma mark - Deleted Post History
++ (NSArray *) requestContruct_DeletedPostHistory:(NSString *)postId {
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSURL *baseURL = [NSURL URLWithString:appDelegateInst.appAPIBaseURL];
+    NSString *reqPath = @"profile/deletedPostHistory";
+    
+    // prepare params
+    NSString *reqData_postId = postId;
+    
+    NSDictionary *parameters = [AppAPI_GeneralInfo_Modal addGeneralRequestInfoDictFull_toRequestDict:
+                                [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 reqData_postId, @"postId",
+                                 nil]];
+    
+    return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@", baseURL, reqPath], parameters, nil];
+}
+
++ (NSDictionary *) processReply_DeletedPostHistory:(NSDictionary *)responseObject {
+    
+    return responseObject;
+}
+
 @end
 

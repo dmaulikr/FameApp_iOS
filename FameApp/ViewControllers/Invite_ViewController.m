@@ -12,7 +12,7 @@
 @end
 
 
-// TODO: allow the user to share the
+// TODO: allow the user to share on their timeline on various SNs.
 
 
 @implementation Invite_ViewController
@@ -123,8 +123,8 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
     
-    // TODO: there is no way to know to whom the user actually sent the SMS
-    // TODO: it's important since we give bonus points for every user invited.
+    // NOTE: there is no way to know to whom the user actually sent the SMS
+    //       it's important since we give bonus points for every user invited.
     
     if (result == MessageComposeResultCancelled) {
         

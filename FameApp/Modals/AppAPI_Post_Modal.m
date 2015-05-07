@@ -58,5 +58,28 @@
     return responseObject;
 }
 
+#pragma mark - Post Status
++ (NSArray *) requestContruct_PostStatus:(NSString *)postId {
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSURL *baseURL = [NSURL URLWithString:appDelegateInst.appAPIBaseURL];
+    NSString *reqPath = @"submit/postStatus";
+    
+    // prepare params
+    NSString *reqData_postId = postId;
+    
+    NSDictionary *parameters = [AppAPI_GeneralInfo_Modal addGeneralRequestInfoDictFull_toRequestDict:
+                                [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 reqData_postId, @"imageUrl",
+                                 nil]];
+    
+    return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@", baseURL, reqPath], parameters, nil];
+}
+
++ (NSDictionary *) processReply_PostStatus:(NSDictionary *)responseObject {
+    
+    return responseObject;
+}
+
 @end
 

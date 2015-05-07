@@ -97,7 +97,7 @@
         [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   NSLog(@"App API - Reply: LogIn Verify [SUCCESS] %@", responseObject);
+                   NSLog(@"App API - Reply: LogIn Verify [SUCCESS]");
                    
                    NSDictionary *repDict = [AppAPI_User_Modal processReply_LogInVerify:responseObject];
                    

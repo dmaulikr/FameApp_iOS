@@ -11,6 +11,8 @@
 // TODO: need to find a way to replace all NSNull CRAP with @""
 // TODO: NSNull is not the same as nil and it will CRASH the app !!!
 
+// TODO: const NSString can be used instead of EMUM for API fields (both request & reply)
+
 @implementation AppAPI_GeneralInfo_Modal
 
 #pragma mark - General Request Info Dict: Full

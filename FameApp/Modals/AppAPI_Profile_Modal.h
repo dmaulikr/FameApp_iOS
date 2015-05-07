@@ -20,5 +20,9 @@
 + (NSArray *) requestContruct_UpdateDisplayName:(NSString *)newDisplayName;
 + (NSDictionary *) processReply_UpdateDisplayName:(NSDictionary *)responseObject;
 
+#pragma mark - Deleted Post History
++ (NSArray *) requestContruct_DeletedPostHistory:(NSString *)postId;
++ (NSDictionary *) processReply_DeletedPostHistory:(NSDictionary *)responseObject;
+
 @end
 

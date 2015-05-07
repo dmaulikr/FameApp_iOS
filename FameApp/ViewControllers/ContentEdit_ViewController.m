@@ -149,6 +149,7 @@ int dt;
             currentPost = [[PostHistory alloc] init];
             currentPost.userId = appDelegateInst.loginUser.userId;
             currentPost.contentFileName = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:appDelegateInst.loginUser.userId];
+            currentPost.timerMSec = TIMER_MILLISECONDS_DEFAULT;
             
             
             // post image
@@ -175,7 +176,7 @@ int dt;
                      if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                          
                          // post info
-                         [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:TIMER_MILLISECONDS_DEFAULT];
+                         [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:currentPost.timerMSec contentImageItself:imageToSave];
                          
                      }
                      // Failure
@@ -213,7 +214,7 @@ int dt;
     });
 }
 
-- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer {
+- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself {
         
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -238,6 +239,7 @@ int dt;
                    
                    // show next screen
                    Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+                   myViewController.contentImage = contentImageItself;
                    myViewController.currentPost = currentPost;
                    [self presentViewController:myViewController animated:YES completion:nil];
                    

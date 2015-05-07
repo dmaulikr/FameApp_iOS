@@ -17,7 +17,6 @@
 @synthesize webLinks;
 @synthesize loginUser;
 @synthesize lastLocation;
-@synthesize isAfterLogin;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
