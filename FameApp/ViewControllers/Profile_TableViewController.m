@@ -439,14 +439,14 @@ int dt;
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSData *testData = UIImageJPEGRepresentation(image, 0.5f);
-    NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_UpdateProfileImage:[NSString stringWithFormat:@"%ld", (unsigned long)testData.length]];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5f);
+    NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_UpdateProfileImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
     
     NSLog(@"App API - Request: Update Profile Image");
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
          constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
          
-             [formData appendPartWithFileData:testData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
+             [formData appendPartWithFileData:imageData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
              
          }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

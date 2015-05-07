@@ -19,11 +19,17 @@
 
 
 // TODO: for both lose & win: save the image with the meta data in the local DB.
+
 // TODO: update server on bonus earned ? (or the server already knows???)
+
+// TODO: adjust to all iPhone types
+
+// TODO: better looking screen design - more like the main screen maybe ?
 
 
 @implementation Post_ViewController
 
+@synthesize currentPost;  // TODO: need to use - update the fields: niceCount, viewsCount, publish_status  (saving image locally - part 3/3)
 @synthesize isWin;
 @synthesize closeButton;
 @synthesize biddingView, winView;
@@ -136,13 +142,13 @@
 // TOOD: DEBUG - REMOVE
 - (void)test:(NSTimer *)timer {
      
-     [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+    [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
                                    [NSNumber numberWithInteger:0],
                                    [NSNumber numberWithInteger:0],
                                    [NSNumber numberWithInteger:0],
                                    [NSNumber numberWithInteger:0],
                                    nil]];
- }
+}
 
 - (void)startSlotMachine {
     

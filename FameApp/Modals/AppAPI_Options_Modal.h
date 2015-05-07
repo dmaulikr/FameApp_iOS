@@ -16,5 +16,9 @@
 + (NSArray *) requestContruct_ChangeEmail:(NSString *)newEmail currentPassword:(NSString *)currentPassword;
 + (NSDictionary *) processReply_ChangeEmail:(NSDictionary *)responseObject;
 
+#pragma mark - Change Password
++ (NSArray *) requestContruct_ChangePassword:(NSString *)newPassword currentPassword:(NSString *)currentPassword;
++ (NSDictionary *) processReply_ChangePassword:(NSDictionary *)responseObject;
+
 @end
 

@@ -118,6 +118,7 @@
                NSLog(@"%@", error);
                
                [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               [continueButton setEnabled:YES];
                
            } // End of Request 'Failure'
      ];

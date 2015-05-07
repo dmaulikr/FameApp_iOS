@@ -145,6 +145,7 @@ int dt;
                NSLog(@"%@", error);
                
                [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               [createNewUserButton setEnabled:YES];
                
            } // End of Request 'Failure'
      ];

@@ -52,6 +52,62 @@
     [[self.view viewWithTag:1002] setBackgroundColor:[UIColor whiteColor]];
     [saveButton setEnabled:NO];
     
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Options_Modal requestContruct_ChangePassword:passwordNewTextField.text currentPassword:passwordCurrentTextField.text];
+    
+    NSLog(@"App API - Request: Change Password");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Change Password [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Options_Modal processReply_ChangeEmail:responseObject];
+               
+               // Success - changing changing password
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   [self showStatusPopup:YES message:[repDict objectForKey:@"statusMsg"]];
+               }
+               // Error - changing password
+               else {
+                   
+                   NSString *errorField = [repDict objectForKey:@"errorField"];
+                   
+                   if ([errorField isEqualToString:@"password"]) {
+                       
+                       [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   else if ([errorField isEqualToString:@"newPassword"]) {
+                       
+                       [[self.view viewWithTag:1002] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                   }
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+              [self.navigationItem stopAnimating];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               [self.navigationItem stopAnimating];
+               
+               NSLog(@"App API - Reply: Change Password [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               [saveButton setEnabled:YES];
+               
+           } // End of Request 'Failure'
+    ];
+    
+    
+    
     // TODO: send to server
     
     // TODO: and show popup

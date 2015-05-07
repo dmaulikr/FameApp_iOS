@@ -8,7 +8,7 @@
 
 #import "ContentEdit_ViewController.h"
 
-
+const int TIMER_MILLISECONDS_DEFAULT = 15000;
 int dt;
 
 
@@ -18,9 +18,11 @@ int dt;
 
 @implementation ContentEdit_ViewController
 
+@synthesize appDelegateInst;
 @synthesize image, imageView;
 @synthesize currentlyEditingLabel, labels;
 @synthesize popup;
+@synthesize currentPost;
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -36,6 +38,8 @@ int dt;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -128,52 +132,142 @@ int dt;
 #pragma mark - Save related
 - (void)saveImage {
     
+    [self.navigationItem startAnimatingAt:ANNavBarLoaderPositionRight];
+    
     // hide the keyboard,
     // otherwise the app will crash
     [[self view] endEditing:YES];
     
-//    UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
-//    [self presentViewController:myViewController animated:YES completion:nil];
+    // post to server & then save image locally
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        UIImage *imageToSave = [self visibleImage];
+        
+        if (imageToSave != nil) {
+            
+            // saving image locally - part 1/3
+            currentPost = [[PostHistory alloc] init];
+            currentPost.userId = appDelegateInst.loginUser.userId;
+            currentPost.contentFileName = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:appDelegateInst.loginUser.userId];
+            
+            
+            // post image
+            AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+            operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+            
+            NSData *imageData = UIImageJPEGRepresentation(imageToSave, 0.5f);
+            NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
+            
+            NSLog(@"App API - Request: Post Image");
+            [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+                 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                 
+                     [formData appendPartWithFileData:imageData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
+                     
+                 }
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     
+                     NSLog(@"App API - Reply: Post Image [SUCCESS]");
+                     
+                     NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostImage:responseObject];
+                     
+                     // Success
+                     if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                         
+                         // post info
+                         [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:TIMER_MILLISECONDS_DEFAULT];
+                         
+                     }
+                     // Failure
+                     else {
+                         
+                         // delete locally stored image
+                         [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+                         
+                         [self.navigationItem stopAnimating];
+                         
+                         [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+                     }
+                     
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     
+                     NSLog(@"App API - Reply: Post Image [FAILURE]");
+                     NSLog(@"%@", error);
+                     
+                     // delete locally stored image
+                     [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+                     
+                     [self.navigationItem stopAnimating];
+                     
+                     [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+                 }
+             ];
+        }
+        else {
+            
+            [self.navigationItem stopAnimating];
+            
+            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+        }
+    });
+}
+
+- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer {
+        
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    // TODO: incomplete
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostInfo:imageURL timer:timer];
     
-    
-    
-    
-    
-//    // save image
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//        
-//        UIImage *imageToSave = [self visibleImage];
-//        if (imageToSave != nil) {
-//            
-//            // TODO:
-//            // TODO: here the bidding process starts
-//            // TODO:
-//            
-//            
-//            NSString *userId = @"@number1";  // TODO: get userId
-//            NSString *imagePath = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:userId];
-//            
-//            
-//            // TODO: DEBUG - should be a global var.  -> get from AppDelegateInst
-//            // TODO:    here will be only 'userId' and 'contentFileName'
-//            PostHistory *currentPost = [[PostHistory alloc] init];
-//            currentPost.userId = userId;
-//            currentPost.contentFileName = imagePath;
-//            currentPost.isPublished = true;
-//            currentPost.countNices = 10000;
-//            currentPost.countViews = 100000;
-//            currentPost.timestamp = [[NSDate alloc] init];
-//            currentPost.postId = [NSString stringWithFormat:@"%@", [[NSDate alloc] init]]; // TODO: temp value - the real one will come from the server
-//            [DataStorageHelper addPostHistory:currentPost];
-//            
-//        }
-//        else {
-//            
-//            [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
-//        }
-//    });
+    NSLog(@"App API - Request: Post Info");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Post Info [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostInfo:responseObject];
+               
+               // Success
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   // saving image locally - part 2/3
+                   currentPost.timestamp = [[NSDate alloc] init];
+                   currentPost.postId = [repDict objectForKey:@"postId"];
+                   
+                   // show next screen
+                   Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+                   myViewController.currentPost = currentPost;
+                   [self presentViewController:myViewController animated:YES completion:nil];
+                   
+               }
+               // Failure
+               else {
+                   
+                   // delete locally stored image
+                   [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+                   
+                   [self.navigationItem stopAnimating];
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Post Info [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // delete locally stored image
+               [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+               
+               [self.navigationItem stopAnimating];
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (UIImage *)visibleImage {

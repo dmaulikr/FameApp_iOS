@@ -17,9 +17,12 @@
 #import "Colors_Modal.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "KKProgressTimer.h"
+#import "PostHistory.h"
 
 
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource, KKProgressTimerDelegate>
+
+@property (nonatomic, readwrite, copy) PostHistory *currentPost;
 
 @property (nonatomic) BOOL isWin;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;

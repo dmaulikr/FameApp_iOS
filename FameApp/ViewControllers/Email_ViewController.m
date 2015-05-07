@@ -59,7 +59,7 @@
     
     NSArray *postReqInfo = [AppAPI_Options_Modal requestContruct_ChangeEmail:emailNewTextField.text currentPassword:passwordCurrentTextField.text];
     
-    NSLog(@"App API - Request: Change Email %@", postReqInfo);
+    NSLog(@"App API - Request: Change Email");
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
@@ -104,6 +104,7 @@
                NSLog(@"%@", error);
                
                [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               [saveButton setEnabled:YES];
                
            } // End of Request 'Failure'
      ];
