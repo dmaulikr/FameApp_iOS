@@ -138,6 +138,7 @@
 		78674CC21AD0031B00EE2956 /* take-snap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take-snap@2x.png"; sourceTree = "<group>"; };
 		78674CC31AD0031B00EE2956 /* YCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCameraViewController.h; sourceTree = "<group>"; };
 		78674CC41AD0031B00EE2956 /* YCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCameraViewController.m; sourceTree = "<group>"; };
+		7873AB0A1AFB965C00C57ACD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		787C1A8D1ACDD1A70072EF03 /* ContentEdit_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentEdit_ViewController.h; path = ViewControllers/ContentEdit_ViewController.h; sourceTree = "<group>"; };
 		787C1A8E1ACDD1A70072EF03 /* ContentEdit_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContentEdit_ViewController.m; path = ViewControllers/ContentEdit_ViewController.m; sourceTree = "<group>"; };
 		787C1A901ACDD1D50072EF03 /* Main_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Main_ViewController.h; path = ViewControllers/Main_ViewController.h; sourceTree = "<group>"; };
@@ -293,6 +294,7 @@
 		780BFCB41AC87F7B009E4DC9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7873AB0A1AFB965C00C57ACD /* README.md */,
 				780BFCB51AC87F7B009E4DC9 /* Info.plist */,
 				780BFCB61AC87F7B009E4DC9 /* main.m */,
 				78F90DAE1AE70B17009A6F79 /* FameApp-Prefix.pch */,
@@ -728,6 +730,7 @@
 				TargetAttributes = {
 					780BFCB01AC87F7B009E4DC9 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 8FZCCL95R3;
 					};
 					780BFCC91AC87F7B009E4DC9 = {
 						CreatedOnToolsVersion = 6.2;
@@ -990,6 +993,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FameApp/FameApp-Prefix.pch";
 				INFOPLIST_FILE = FameApp/Info.plist;
@@ -1006,6 +1010,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FameApp/FameApp-Prefix.pch";
 				INFOPLIST_FILE = FameApp/Info.plist;

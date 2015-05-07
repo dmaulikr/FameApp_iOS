@@ -25,10 +25,6 @@ pod 'TOWebViewController', :git => 'https://github.com/TimOliver/TOWebViewContro
 pod 'L360Confetti',        :git => 'https://github.com/life360/confetti.git'
 
 
-## Non-Pods
-#pod 'YCameraView',      '~>0.1.0'
-
-
 ## Maybe later
 #pod 'DAScratchPad',                 '~> 0.4'
 #pod 'FLAnimatedImage',              '~> 1.0.8'
