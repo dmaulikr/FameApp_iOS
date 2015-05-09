@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DataStorageHelper.h"
 #import "UserInfo.h"
+#import "BiddingAndBonusInfo.h"
 #import "Colors_Modal.h"
 #import "INTULocationManager.h"
 
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) NSDictionary *webLinks;
 @property (nonatomic, strong) UserInfo *loginUser;
 @property (nonatomic, strong) CLLocation *lastLocation;
+@property (nonatomic, strong) BiddingAndBonusInfo *myBiddingAndBonusInfo;
 
 @end
 

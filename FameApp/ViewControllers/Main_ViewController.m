@@ -22,11 +22,12 @@ int dt;
 
 @implementation Main_ViewController
 
+@synthesize appDelegateInst;
 @synthesize userImageView, userDisplayName, contentView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use 'oddsBonusLabel' & 'oddsLabel' with reply from server
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
-@synthesize popup, radio1, popupStatus;
+@synthesize popup, radio1, reportMsgField, popupStatus;
 
 
 - (void)didReceiveMemoryWarning {
@@ -38,13 +39,15 @@ int dt;
     
     [super viewDidLoad];
     
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     [self initLocationService];
     
     // logo image on top of the navigation bar
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,0,40)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.clipsToBounds = NO;
-    imageView.image = [UIImage imageNamed:@"Logo"];
+    imageView.image = [UIImage imageNamed:@"TextLogo_Black"];
     self.navigationItem.titleView = imageView;
 }
 
@@ -69,13 +72,25 @@ int dt;
     [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self stopTimer];
+}
+
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
+    
+    [self initBiddingAndBonusInfoViews];
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:2000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
     [UIHelper setRoundedCornersCircleToView:userImageView];
+    [((UILabel *)[self.view viewWithTag:3001]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
+    [((UILabel *)[self.view viewWithTag:3002]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
+    [((UILabel *)[self.view viewWithTag:3003]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     
     [niceButton setBackgroundColor:[Colors_Modal getUIColorForMain_5]];
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
@@ -198,13 +213,19 @@ int dt;
     }];
 }
 
+- (void)stopTimer {
+    
+    [timer invalidate];
+    timer = nil;
+}
+
 - (void)timerInverval:(NSTimer *)aTimer {
     
     timerPercentCount += 100/(CGFloat)timerFinishSeconds/10;
     
     if (timerPercentCount >= 100) {
-        [timer invalidate];
-        timer = nil;
+        
+        [self stopTimer];
     }
     else if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
         
@@ -229,9 +250,101 @@ int dt;
     
     [self setSkipButtonStatus:NO];
     [self nextContent];
+    [self getBiddingInfo];
 }
 
--(void)nextContent {  // TODO: incomplete
+
+#pragma mark - Channel related
+- (void)initBiddingAndBonusInfoViews {
+    
+    [[self.view viewWithTag:2001] setHidden:YES];
+    [[self.view viewWithTag:2002] setHidden:YES];
+    
+    [self getBiddingInfo];
+}
+
+- (void)getBiddingInfo {
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_BiddingInfo];
+    
+    NSLog(@"App API - Request: Channel Bidding Info");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
+               
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
+                   if (aBiddingAndBonusInfo == nil) {
+                       
+                       aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
+                   }
+                   aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
+                   aBiddingAndBonusInfo.bonusOdds = [NSString stringWithFormat:@"+%@", [repDict objectForKey:@"bonusOdds"]];
+                   
+                   [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
+                   
+                   [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+                   [[self.view viewWithTag:2002] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+                   
+                   if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
+                       
+                       [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+                       
+                       CGAffineTransform transform_oddsLabel = oddsLabel.transform;
+                       [UIView animateWithDuration:1.0 animations:^{
+                           
+                           oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
+                       }
+                       completion:^(BOOL finished) {
+                           
+                           [UIView animateWithDuration:0.8 animations:^{
+                               
+                               oddsLabel.transform = transform_oddsLabel;
+                           }];
+                       }];
+                   }
+                   
+                   if ([oddsBonusLabel.text isEqualToString:aBiddingAndBonusInfo.bonusOdds] == NO) {
+                       
+                       [oddsBonusLabel setText:appDelegateInst.myBiddingAndBonusInfo.bonusOdds];
+                       
+                       CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
+                       [UIView animateWithDuration:1.0 animations:^{
+                           
+                           oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
+                       }
+                       completion:^(BOOL finished) {
+                           
+                           [UIView animateWithDuration:0.8 animations:^{
+                               
+                               oddsBonusLabel.transform = transform_oddsBonusLabel;
+                           }];
+                       }];
+                   }
+                   
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Channel Bidding Info [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // do nothing
+               
+           } // End of Request 'Failure'
+    ];
+}
+
+- (void)nextContent {  // TODO: incomplete
     
     UIView *aView = [self.view viewWithTag:1000];
     
@@ -320,6 +433,8 @@ int dt;
 #pragma mark - 'Report This?' related
 - (IBAction)showReportThisPopup:(UIButton *)aButton {
     
+    [self stopTimer];
+    
     // Generate content view to present
     UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 370)];
     popupView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -390,9 +505,9 @@ int dt;
     
     
     // message from user
-    UITextView *msgField = [[UITextView alloc] initWithFrame:CGRectMake(30, 225, 240, 50)];
-    msgField.delegate = self;
-    [popupView addSubview:msgField];
+    reportMsgField = [[UITextView alloc] initWithFrame:CGRectMake(30, 225, 240, 50)];
+    reportMsgField.delegate = self;
+    [popupView addSubview:reportMsgField];
     
     
     // action buttons
@@ -426,6 +541,9 @@ int dt;
 
 - (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
     
+    // TODO: need to restart TIMER after the button is pressed
+    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
+    
     [popup dismiss:YES];
 }
 
@@ -433,40 +551,37 @@ int dt;
     
     [popup dismiss:YES];
     
+    // TODO: need to restart TIMER after the button is pressed
+    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
     
-    // TODO: access_token
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    // TODO: DEBUG  --  NEED TO FIND HOW TO GET THE DAMN SELECTED VALUE FROM THE RADIO BUTTONS
-    NSLog(@"%ld %ld %ld, %ld", radio1.tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:0]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:1]).tag, ((DLRadioButton *)[radio1.otherButtons objectAtIndex:2]).tag);
+    NSString *postId = @"aaaaa";  // TODO: incomplete - use real value
+    NSString *reasonString = radio1.selectedButton.titleLabel.text;
+    NSString *msgFromUser = reportMsgField.text;
     
-//    if (radio1.isSelected == YES) {
-//        
-//        NSLog(@"1");
-//    }
-//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:0]).isSelected == YES) {
-//        
-//        NSLog(@"2");
-//    }
-//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:1]).isSelected == YES) {
-//        
-//        NSLog(@"3");
-//    }
-//    else if (((DLRadioButton *)[radio1.otherButtons objectAtIndex:2]).isSelected == YES) {
-//        
-//        NSLog(@"4");
-//    }
-//    else {
-//        NSLog(@"WTF?!");
-//    }
+    NSArray *postReqInfo = [AppAPI_Report_Modal requestContruct_ReportContent:postId reportReason:reasonString msg:msgFromUser];
     
-    // TODO: collect:
-    // TODO:    1. selected radio button value.
-    // TODO:    2. msg from user
-    // TODO:    3. reported content ID.
-    
-    // TODO: send to server
-    // TODO:    - once the server replies show PopupStatus:
-    [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
+    NSLog(@"App API - Request: Report Content %@", [postReqInfo objectAtIndex:1]);
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Report Content [SUCCESS] %@", responseObject);
+               
+               [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Report Content [FAILURE]");
+               NSLog(@"%@", error);
+               
+               [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
+               
+           } // End of Request 'Failure'
+    ];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -529,7 +644,6 @@ int dt;
                 // currentLocation contains the device's current location.
                 
                 // got a new location. save it.
-                AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 appDelegateInst.lastLocation = currentLocation;
             }
             else if (status == INTULocationStatusTimedOut) {

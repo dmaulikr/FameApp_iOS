@@ -9,6 +9,7 @@ pod 'IQKeyboardManager',            '~> 3.2.2'
 pod 'IQDropDownTextField',          '~> 1.0.4.1'
 pod 'NVDate',                       '~> 0.0.2'
 pod 'UINavigationItem+Loading',     '~> 1.1'
+pod 'BlocksKit', :git => 'https://github.com/zwaldowski/BlocksKit.git'
 
 pod 'IQLabelView',                  '~> 0.1.5'
 

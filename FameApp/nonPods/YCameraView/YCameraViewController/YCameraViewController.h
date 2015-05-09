@@ -6,6 +6,13 @@
 //  Copyright (c) 2014 limbasiya.nirav@gmail.com. All rights reserved.
 //
 
+
+#import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreMotion/CoreMotion.h>
+#import "Colors_Modal.h"
+#import "ContentEdit_ViewController.h"
+
 //
 //  ARC Helper
 #ifndef ah_retain
@@ -22,12 +29,6 @@
 #endif
 
 //  ARC Helper ends
-
-#import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
-#import <CoreMotion/CoreMotion.h>
-#import "Colors_Modal.h"
-#import "ContentEdit_ViewController.h"
 
 @protocol YCameraViewControllerDelegate;
 

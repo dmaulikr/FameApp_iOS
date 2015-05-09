@@ -16,9 +16,14 @@
 #import "KLCPopup.h"
 #import "DLRadioButton.h"
 #import "INTULocationManager.h"
+#import "AFNetworking.h"
+#import "AppAPI_Channel_Modal.h"
+#import "AppAPI_Report_Modal.h"
 
 
 @interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
+
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UILabel *userDisplayName;
@@ -37,6 +42,7 @@
 
 @property (nonatomic, strong) KLCPopup* popup;
 @property (nonatomic, strong) DLRadioButton *radio1;
+@property (nonatomic, strong) UITextView *reportMsgField;
 @property (nonatomic, strong) KLCPopup* popupStatus;
 
 @end

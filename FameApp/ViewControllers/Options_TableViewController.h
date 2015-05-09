@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomSegueHelper_Modal.h"
 #import <UINavigationItem+Loading.h>
 #import "AFNetworking.h"
 #import "AppVersionHelper.h"

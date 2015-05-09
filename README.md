@@ -1,5 +1,5 @@
 ![ios_project_banner.png](https://bitbucket.org/repo/a94xRK/images/3398210870-ios_project_banner.png)
-# Fame App iOS app
+# Fame App - iOS app
 
 ## Release Notes
 ### version 0.0.1

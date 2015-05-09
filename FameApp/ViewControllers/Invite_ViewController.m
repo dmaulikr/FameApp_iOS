@@ -17,6 +17,7 @@
 
 @implementation Invite_ViewController
 
+@synthesize invitedContacts;
 @synthesize infoLabel;
 @synthesize popupStatus;
 
@@ -29,6 +30,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    [CustomSegueHelper_Modal setCustomBackButton:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,12 +43,16 @@
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     self.navigationItem.title = @"INVITE";
     
+    invitedContacts = [[NSMutableArray alloc] init];
+    
     [self initSubViews];
 }
 
 - (void)initSubViews {
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
+    
+    [((UILabel *)[self.view viewWithTag:2001]) setText:@"+7.5%"];  // TODO: set bonus info from server - will set loaded on login - and stored in AppDelegate
     
     [self initInfoLabel];
 }
@@ -103,6 +110,13 @@
     
     NSArray *recipents = [[NSMutableArray alloc] initWithObjects:((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone, nil];
     
+    // TODO: BUG need to verify the name parts, phone & email actually exist before using them
+    // TODO: otherwise it will crash the app
+    [invitedContacts addObject:@[ [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName],
+                                  ((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone,
+                                  [contact.emails objectAtIndex:0]
+                                ]];
+    
     NSString *contactName = @"Hey there";
     if (contact.firstName != nil) {
         contactName = contact.firstName;
@@ -138,11 +152,44 @@
         
         NSLog(@"SMS sent");
         
-        // TODO: incomplete
-        // TODO:    1. send to server.
-        // TODO:    2. show status popup
+        AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+        operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        NSArray *postReqInfo = [AppAPI_Invite_Modal requestContruct_FriendInvited:invitedContacts];
+        
+        NSLog(@"App API - Request: Friend Invited");
+        [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   
+                   NSLog(@"App API - Reply: Friend Invited [SUCCESS]");
+                   
+                   NSDictionary *repDict = [AppAPI_Invite_Modal processReply_FriendInvited:responseObject];
+                   
+                   // Success
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       [self showStatusPopup:YES message:[repDict objectForKey:@"earnedBonusMessage"]];
+                   }
+                   // Failure
+                   else {
+                       
+                       [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+                   }
+                   
+               } // End of Request 'Success'
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   
+                   NSLog(@"App API - Reply: Friend Invited [FAILURE]");
+                   NSLog(@"%@", error);
+                   
+                   [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+                   
+               } // End of Request 'Failure'
+         ];
     }
     
+    invitedContacts = [[NSMutableArray alloc] init];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

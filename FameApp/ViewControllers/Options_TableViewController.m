@@ -28,6 +28,7 @@
     [super viewDidLoad];
     
     appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [CustomSegueHelper_Modal setCustomBackButton:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,6 +169,12 @@
                
                [self.navigationItem stopAnimating];
                
+               [DataStorageHelper deleteLoginUserInfo];
+               appDelegateInst.loginUser = nil;
+               
+               UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PreLoginNav"];
+               [self presentViewController:myNavigationController animated:YES completion:nil];
+               
            } // End of Request 'Success'
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                
@@ -180,12 +187,6 @@
                
            } // End of Request 'Failure'
      ];
-    
-    [DataStorageHelper deleteLoginUserInfo];
-    appDelegateInst.loginUser = nil;
-    
-    UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PreLoginNav"];
-    [self presentViewController:myNavigationController animated:YES completion:nil];
 }
 
 - (void)cancelLogoutButtonPressed:(UIButton *)aButton {

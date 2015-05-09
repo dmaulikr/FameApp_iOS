@@ -11,6 +11,7 @@
 #import "SQPersist.h"
 #import "UserInfo.h"
 #import "PostHistory.h"
+#import "BiddingAndBonusInfo.h"
 
 @interface DataStorageHelper : NSObject
 
@@ -18,6 +19,10 @@
 
 #pragma mark - UserInfo related
 + (UserInfo *)getLoginUserInfo;
+/*!
+ Sets/updates login user in the DB.
+ And the param in AppDelegate.
+ */
 + (void)setLoginUserInfo:(UserInfo *)aUser;
 + (void)deleteLoginUserInfo;
 
@@ -34,6 +39,14 @@
 + (NSMutableArray *)getAllPostHistory;
 + (PostHistory *)getPostHistory:(NSString *)postId;
 + (void)deletePostHistory:(NSString *)postId;
+
+#pragma mark - BiddingAndBonusInfo related
+/*!
+ Adds a BiddingAndBonusInfo, for the currently login user.
+ And also set the param in AppDelegate.
+ */
++ (void)setBiddingAndBonusInfo:(BiddingAndBonusInfo *)aBiddingBonusInfo;
++ (BiddingAndBonusInfo *)getBiddingAndBonusInfo:(NSString *)userId;
 
 @end
 

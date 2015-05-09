@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomSegueHelper_Modal.h"
 #import "AFNetworking.h"
 #import "AppAPI_Profile_Modal.h"
 #import "YCameraViewController.h"

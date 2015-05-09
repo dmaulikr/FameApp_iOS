@@ -22,38 +22,30 @@
     return [UserInfo SQPFetchOne];
 }
 
+/*!
+  Sets/updates login user in the DB.
+  And the param in AppDelegate.
+ */
 + (void)setLoginUserInfo:(UserInfo *)aUser {
     
-    UserInfo *existingUser = [DataStorageHelper getLoginUserInfo];
+    UserInfo *currentUser = [DataStorageHelper getLoginUserInfo];
     AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    // update existing user
-    if (existingUser != nil) {
+    // login user doesn't exist in DB
+    if (currentUser == nil) {
         
-        existingUser.userId = aUser.userId;
-        existingUser.userDisplayName = aUser.userDisplayName;
-        existingUser.userImageURL = aUser.userImageURL;
-        existingUser.userEmail = aUser.userEmail;
-        existingUser.userToken = aUser.userToken;
-        
-        [existingUser SQPSaveEntity];
-        
-        appDelegateInst.loginUser = existingUser;
+        currentUser = [UserInfo SQPCreateEntity];
     }
-    // insert new user
-    else {
-        
-        UserInfo *newUser = [UserInfo SQPCreateEntity];
-        newUser.userId = aUser.userId;
-        newUser.userDisplayName = aUser.userDisplayName;
-        newUser.userImageURL = aUser.userImageURL;
-        newUser.userEmail = aUser.userEmail;
-        newUser.userToken = aUser.userToken;
-        
-        [newUser SQPSaveEntity];
-        
-        appDelegateInst.loginUser = newUser;
-    }
+    
+    currentUser.userId = aUser.userId;
+    currentUser.userDisplayName = aUser.userDisplayName;
+    currentUser.userImageURL = aUser.userImageURL;
+    currentUser.userEmail = aUser.userEmail;
+    currentUser.userToken = aUser.userToken;
+    
+    [currentUser SQPSaveEntity];
+    
+    appDelegateInst.loginUser = currentUser;
 }
 
 + (void)deleteLoginUserInfo {
@@ -129,5 +121,45 @@
 }
 
 
+#pragma mark - BiddingAndBonusInfo related
+/*!
+ Adds a BiddingAndBonusInfo, for the currently login user.
+ And also set the param in AppDelegate.
+ */
++ (void)setBiddingAndBonusInfo:(BiddingAndBonusInfo *)aBiddingBonusInfo {
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UserInfo *loginUser = [DataStorageHelper getLoginUserInfo];
+    BiddingAndBonusInfo *currentBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:loginUser.userId];
+    
+    // first time entry for the currently login user
+    if (currentBiddingAndBonusInfo == nil) {
+        
+        currentBiddingAndBonusInfo = [BiddingAndBonusInfo SQPCreateEntity];
+    }
+    
+    currentBiddingAndBonusInfo.userId = loginUser.userId;
+    currentBiddingAndBonusInfo.winningOdds = aBiddingBonusInfo.winningOdds;
+    currentBiddingAndBonusInfo.bonusOdds = aBiddingBonusInfo.bonusOdds;
+    currentBiddingAndBonusInfo.bonusForFriendInvite = aBiddingBonusInfo.bonusForFriendInvite;
+    currentBiddingAndBonusInfo.bonusForShareToSN = aBiddingBonusInfo.bonusForShareToSN;
+    
+    [currentBiddingAndBonusInfo SQPSaveEntity];
+    
+    appDelegateInst.myBiddingAndBonusInfo = currentBiddingAndBonusInfo;
+}
+
++ (BiddingAndBonusInfo *)getBiddingAndBonusInfo:(NSString *)userId {
+    
+    return [BiddingAndBonusInfo SQPFetchOneWhere:[NSString stringWithFormat:@"userId = '%@'", userId]];
+}
+
 @end
+
+
+
+
+
+
+
 

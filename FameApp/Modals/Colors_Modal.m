@@ -14,14 +14,16 @@
 #pragma mark - Navigation Bar Color
 + (UIColor *) getUIColorForNavigationBar_backgroundColor {
     
-    return [[Colors_Modal colorWithHexString:@"#ff9870"] colorWithAlphaComponent:1.0f];
+    return [[Colors_Modal colorWithHexString:@"#ffd453"] colorWithAlphaComponent:1.0f]; // YELLOW
     
-//    return [[Colors_Modal colorWithHexString:@"#f09e00"] colorWithAlphaComponent:1.0f];
+//    return [[Colors_Modal colorWithHexString:@"#ff9870"] colorWithAlphaComponent:1.0f]; // ORANGE
 }
 
 + (UIColor *) getUIColorForNavigationBar_tintColor {
     
-    return [[Colors_Modal colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f];
+//    return [[Colors_Modal colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f];
+    
+    return [[Colors_Modal colorWithHexString:@"#30270a"] colorWithAlphaComponent:1.0f];
 }
 
 
@@ -114,6 +116,13 @@
     b = col & 0xFF;
     g = (col >> 8) & 0xFF;
     r = (col >> 16) & 0xFF;
+    
+//#if TARGET_IPHONE_SIMULATOR
+//    r += 12;
+//    g += 19;
+//    b += 16;
+//#endif
+    
     return [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:1.0f];
 }
 

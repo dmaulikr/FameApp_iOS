@@ -17,6 +17,7 @@
 @synthesize webLinks;
 @synthesize loginUser;
 @synthesize lastLocation;
+@synthesize myBiddingAndBonusInfo;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -35,9 +36,9 @@
     [[UINavigationBar appearance] setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     [[UINavigationBar appearance] setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                            [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                            [Colors_Modal getUIColorForNavigationBar_tintColor], NSForegroundColorAttributeName,
                                                             [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
-    [UIActivityIndicatorView appearanceWhenContainedIn:[UINavigationBar class], nil].color = [UIColor whiteColor];
+    [UIActivityIndicatorView appearanceWhenContainedIn:[UINavigationBar class], nil].color = [Colors_Modal getUIColorForNavigationBar_tintColor];
     
     // connect to DB
     [DataStorageHelper setupDB];

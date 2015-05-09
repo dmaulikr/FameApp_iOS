@@ -40,6 +40,7 @@ int dt;
     [super viewDidLoad];
     
     appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [CustomSegueHelper_Modal setCustomBackButton:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
