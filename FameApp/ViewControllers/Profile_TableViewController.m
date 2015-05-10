@@ -69,9 +69,10 @@ int dt;
     
     if ([appDelegateInst.loginUser.userImageURL isEqualToString:@""] == NO) {
         
-        // TODO: this is sync CRAP!!
-        // TODO: instead, use async image load from URL - with AFNetworking
-        //[userImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:appDelegateInst.loginUser.userImageURL]]]];
+        [[DFImageManager sharedManager] requestImageForResource:[NSURL URLWithString:appDelegateInst.loginUser.userImageURL] completion:^(UIImage *image, NSDictionary *info) {
+            
+            [userImageView setImage:image];
+        }];
     }
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];

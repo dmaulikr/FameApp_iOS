@@ -106,25 +106,6 @@
                
            } // End of Request 'Failure'
     ];
-    
-    
-    
-    // TODO: send to server
-    
-    // TODO: and show popup
-    
-    // TODO: incomplete
-    
-    
-    // TODO: send to server to see if everything is OK.
-    // TODO:    1. verify current password is good.
-    // TODO:    2. verify new password is by our standard.
-    // TODO:    3. if all is good, save to appDelegate + DB
-    
-    // TODO: the below is when the server retuns error on input verification:
-    // TOOD: EXAMPLE:
-    [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
-    [self showStatusPopup:NO message:@"Wrong Password !!"];  // TODO:  message from server
 }
 
 - (void)initSubViews {

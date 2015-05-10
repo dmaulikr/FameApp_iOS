@@ -90,7 +90,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L6a-Pc-OOs">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L6a-Pc-OOs">
                                                 <rect key="frame" x="25" y="7.5" width="67" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="28"/>
@@ -197,7 +197,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bidPostButton" destination="dMU-v2-paU" id="Jfz-mB-PRy"/>
-                        <outlet property="contentView" destination="2KQ-C7-1fJ" id="8od-K8-yet"/>
+                        <outlet property="contentImageView" destination="2KQ-C7-1fJ" id="IaM-4L-AYi"/>
+                        <outlet property="inviteFriendsButton" destination="UF8-XF-FIt" id="z3z-uQ-97N"/>
                         <outlet property="niceButton" destination="2rY-xk-Y4a" id="Ju3-TX-jqO"/>
                         <outlet property="oddsBonusLabel" destination="L6a-Pc-OOs" id="BiU-uY-H8I"/>
                         <outlet property="oddsLabel" destination="ExA-j7-x7L" id="0Rr-ZB-txJ"/>
@@ -223,7 +224,7 @@
                             <rect key="frame" x="0.0" y="64" width="375" height="416"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileImage" id="nlI-HX-HO4">
+                                <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder_ProfileImage" id="nlI-HX-HO4">
                                     <rect key="frame" x="87" y="21" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
@@ -1222,7 +1223,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ProfileImage" width="232" height="228"/>
+        <image name="Placeholder_ProfileImage" width="232" height="228"/>
         <image name="StarLogo" width="171" height="171"/>
         <image name="Tests" width="500" height="500"/>
         <image name="Tests_1_2" width="704" height="704"/>

@@ -23,9 +23,10 @@ int dt;
 @implementation Main_ViewController
 
 @synthesize appDelegateInst;
-@synthesize userImageView, userDisplayName, contentView;
+@synthesize userImageView, userDisplayName, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
-@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;  // TODO: need to use 'oddsBonusLabel' & 'oddsLabel' with reply from server
+@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
+@synthesize contentList, contentIndex, currentContent_postId;
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
 @synthesize popup, radio1, reportMsgField, popupStatus;
 
@@ -55,6 +56,8 @@ int dt;
     
     [super viewWillAppear:animated];
     
+    [self loadNextContent];
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
@@ -69,7 +72,7 @@ int dt;
     
     [super viewDidAppear:animated];
     
-    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
+    [self showNextContent:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -81,6 +84,9 @@ int dt;
 
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
+    
+    // starting point for the View on which the content info is displayed
+    [[self.view viewWithTag:1000] setAlpha:0.0f];
     
     [self initBiddingAndBonusInfoViews];
     
@@ -129,7 +135,7 @@ int dt;
     userImageView.frame = CGRectMake(20, 10, 70, 70);
     userDisplayName.frame = CGRectMake(100, 30, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(319, 67, 87, 21);
-    contentView.frame = CGRectMake(10, 87, 394, 394);
+    contentImageView.frame = CGRectMake(10, 87, 394, 394);
     niceButton.frame = CGRectMake(40, 431, 150, 40);
     skipButton.frame = CGRectMake(224, 431, 150, 40);
     [self.view viewWithTag:1002].frame = CGRectMake(238, 433, 35, 35);
@@ -146,7 +152,7 @@ int dt;
     userImageView.frame = CGRectMake(20, 10, 50, 50);
     userDisplayName.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(280, 45, 87, 21);
-    contentView.frame = CGRectMake(8, 65, 360, 360);
+    contentImageView.frame = CGRectMake(8, 65, 360, 360);
     niceButton.frame = CGRectMake(40, 378, 130, 40);
     skipButton.frame = CGRectMake(207, 378, 130, 40);
     [self.view viewWithTag:1002].frame = CGRectMake(217, 381, 35, 35);
@@ -163,7 +169,7 @@ int dt;
     userImageView.frame = CGRectMake(20, 10, 50, 50);
     userDisplayName.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 45, 87, 21);
-    contentView.frame = CGRectMake(10, 65, 300, 300);
+    contentImageView.frame = CGRectMake(10, 65, 300, 300);
     niceButton.frame = CGRectMake(20, 320, 130, 40);
     skipButton.frame = CGRectMake(170, 320, 130, 40);
     [self.view viewWithTag:1002].frame = CGRectMake(178, 323, 35, 35);
@@ -180,7 +186,7 @@ int dt;
     userImageView.frame = CGRectMake(6, 1, 30, 30);
     userDisplayName.frame = CGRectMake(44, 2, 184, 26);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 14, 87, 21);
-    contentView.frame = CGRectMake(25, 33, 270, 270);
+    contentImageView.frame = CGRectMake(25, 33, 270, 270);
     niceButton.frame = CGRectMake(29, 258, 116, 40);
     skipButton.frame = CGRectMake(174, 258, 116, 40);
     [self.view viewWithTag:1002].frame = CGRectMake(182, 261, 35, 35);
@@ -249,7 +255,7 @@ int dt;
     
     
     [self setSkipButtonStatus:NO];
-    [self nextContent];
+    [self showNextContent:NO];
     [self getBiddingInfo];
 }
 
@@ -344,26 +350,90 @@ int dt;
     ];
 }
 
-- (void)nextContent {  // TODO: incomplete
+- (void)loadNextContent {
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_GetContent];
+    
+    NSLog(@"App API - Request: Channel Get Content");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Channel Get Content [SUCCESS] %@", responseObject);  // TODO: remove the %@
+               
+               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_GetContent:responseObject];
+               
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   contentIndex = 0;
+                   contentList = [repDict objectForKey:@"biddings"];
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // do nothing
+               
+           } // End of Request 'Failure'
+    ];
+}
+
+- (void)showNextContent:(BOOL)isFirst {
+    
+    if (isFirst == NO) {
+        
+        //fade out
+        UIView *aView = [self.view viewWithTag:1000];
+        [UIView animateWithDuration:1.5f animations:^{
+            
+            [aView setAlpha:0.2f];
+        }
+        completion:^(BOOL finished) {
+            
+            [self setContentViews:YES];
+        }];
+    }
+    else {
+        
+        [self setContentViews:YES];
+    }
+}
+
+- (void)setContentViews:(BOOL)animated {  // TODO: incomplete
+    
+    NSDictionary *currentContent = [contentList objectAtIndex:contentIndex];
+    contentIndex++;
+    
+    if (contentIndex+1 == [contentList count]) {
+        
+        [self loadNextContent];
+    }
+    
+    currentContent_postId = [currentContent objectForKey:@"postId"];
+    NSString *currentContent_imageURL = [currentContent objectForKey:@"contentUrl"];
+    NSInteger currentContent_timerDuration_sec = [[currentContent objectForKey:@"timerDuration"] integerValue] / 1000;
+    NSInteger currentContent_timerStart_sec = 0;//[[currentContent objectForKey:@"timerStart"] integerValue] / 1000;  // TODO: SERVER BUG
+    NSString *currentContent_userId = [currentContent objectForKey:@"userId"];
+    NSString *currentContent_userDisplayName = [currentContent objectForKey:@"userDisplayName"];
+    NSString *currentContent_userImageURL = [currentContent objectForKey:@"userImageUrl"];
+    
+    [self setImageWithShortCache:currentContent_imageURL imageView:contentImageView];
+    [self setImageWithShortCache:currentContent_userImageURL imageView:userImageView];
+    
+    [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
+    
+    [self startTimer:currentContent_timerStart_sec finishSeconds:currentContent_timerDuration_sec];
+    
+    // TODO: need to preload the image before the need to display it
     
     UIView *aView = [self.view viewWithTag:1000];
-    
-    //fade out
-    [UIView animateWithDuration:1.5f animations:^{
-        
-        [aView setAlpha:0.2f];
-        
-    } completion:^(BOOL finished) {
-        
-        // TODO: set next content and related info:
-        // TODO:    1. content image (pre-loaded)
-        // TODO:    2. user image (pre-loaded)
-        // TODO:    3. user displayname.
-        
-        [contentView setImage:[UIImage imageNamed:@"Tests"]];  // TODO: DEBUG value
-        
-        // TODO: restart the TIMER
-        [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - example - need to use real values
+    if (animated == YES) {
         
         //fade in
         [UIView animateWithDuration:0.5f animations:^{
@@ -371,6 +441,28 @@ int dt;
             [aView setAlpha:1.0f];
             
         } completion:nil];
+    }
+    else {
+        
+        [aView setAlpha:1.0f];
+    }
+}
+
+- (void)setImageWithShortCache:(NSString *)imageURL imageView:(UIImageView *)imageView {  // TODO: make this into a helper
+    
+    DFImageRequestOptions *options = [[DFImageRequestOptions alloc] init];
+    options.expirationAge = 60;
+    
+    DFImageRequest *request = [DFImageRequest requestWithResource:[NSURL URLWithString:imageURL] targetSize:imageView.frame.size contentMode:DFImageContentModeAspectFill options:options];
+    
+    [[DFImageManager sharedManager] requestImageForRequest:request completion:^(UIImage *image, NSDictionary *info) {
+        
+        if (info != nil) {
+            
+            [imageView setImage:image];
+        }
+        
+        // TODO: need to set a placeholder
         
     }];
 }
@@ -541,8 +633,7 @@ int dt;
 
 - (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
     
-    // TODO: need to restart TIMER after the button is pressed
-    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
+    [self showNextContent:NO];
     
     [popup dismiss:YES];
 }
@@ -551,24 +642,22 @@ int dt;
     
     [popup dismiss:YES];
     
-    // TODO: need to restart TIMER after the button is pressed
-    [self startTimer:0 finishSeconds:15];  // TODO: DEBUG - REMOVE
+    [self showNextContent:NO];
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSString *postId = @"aaaaa";  // TODO: incomplete - use real value
     NSString *reasonString = radio1.selectedButton.titleLabel.text;
     NSString *msgFromUser = reportMsgField.text;
     
-    NSArray *postReqInfo = [AppAPI_Report_Modal requestContruct_ReportContent:postId reportReason:reasonString msg:msgFromUser];
+    NSArray *postReqInfo = [AppAPI_Report_Modal requestContruct_ReportContent:currentContent_postId reportReason:reasonString msg:msgFromUser];
     
-    NSLog(@"App API - Request: Report Content %@", [postReqInfo objectAtIndex:1]);
+    NSLog(@"App API - Request: Report Content");
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
-               NSLog(@"App API - Reply: Report Content [SUCCESS] %@", responseObject);
+               NSLog(@"App API - Reply: Report Content [SUCCESS]");
                
                [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
                

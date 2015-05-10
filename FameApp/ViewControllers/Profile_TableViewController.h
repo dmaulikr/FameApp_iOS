@@ -21,6 +21,7 @@
 #import "PostHistory.h"
 #import "FormattingHelper.h"
 #import "UIHelper.h"
+#import "DFImageManager.h"
 
 @interface Profile_TableViewController : UITableViewController <UITextFieldDelegate, YCameraViewControllerDelegate>
 

@@ -96,17 +96,47 @@
 #define COCOAPODS_VERSION_MINOR_BlocksKit_MessageUI 2
 #define COCOAPODS_VERSION_PATCH_BlocksKit_MessageUI 5
 
-// BlocksKit/QuickLook
-#define COCOAPODS_POD_AVAILABLE_BlocksKit_QuickLook
-#define COCOAPODS_VERSION_MAJOR_BlocksKit_QuickLook 2
-#define COCOAPODS_VERSION_MINOR_BlocksKit_QuickLook 2
-#define COCOAPODS_VERSION_PATCH_BlocksKit_QuickLook 5
-
 // BlocksKit/UIKit
 #define COCOAPODS_POD_AVAILABLE_BlocksKit_UIKit
 #define COCOAPODS_VERSION_MAJOR_BlocksKit_UIKit 2
 #define COCOAPODS_VERSION_MINOR_BlocksKit_UIKit 2
 #define COCOAPODS_VERSION_PATCH_BlocksKit_UIKit 5
+
+// DFImageManager
+#define COCOAPODS_POD_AVAILABLE_DFImageManager
+#define COCOAPODS_VERSION_MAJOR_DFImageManager 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager 1
+
+// DFImageManager/AssetsLibrary
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_AssetsLibrary
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_AssetsLibrary 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_AssetsLibrary 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_AssetsLibrary 1
+
+// DFImageManager/Core
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_Core
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_Core 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_Core 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_Core 1
+
+// DFImageManager/NSURLSession
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_NSURLSession
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_NSURLSession 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_NSURLSession 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_NSURLSession 1
+
+// DFImageManager/PhotosKit
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_PhotosKit
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_PhotosKit 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_PhotosKit 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_PhotosKit 1
+
+// DFImageManager/UI
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_UI
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_UI 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_UI 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_UI 1
 
 // DLRadioButton
 #define COCOAPODS_POD_AVAILABLE_DLRadioButton

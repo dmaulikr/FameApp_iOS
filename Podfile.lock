@@ -30,19 +30,30 @@ PODS:
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
     - BlocksKit/MessageUI
-    - BlocksKit/QuickLook
     - BlocksKit/UIKit
   - BlocksKit/Core (2.2.5)
   - BlocksKit/DynamicDelegate (2.2.5)
   - BlocksKit/MessageUI (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - BlocksKit/QuickLook (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - DFImageManager (0.3.1):
+    - DFImageManager/AssetsLibrary (= 0.3.1)
+    - DFImageManager/Core (= 0.3.1)
+    - DFImageManager/NSURLSession (= 0.3.1)
+    - DFImageManager/PhotosKit (= 0.3.1)
+    - DFImageManager/UI (= 0.3.1)
+  - DFImageManager/AssetsLibrary (0.3.1):
+    - DFImageManager/Core
+  - DFImageManager/Core (0.3.1)
+  - DFImageManager/NSURLSession (0.3.1):
+    - DFImageManager/Core
+  - DFImageManager/PhotosKit (0.3.1):
+    - DFImageManager/Core
+  - DFImageManager/UI (0.3.1):
+    - DFImageManager/Core
   - DLRadioButton (1.1.1)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
@@ -68,7 +79,8 @@ PODS:
 DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.2)
   - AFNetworking (~> 2.5.3)
-  - BlocksKit (from `https://github.com/zwaldowski/BlocksKit.git`)
+  - BlocksKit (~> 2.2.5)
+  - DFImageManager (~> 0.3.1)
   - DLRadioButton (~> 1.1.1)
   - INTULocationManager (~> 3.0.1)
   - IQDropDownTextField (~> 1.0.4.1)
@@ -85,17 +97,12 @@ DEPENDENCIES:
   - WPAttributedMarkup (~> 1.0.0)
 
 EXTERNAL SOURCES:
-  BlocksKit:
-    :git: https://github.com/zwaldowski/BlocksKit.git
   L360Confetti:
     :git: https://github.com/life360/confetti.git
   TOWebViewController:
     :git: https://github.com/TimOliver/TOWebViewController.git
 
 CHECKOUT OPTIONS:
-  BlocksKit:
-    :commit: d554229ed0b42123ea5e847868e3a60b07f74edb
-    :git: https://github.com/zwaldowski/BlocksKit.git
   L360Confetti:
     :commit: f34d6da6a2292de1dd99f48178d4b96b594624b5
     :git: https://github.com/life360/confetti.git
@@ -107,7 +114,8 @@ SPEC CHECKSUMS:
   ABMenuTableViewCell: 9ae466fd77d467ae46963c60ad592d8af7637693
   AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
   APAddressBook: c72fec93464d57f39966ce28c107c10253fa7d39
-  BlocksKit: 918117f8a8e23b82c9ef327da82849d78dd64cc3
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  DFImageManager: 2ee9701b09a96e7ab4d94f3ca1a6708027587473
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   INTULocationManager: c27483113e1bbc5952ead6417f9b39824a240ebb
