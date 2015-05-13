@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SQPersist.h"
 
-@interface UserInfo : SQPObject
+@interface UserInfo : SQPObject <NSCopying>
 
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *userDisplayName;

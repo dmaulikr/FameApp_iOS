@@ -44,7 +44,12 @@
     
     if ((imageURL == nil) || ([imageURL isEqualToString:@""])) {
         
-        // TODO: incomplete - show placeholder
+        if ((imageView != nil)
+            && (placeholderImageName != nil) && ([placeholderImageName isEqualToString:@""] == NO)) {
+            
+            [imageView setImage:[UIImage imageNamed:placeholderImageName]];
+        }
+        
         return;
     }
     

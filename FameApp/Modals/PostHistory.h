@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SQPersist.h"
 
-@interface PostHistory : SQPObject
+@interface PostHistory : SQPObject <NSCopying>
 
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) NSString *userId;
@@ -18,7 +18,7 @@
 @property (nonatomic) bool isPublished;
 @property (nonatomic) int countViews;
 @property (nonatomic) int countNices;
-@property (nonatomic) int timerMSec;
+@property (nonatomic) long timerMSec;
 
 @end
 

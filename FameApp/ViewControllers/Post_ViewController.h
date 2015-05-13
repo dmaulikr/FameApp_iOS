@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "AppDelegate.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"
 #import "WPHotspotLabel.h"
@@ -18,6 +19,7 @@
 #import "NSString+WPAttributedMarkup.h"
 #import "KKProgressTimer.h"
 #import "PostHistory.h"
+#import "FormattingHelper.h"
 #import "AFNetworking.h"
 #import "AppAPI_Post_Modal.h"
 
@@ -26,6 +28,8 @@
 
 @property (nonatomic, readwrite, copy) UIImage *contentImage;
 @property (nonatomic, readwrite, copy) PostHistory *currentPost;
+
+@property (nonatomic, strong) AppDelegate *appDelegateInst;
 
 @property (nonatomic) BOOL isWin;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;

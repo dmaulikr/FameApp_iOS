@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SQPersist.h"
 
-@interface BiddingAndBonusInfo : SQPObject
+@interface BiddingAndBonusInfo : SQPObject <NSCopying>
 
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *winningOdds;

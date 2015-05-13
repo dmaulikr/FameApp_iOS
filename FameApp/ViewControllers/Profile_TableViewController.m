@@ -14,8 +14,6 @@ const int CELL_HEIGHT__THE_VIEW = 170;
 const int CELL_HEIGHT__THE_SEPARATOR = 10;
 int dt;
 
-// TODO: a better EDIT placeholder profile image
-
 @interface Profile_TableViewController ()
 @end
 
@@ -68,13 +66,7 @@ int dt;
     }
     [userIdLabel setText:appDelegateInst.loginUser.userId];
     
-    if ([appDelegateInst.loginUser.userImageURL isEqualToString:@""] == NO) {
-        
-        [[DFImageManager sharedManager] requestImageForResource:[NSURL URLWithString:appDelegateInst.loginUser.userImageURL] completion:^(UIImage *image, NSDictionary *info) {
-            
-            [userImageView setImage:image];
-        }];
-    }
+    [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
@@ -516,7 +508,7 @@ int dt;
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.5f);
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8f);
     NSArray *postReqInfo = [AppAPI_Profile_Modal requestContruct_UpdateProfileImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
     
     NSLog(@"App API - Request: Update Profile Image");

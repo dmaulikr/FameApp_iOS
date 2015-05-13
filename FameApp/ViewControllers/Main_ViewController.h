@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
+#import "PlaceholderImageHelper.h"
 #import "UIHelper.h"
 #import "URLHelper.h"
 #import "YCameraViewController.h"

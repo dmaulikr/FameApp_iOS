@@ -15,7 +15,7 @@
     
     AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     NSURL *baseURL = [NSURL URLWithString:appDelegateInst.appAPIBaseUploaderURL];
-    NSString *reqPath = @"/upload/postImage";
+    NSString *reqPath = @"upload/postImage";
     
     // prepare params
     NSString *reqData_dataSize = imageSizeInBytes;

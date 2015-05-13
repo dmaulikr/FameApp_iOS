@@ -22,6 +22,8 @@
 #import "FormattingHelper.h"
 #import "UIHelper.h"
 #import "DFImageManager.h"
+#import "URLHelper.h"
+#import "PlaceholderImageHelper.h"
 
 @interface Profile_TableViewController : UITableViewController <UITextFieldDelegate, YCameraViewControllerDelegate>
 

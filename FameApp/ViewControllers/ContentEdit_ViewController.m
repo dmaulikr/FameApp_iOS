@@ -174,7 +174,7 @@ int dt;
             AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
             operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
             
-            NSData *imageData = UIImageJPEGRepresentation(imageToSave, 0.5f);
+            NSData *imageData = UIImageJPEGRepresentation(imageToSave, 0.8f);
             NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
             
             NSLog(@"App API - Request: Post Image");

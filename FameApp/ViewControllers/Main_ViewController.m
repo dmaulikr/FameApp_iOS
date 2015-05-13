@@ -13,11 +13,9 @@ int dt;
 
 // TODO: NOW - the nice/skip button are covering the image... this is BAD!!!
 
-// TODO: LATER - left/right gestures for NICE/SKIP
+// TODO: change the Nice button to be active/inactive like the Skip button.
 
-// TODO: need to test API calls with geo location blocked
-
-// TODO: BUG - crash after a minute on real device: iPhone4 iOS7
+// TODO: left/right gestures for NICE/SKIP
 
 
 @interface Main_ViewController ()
@@ -44,8 +42,6 @@ int dt;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    NSLog(@">>>>>>>>>\n\n\n\n\n\n\n\nWTF\n\n\n\n\n\n\n\n\n\n\n\n");  // TODO: DEBUG - REMOVE
     
     appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -564,8 +560,8 @@ int dt;
     NSInteger currentContent_timerDuration_msec = 15000; //[[currentContent objectForKey:@"timerDuration"] integerValue];  // TODO: SERVER BUG
     
     
-    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];
-    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:@""];   // TODO: need to pass the placeholder image name
+    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];  // TODO: the defualt image should be different ???
+    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]];   // TODO: need to pass the placeholder image name
     
     [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
     
@@ -654,8 +650,6 @@ int dt;
 
 #pragma mark - 'Report This?' related
 - (IBAction)showReportThisPopup:(UIButton *)aButton {
-    
-    [self stopTimer];
     
     // Generate content view to present
     UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 370)];
@@ -762,8 +756,6 @@ int dt;
 }
 
 - (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
-
-    // TODO: restore content
     
     [popup dismiss:YES];
 }
@@ -771,8 +763,6 @@ int dt;
 - (void)reportButtonPressed_reportThis:(UIButton *)aButton {
     
     [popup dismiss:YES];
-    
-    // TODO: restore content
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];

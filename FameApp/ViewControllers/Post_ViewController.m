@@ -30,13 +30,14 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 
 @synthesize contentImage;
 @synthesize currentPost;
+@synthesize appDelegateInst;
 @synthesize isWin;
 @synthesize closeButton;
 @synthesize sampleTimer_postStatus;
 @synthesize biddingView, winView;
 @synthesize mySlotMachine, slotIcons;
 @synthesize isBeingPublished;
-@synthesize winningOddsLabel, bonusOddsLabel;  // TODO: need to use
+@synthesize winningOddsLabel, bonusOddsLabel;
 @synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel;
 @synthesize loseLabel, loseWantMoreLabel;
 @synthesize labelAttributeStyle1;
@@ -56,6 +57,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     restoreNavBar_barTintColor = self.navigationController.navigationBar.barTintColor;
     restoreNavBar_tintColor = self.navigationController.navigationBar.tintColor;
@@ -126,10 +129,25 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [loseWantMoreLabel setHidden:YES];
     [loseLabel setHidden:YES];
     
-    // TODO: set the labels.
-    // TODO: hide 'bonus' view if user has none.
-    
+    [self initBiddingAndBonusInfoViews];
     [self initSlotMachine];
+}
+
+- (void)initBiddingAndBonusInfoViews {
+    
+    if (appDelegateInst.myBiddingAndBonusInfo == nil) {
+        
+        [[self.view viewWithTag:2001] setHidden:YES];
+        [[self.view viewWithTag:2002] setHidden:YES];
+    }
+    else {
+        
+        [winningOddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+        [bonusOddsLabel setText:[FormattingHelper formatLabelTextForCurrentOddBonus:appDelegateInst.myBiddingAndBonusInfo.bonusOdds]];
+        
+        [[self.view viewWithTag:2001] setHidden:[appDelegateInst.myBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+        [[self.view viewWithTag:2002] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+    }
 }
 
 #pragma mark - Slot Machine related
