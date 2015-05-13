@@ -10,6 +10,17 @@
 
 @implementation FormattingHelper
 
+#pragma mark - General Labels related
++ (NSString *)formatLabelTextForCurrentOddBonus:(NSString *)percentString {
+    
+    return [NSString stringWithFormat:@"+%@", percentString];
+}
+
++ (NSString *)formatLabelTextForBonusInfo:(NSString *)percentString {
+    
+    return [NSString stringWithFormat:@"+%@ Bonus", percentString];
+}
+
 #pragma mark - Invite related
 /*!
  @param sourceRef - <br/>

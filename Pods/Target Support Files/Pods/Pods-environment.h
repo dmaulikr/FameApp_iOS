@@ -108,6 +108,12 @@
 #define COCOAPODS_VERSION_MINOR_DFImageManager 3
 #define COCOAPODS_VERSION_PATCH_DFImageManager 1
 
+// DFImageManager/AFNetworking
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_AFNetworking 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_AFNetworking 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_AFNetworking 1
+
 // DFImageManager/AssetsLibrary
 #define COCOAPODS_POD_AVAILABLE_DFImageManager_AssetsLibrary
 #define COCOAPODS_VERSION_MAJOR_DFImageManager_AssetsLibrary 0

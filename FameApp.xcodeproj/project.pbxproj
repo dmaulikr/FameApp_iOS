@@ -49,9 +49,12 @@
 		78674CDA1AD0031B00EE2956 /* take-snap.png in Resources */ = {isa = PBXBuildFile; fileRef = 78674CC11AD0031B00EE2956 /* take-snap.png */; };
 		78674CDB1AD0031B00EE2956 /* take-snap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78674CC21AD0031B00EE2956 /* take-snap@2x.png */; };
 		78674CDC1AD0031B00EE2956 /* YCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78674CC41AD0031B00EE2956 /* YCameraViewController.m */; };
+		786CF17D1B01071400E77105 /* DKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 786CF1791B01071400E77105 /* DKQueue.m */; };
+		786CF17E1B01071400E77105 /* DKStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 786CF17B1B01071400E77105 /* DKStack.m */; };
 		7873AB0F1AFB9CE600C57ACD /* AppAPI_Invite_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 7873AB0E1AFB9CE600C57ACD /* AppAPI_Invite_Modal.m */; };
 		787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787C1A8E1ACDD1A70072EF03 /* ContentEdit_ViewController.m */; };
 		787C1A921ACDD1D50072EF03 /* Main_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787C1A911ACDD1D50072EF03 /* Main_ViewController.m */; };
+		787C6DCA1AFFB72C0033066A /* URLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 787C6DC91AFFB72C0033066A /* URLHelper.m */; };
 		787E00F91AD719CA000139E2 /* ImageStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 787E00F81AD719CA000139E2 /* ImageStorageHelper.m */; };
 		787E00FD1AD72A58000139E2 /* DataStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 787E00FC1AD72A58000139E2 /* DataStorageHelper.m */; };
 		787E01061AD7550F000139E2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 787E01051AD7550F000139E2 /* libsqlite3.dylib */; };
@@ -152,6 +155,11 @@
 		78674CC21AD0031B00EE2956 /* take-snap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take-snap@2x.png"; sourceTree = "<group>"; };
 		78674CC31AD0031B00EE2956 /* YCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCameraViewController.h; sourceTree = "<group>"; };
 		78674CC41AD0031B00EE2956 /* YCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCameraViewController.m; sourceTree = "<group>"; };
+		786CF1781B01071400E77105 /* DKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKQueue.h; sourceTree = "<group>"; };
+		786CF1791B01071400E77105 /* DKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKQueue.m; sourceTree = "<group>"; };
+		786CF17A1B01071400E77105 /* DKStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKStack.h; sourceTree = "<group>"; };
+		786CF17B1B01071400E77105 /* DKStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKStack.m; sourceTree = "<group>"; };
+		786CF17C1B01071400E77105 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7873AB0A1AFB965C00C57ACD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7873AB0D1AFB9CE600C57ACD /* AppAPI_Invite_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppAPI_Invite_Modal.h; path = Modals/AppAPI_Invite_Modal.h; sourceTree = "<group>"; };
 		7873AB0E1AFB9CE600C57ACD /* AppAPI_Invite_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppAPI_Invite_Modal.m; path = Modals/AppAPI_Invite_Modal.m; sourceTree = "<group>"; };
@@ -159,6 +167,8 @@
 		787C1A8E1ACDD1A70072EF03 /* ContentEdit_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContentEdit_ViewController.m; path = ViewControllers/ContentEdit_ViewController.m; sourceTree = "<group>"; };
 		787C1A901ACDD1D50072EF03 /* Main_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Main_ViewController.h; path = ViewControllers/Main_ViewController.h; sourceTree = "<group>"; };
 		787C1A911ACDD1D50072EF03 /* Main_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Main_ViewController.m; path = ViewControllers/Main_ViewController.m; sourceTree = "<group>"; };
+		787C6DC81AFFB72C0033066A /* URLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLHelper.h; path = Modals/URLHelper.h; sourceTree = "<group>"; };
+		787C6DC91AFFB72C0033066A /* URLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = URLHelper.m; path = Modals/URLHelper.m; sourceTree = "<group>"; };
 		787E00F71AD719CA000139E2 /* ImageStorageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageStorageHelper.h; path = Modals/ImageStorageHelper.h; sourceTree = "<group>"; };
 		787E00F81AD719CA000139E2 /* ImageStorageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageStorageHelper.m; path = Modals/ImageStorageHelper.m; sourceTree = "<group>"; };
 		787E00FB1AD72A58000139E2 /* DataStorageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataStorageHelper.h; path = Modals/DataStorageHelper.h; sourceTree = "<group>"; };
@@ -359,7 +369,8 @@
 		782B746F1AC9920B00E18F7F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				78FFF48E1AF2D28F00E8C61D /* NotificationHelper */,
+				787C6DC71AFFB70C0033066A /* URL Helper */,
+				78FFF48E1AF2D28F00E8C61D /* Notification Helper */,
 				78FFF48A1AF2D13700E8C61D /* AppVersion Helper */,
 				787E00FA1AD72A23000139E2 /* Data Storage Helper */,
 				787E00F61AD71989000139E2 /* Image Storage Helper */,
@@ -465,6 +476,7 @@
 		78674CA91AD0031B00EE2956 /* nonPods */ = {
 			isa = PBXGroup;
 			children = (
+				786CF1771B01071400E77105 /* DKStack_DKQueue */,
 				78A452F81AF693F0008DD84C /* DynamicGraphView */,
 				78FFF47B1AF24E6200E8C61D /* ZCSlotMachine */,
 				78D436F21AD81DC800B9D05A /* KKProgressTimer */,
@@ -521,6 +533,18 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		786CF1771B01071400E77105 /* DKStack_DKQueue */ = {
+			isa = PBXGroup;
+			children = (
+				786CF1781B01071400E77105 /* DKQueue.h */,
+				786CF1791B01071400E77105 /* DKQueue.m */,
+				786CF17A1B01071400E77105 /* DKStack.h */,
+				786CF17B1B01071400E77105 /* DKStack.m */,
+				786CF17C1B01071400E77105 /* README.md */,
+			);
+			path = DKStack_DKQueue;
+			sourceTree = "<group>";
+		};
 		7873AB0C1AFB9CB700C57ACD /* Invite Modal */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,6 +575,15 @@
 				787C1A8E1ACDD1A70072EF03 /* ContentEdit_ViewController.m */,
 			);
 			name = ContentEdit;
+			sourceTree = "<group>";
+		};
+		787C6DC71AFFB70C0033066A /* URL Helper */ = {
+			isa = PBXGroup;
+			children = (
+				787C6DC81AFFB72C0033066A /* URLHelper.h */,
+				787C6DC91AFFB72C0033066A /* URLHelper.m */,
+			);
+			name = "URL Helper";
 			sourceTree = "<group>";
 		};
 		787E00F61AD71989000139E2 /* Image Storage Helper */ = {
@@ -728,13 +761,13 @@
 			name = "AppVersion Helper";
 			sourceTree = "<group>";
 		};
-		78FFF48E1AF2D28F00E8C61D /* NotificationHelper */ = {
+		78FFF48E1AF2D28F00E8C61D /* Notification Helper */ = {
 			isa = PBXGroup;
 			children = (
 				78FFF48F1AF2D2AB00E8C61D /* NotificationHelper.h */,
 				78FFF4901AF2D2AB00E8C61D /* NotificationHelper.m */,
 			);
-			name = NotificationHelper;
+			name = "Notification Helper";
 			sourceTree = "<group>";
 		};
 		863FD918D9CB255FAFE27EAA /* Pods */ = {
@@ -914,11 +947,13 @@
 				78E0A38C1ACDD28000FD5CB0 /* Colors_Modal.m in Sources */,
 				78EBD94A1AF9861E007BFDCD /* AppAPI_Profile_Modal.m in Sources */,
 				787E00FD1AD72A58000139E2 /* DataStorageHelper.m in Sources */,
+				787C6DCA1AFFB72C0033066A /* URLHelper.m in Sources */,
 				787C1A8F1ACDD1A70072EF03 /* ContentEdit_ViewController.m in Sources */,
 				7804E4731AD1C94C00A611C2 /* UIHelper.m in Sources */,
 				786427071AFE13C300569EDD /* AppAPI_Channel_Modal.m in Sources */,
 				7887E7E01ADB34E80088109C /* UserInfo.m in Sources */,
 				78FFF48D1AF2D16F00E8C61D /* AppVersionHelper.m in Sources */,
+				786CF17E1B01071400E77105 /* DKStack.m in Sources */,
 				789244DF1AEAB02D0071445C /* AppAPI_User_Modal.m in Sources */,
 				78E1CE231AE4572B00CF01A1 /* Login_ViewController.m in Sources */,
 				78DB087E1ADC169100AA60FD /* FormattingHelper.m in Sources */,
@@ -938,6 +973,7 @@
 				78165D611AFD12A2000A910B /* CustomSegueHelper_Modal.m in Sources */,
 				78FFF4911AF2D2AB00E8C61D /* NotificationHelper.m in Sources */,
 				78E0A38F1ACDD29200FD5CB0 /* DeviceTypeHelper.m in Sources */,
+				786CF17D1B01071400E77105 /* DKQueue.m in Sources */,
 				78E1CE1C1AE4028800CF01A1 /* SignUp_ViewController.m in Sources */,
 				7864270B1AFE1BEE00569EDD /* BiddingAndBonusInfo.m in Sources */,
 			);

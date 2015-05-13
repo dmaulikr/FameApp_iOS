@@ -45,7 +45,7 @@
                                             <action selector="skipButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jKZ-k4-g1k"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tests_2" id="1im-zy-eys">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder_ProfileImage_1" id="1im-zy-eys">
                                         <rect key="frame" x="20" y="10" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -224,7 +224,7 @@
                             <rect key="frame" x="0.0" y="64" width="375" height="416"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder_ProfileImage" id="nlI-HX-HO4">
+                                <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder_ProfileImage_Edit_1" id="nlI-HX-HO4">
                                     <rect key="frame" x="87" y="21" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
@@ -807,11 +807,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="2001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+15% Bonus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dWf-92-Q6n">
+                            <label opaque="NO" userInteractionEnabled="NO" tag="2001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="dWf-92-Q6n">
                                 <rect key="frame" x="0.0" y="198" width="112" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.18806703629999999" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rrx-yy-fZR">
@@ -830,6 +830,7 @@
                     <navigationItem key="navigationItem" title="INVITE" id="SsB-PA-LBh"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="friendsInviteBonusInfoLabel" destination="dWf-92-Q6n" id="59v-Vf-jtQ"/>
                         <outlet property="infoLabel" destination="HH3-uE-c4Y" id="xsi-uI-ZJe"/>
                     </connections>
                 </viewController>
@@ -1223,11 +1224,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Placeholder_ProfileImage" width="232" height="228"/>
+        <image name="Placeholder_ProfileImage_1" width="210" height="210"/>
+        <image name="Placeholder_ProfileImage_Edit_1" width="210" height="210"/>
         <image name="StarLogo" width="171" height="171"/>
         <image name="Tests" width="500" height="500"/>
         <image name="Tests_1_2" width="704" height="704"/>
-        <image name="Tests_2" width="474" height="474"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

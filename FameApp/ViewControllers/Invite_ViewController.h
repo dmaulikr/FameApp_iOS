@@ -21,9 +21,10 @@
 
 @interface Invite_ViewController : UIViewController <KBContactsSelectionViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
+@property (nonatomic, strong) IBOutlet UILabel *friendsInviteBonusInfoLabel;
 @property (nonatomic, strong) NSMutableArray *invitedContacts;
 @property (nonatomic, strong) IBOutlet UILabel *infoLabel;
-@property (nonatomic, strong) KLCPopup* popupStatus;
+@property (nonatomic, strong) KLCPopup *popupStatus;
 
 @end
 

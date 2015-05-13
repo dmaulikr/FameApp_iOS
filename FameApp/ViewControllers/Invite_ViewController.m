@@ -11,13 +11,9 @@
 @interface Invite_ViewController ()
 @end
 
-
-// TODO: allow the user to share on their timeline on various SNs.
-
-
 @implementation Invite_ViewController
 
-@synthesize invitedContacts;
+@synthesize friendsInviteBonusInfoLabel, invitedContacts;
 @synthesize infoLabel;
 @synthesize popupStatus;
 
@@ -30,6 +26,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    [self initInviteFriendsBonusInfo];
     
     [CustomSegueHelper_Modal setCustomBackButton:self];
 }
@@ -52,8 +50,6 @@
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     
-    [((UILabel *)[self.view viewWithTag:2001]) setText:@"+7.5%"];  // TODO: set bonus info from server - will set loaded on login - and stored in AppDelegate
-    
     [self initInfoLabel];
 }
 
@@ -71,6 +67,59 @@
     [infoLabel setTextAlignment:NSTextAlignmentCenter];
     [infoLabel setNumberOfLines:7];
     [infoLabel setAttributedText:[@"Want to boost your odds to get <one>PUBLISHED</one> to the masses?\n<three>(of course you do)</three>\n\nInvite friends\nto get <two>FREE BONUSES</two>" attributedStringWithStyleBook:labelAttributeStyle1]];
+}
+
+- (void)initInviteFriendsBonusInfo {
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Invite_Modal requestContruct_BonusInfo];
+    
+    NSLog(@"App API - Request: Invite Bonus Info");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Invite Bonus Info [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Invite_Modal processReply_BonusInfo:responseObject];
+               
+               AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+               if (appDelegateInst.myBiddingAndBonusInfo == nil) {
+                   
+                   appDelegateInst.myBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
+               }
+               
+               appDelegateInst.myBiddingAndBonusInfo.bonusForFriendInvite = [repDict objectForKey:@"inviteBonus"];
+               appDelegateInst.myBiddingAndBonusInfo.bonusForShareToSN = [repDict objectForKey:@"shareBonus"];
+               
+               [friendsInviteBonusInfoLabel setText:[FormattingHelper formatLabelTextForBonusInfo:appDelegateInst.myBiddingAndBonusInfo.bonusForFriendInvite]];
+               
+               [friendsInviteBonusInfoLabel setAlpha:1.0f];
+               CGAffineTransform transform_oddsLabel = friendsInviteBonusInfoLabel.transform;
+               [UIView animateWithDuration:1.0 animations:^{
+                   
+                   friendsInviteBonusInfoLabel.transform = CGAffineTransformScale(friendsInviteBonusInfoLabel.transform, 1.3, 1.3);
+               }
+               completion:^(BOOL finished) {
+                
+                [UIView animateWithDuration:0.8 animations:^{
+                    
+                    friendsInviteBonusInfoLabel.transform = transform_oddsLabel;
+                }];
+           }];
+               
+               // TODO: LATER need to use the 'shareBonus'
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Invite Bonus Info [FAILURE]");
+               NSLog(@"%@", error);
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (IBAction)openContacts:(id)sender {
@@ -110,12 +159,22 @@
     
     NSArray *recipents = [[NSMutableArray alloc] initWithObjects:((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone, nil];
     
-    // TODO: BUG need to verify the name parts, phone & email actually exist before using them
-    // TODO: otherwise it will crash the app
-    [invitedContacts addObject:@[ [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName],
-                                  ((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone,
-                                  [contact.emails objectAtIndex:0]
-                                ]];
+    NSString *fullName = @"";
+    if (contact.firstName != nil) {
+        fullName = contact.firstName;
+    }
+    if (contact.lastName != nil) {
+        if ([fullName isEqualToString:@""]) {
+            fullName = contact.lastName;
+        }
+        else {
+            fullName = [NSString stringWithFormat:@"%@ %@", fullName, contact.lastName];
+        }
+    }
+    NSString *phoneNumber = ((APPhoneWithLabel *)[contact.phonesWithLabels objectAtIndex:0]).phone;
+    NSString *emailAddress = ([contact.emails count] > 0) ? [contact.emails objectAtIndex:0] : @"";
+    
+    [invitedContacts addObject:@[ fullName, phoneNumber, emailAddress ]];
     
     NSString *contactName = @"Hey there";
     if (contact.firstName != nil) {

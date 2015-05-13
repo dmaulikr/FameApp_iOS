@@ -14,6 +14,7 @@ const int CELL_HEIGHT__THE_VIEW = 170;
 const int CELL_HEIGHT__THE_SEPARATOR = 10;
 int dt;
 
+// TODO: a better EDIT placeholder profile image
 
 @interface Profile_TableViewController ()
 @end

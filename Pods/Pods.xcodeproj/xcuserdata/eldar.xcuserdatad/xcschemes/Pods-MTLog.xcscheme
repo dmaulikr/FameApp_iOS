@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01442962A2B36B373C011488"
+               BlueprintIdentifier = "A5D4432D6B9DC7363F449A29"
                BuildableName = "libPods-MTLog.a"
                BlueprintName = "Pods-MTLog"
                ReferencedContainer = "container:Pods.xcodeproj">

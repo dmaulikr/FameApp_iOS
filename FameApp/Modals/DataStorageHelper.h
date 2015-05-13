@@ -24,6 +24,10 @@
  And the param in AppDelegate.
  */
 + (void)setLoginUserInfo:(UserInfo *)aUser;
+/*!
+ Deletes login user in the DB.
+ And the same goes for the param in AppDelegate.
+ */
 + (void)deleteLoginUserInfo;
 
 #pragma mark - PostHistory related

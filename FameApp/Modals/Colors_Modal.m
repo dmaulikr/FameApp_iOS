@@ -24,9 +24,12 @@
 
 + (UIColor *) getUIColorForNavigationBar_tintColor {
     
-//    return [[Colors_Modal colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f];
-    
     return [[Colors_Modal colorWithHexString:@"#30270a"] colorWithAlphaComponent:1.0f];
+}
+
++ (UIColor *) getUIColorForNavigationBar_tintColor_1 {
+    
+    return [UIColor whiteColor];
 }
 
 

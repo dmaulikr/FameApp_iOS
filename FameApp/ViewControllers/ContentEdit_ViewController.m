@@ -12,7 +12,12 @@ const int TIMER_MILLISECONDS_DEFAULT = 15000;
 int dt;
 
 
-@interface ContentEdit_ViewController ()
+@interface ContentEdit_ViewController () {
+    
+    UIColor *restoreNavBar_barTintColor;
+    UIColor *restoreNavBar_tintColor;
+    NSDictionary *restoreNavBar_titleTextAttributes;
+}
 @end
 
 
@@ -47,9 +52,17 @@ int dt;
     
     [super viewWillAppear:animated];
     
+    restoreNavBar_barTintColor = self.navigationController.navigationBar.barTintColor;
+    restoreNavBar_tintColor = self.navigationController.navigationBar.tintColor;
+    restoreNavBar_titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
+    [self.navigationController.navigationBar setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor_1]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName,
+                                                          [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     self.navigationItem.title = @"EDIT";
     
     labels = [[NSMutableArray alloc] init];
@@ -64,9 +77,13 @@ int dt;
     [self initSubViews];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     
-    [super viewDidAppear:animated];
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar setBarTintColor:restoreNavBar_barTintColor];
+    [self.navigationController.navigationBar setTintColor:restoreNavBar_tintColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:restoreNavBar_titleTextAttributes];
 }
 
 #pragma mark - Subviews init by device type

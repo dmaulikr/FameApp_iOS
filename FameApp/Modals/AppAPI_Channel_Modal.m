@@ -44,5 +44,31 @@
     return responseObject;
 }
 
+#pragma mark - Channel Skip
++ (NSArray *) requestContruct_Skip:(NSString *)postId timerPoint:(long)timerPoint actionType:(int)actionType {
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSURL *baseURL = [NSURL URLWithString:appDelegateInst.appAPIBaseURL];
+    NSString *reqPath = @"channel/skip";
+    
+    NSString *reqData_postId = postId;
+    NSNumber *reqData_timerPoint = [[NSNumber alloc] initWithLong:timerPoint];
+    NSNumber *reqData_actionType = [[NSNumber alloc] initWithInt:actionType];
+    
+    NSDictionary *parameters = [AppAPI_GeneralInfo_Modal addGeneralRequestInfoDictFull_toRequestDict:
+                                [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 reqData_postId, @"postId",
+                                 reqData_timerPoint, @"timerPoint",
+                                 reqData_actionType, @"actionType",
+                                 nil]];
+    
+    return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@", baseURL, reqPath], parameters, nil];
+}
+
++ (NSDictionary *) processReply_Skip:(NSDictionary *)responseObject {
+    
+    return responseObject;
+}
+
 @end
 

@@ -45,6 +45,9 @@ PODS:
     - DFImageManager/NSURLSession (= 0.3.1)
     - DFImageManager/PhotosKit (= 0.3.1)
     - DFImageManager/UI (= 0.3.1)
+  - DFImageManager/AFNetworking (0.3.1):
+    - AFNetworking/NSURLSession (~> 2.0)
+    - DFImageManager/Core
   - DFImageManager/AssetsLibrary (0.3.1):
     - DFImageManager/Core
   - DFImageManager/Core (0.3.1)
@@ -81,6 +84,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.5.3)
   - BlocksKit (~> 2.2.5)
   - DFImageManager (~> 0.3.1)
+  - DFImageManager/AFNetworking
   - DLRadioButton (~> 1.1.1)
   - INTULocationManager (~> 3.0.1)
   - IQDropDownTextField (~> 1.0.4.1)

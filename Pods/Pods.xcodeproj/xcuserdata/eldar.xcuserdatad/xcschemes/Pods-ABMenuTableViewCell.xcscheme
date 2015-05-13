@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "364BE1FAE0F4F4166429CF18"
+               BlueprintIdentifier = "69A6265452E9E76C2FC2B7DD"
                BuildableName = "libPods-ABMenuTableViewCell.a"
                BlueprintName = "Pods-ABMenuTableViewCell"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -11,11 +11,17 @@
 
 @interface FormattingHelper : NSObject
 
+#pragma mark - General Labels related
++ (NSString *)formatLabelTextForCurrentOddBonus:(NSString *)percentString;
++ (NSString *)formatLabelTextForBonusInfo:(NSString *)percentString;
+
 #pragma mark - Invite related
 + (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef;
 + (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name;
+
 #pragma mark - Date Time related
 + (NSString *)formatDateString:(NSDate *)aDate;
+
 #pragma mark - Generic Error Messages
 + (NSString *)formatGeneralErrorMessage;
 

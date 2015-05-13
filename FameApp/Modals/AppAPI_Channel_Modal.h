@@ -20,5 +20,9 @@
 + (NSArray *) requestContruct_GetContent;
 + (NSDictionary *) processReply_GetContent:(NSDictionary *)responseObject;
 
+#pragma mark - Channel Skip
++ (NSArray *) requestContruct_Skip:(NSString *)postId timerPoint:(long)timerPoint actionType:(int)actionType;
++ (NSDictionary *) processReply_Skip:(NSDictionary *)responseObject;
+
 @end
 

@@ -10,7 +10,12 @@
 
 const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 
-@interface Post_ViewController ()
+@interface Post_ViewController () {
+    
+    UIColor *restoreNavBar_barTintColor;
+    UIColor *restoreNavBar_tintColor;
+    NSDictionary *restoreNavBar_titleTextAttributes;
+}
 @end
 
 
@@ -52,9 +57,16 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     
     [super viewDidLoad];
     
+    restoreNavBar_barTintColor = self.navigationController.navigationBar.barTintColor;
+    restoreNavBar_tintColor = self.navigationController.navigationBar.tintColor;
+    restoreNavBar_titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
+    [self.navigationController.navigationBar setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor_1]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     self.navigationItem.title = @"POSTING YOUR FAME...";
     
     [self setStateForCloseButton:NO];
@@ -72,6 +84,15 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [super viewDidAppear:animated];
     
     [self startSlotMachine];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar setBarTintColor:restoreNavBar_barTintColor];
+    [self.navigationController.navigationBar setTintColor:restoreNavBar_tintColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:restoreNavBar_titleTextAttributes];
 }
 
 - (void)setStateForCloseButton:(BOOL)isVisible {

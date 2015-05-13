@@ -24,7 +24,7 @@
 
 /*!
   Sets/updates login user in the DB.
-  And the param in AppDelegate.
+  And the same goes for the param in AppDelegate.
  */
 + (void)setLoginUserInfo:(UserInfo *)aUser {
     
@@ -48,6 +48,10 @@
     appDelegateInst.loginUser = currentUser;
 }
 
+/*!
+ Deletes login user in the DB.
+ And the same goes for the param in AppDelegate.
+ */
 + (void)deleteLoginUserInfo {
     
     UserInfo *user = [DataStorageHelper getLoginUserInfo];
@@ -58,6 +62,9 @@
         user.deleteObject = YES;
         [user SQPSaveEntity];
     }
+    
+    AppDelegate *appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegateInst.loginUser = nil;
 }
 
 

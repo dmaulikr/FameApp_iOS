@@ -11,9 +11,13 @@
 int dt;
 
 
-// TODO: left/right gestures for NICE/SKIP
+// TODO: NOW - the nice/skip button are covering the image... this is BAD!!!
+
+// TODO: LATER - left/right gestures for NICE/SKIP
 
 // TODO: need to test API calls with geo location blocked
+
+// TODO: BUG - crash after a minute on real device: iPhone4 iOS7
 
 
 @interface Main_ViewController ()
@@ -23,11 +27,12 @@ int dt;
 @implementation Main_ViewController
 
 @synthesize appDelegateInst;
+@synthesize contentQueue_1, contentQueue_2, isMainQueue_1;
+@synthesize currentContent_postId;
 @synthesize userImageView, userDisplayName, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
-@synthesize contentList, contentIndex, currentContent_postId;
-@synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
+@synthesize timerController, timerPercentCount, timer, timerFinishSeconds, isReachedTimerOnLastMoments, isFromSkipAction;
 @synthesize popup, radio1, reportMsgField, popupStatus;
 
 
@@ -40,7 +45,17 @@ int dt;
     
     [super viewDidLoad];
     
+    NSLog(@">>>>>>>>>\n\n\n\n\n\n\n\nWTF\n\n\n\n\n\n\n\n\n\n\n\n");  // TODO: DEBUG - REMOVE
+    
     appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    // init the content Queues
+    contentQueue_1 = [[DKQueue alloc] init];
+    contentQueue_2 = [[DKQueue alloc] init];
+    isMainQueue_1 = YES;
+    
+    [self callGetContent];
+    [self showNextContent:YES isBecauseSkip:NO];
     
     [self initLocationService];
     
@@ -50,36 +65,26 @@ int dt;
     imageView.clipsToBounds = NO;
     imageView.image = [UIImage imageNamed:@"TextLogo_Black"];
     self.navigationItem.titleView = imageView;
+    
+    
+    [self initSubViews];
+    [self initTimerView];
+    
+    [self setSkipButtonStatus:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     
-    [self loadNextContent];
-    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
-    
-    [self setSkipButtonStatus:NO];
-    
-    [self initSubViews];
-    [self initTimerView];
 }
 
-- (void)viewDidAppear:(BOOL)animated {  // TODO: DEBUG - REMOVE
+- (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
-    
-    [self showNextContent:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    
-    [self stopTimer];
 }
 
 #pragma mark - Subviews init by device type
@@ -223,6 +228,9 @@ int dt;
     
     [timer invalidate];
     timer = nil;
+    [timerController stop];
+    
+    isReachedTimerOnLastMoments = NO;
 }
 
 - (void)timerInverval:(NSTimer *)aTimer {
@@ -236,6 +244,16 @@ int dt;
     else if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
         
         [self setSkipButtonStatus:YES];
+    }
+    else if ((timerPercentCount > 75) && (isReachedTimerOnLastMoments == NO)) {
+        
+        isReachedTimerOnLastMoments = YES;
+        
+        // call only if we are currently on the last content
+        DKQueue *mainQueue = (isMainQueue_1) ? contentQueue_1 : contentQueue_2;
+        if ([mainQueue size] == 0) {
+            [self callGetContent];
+        }
     }
 }
 
@@ -251,20 +269,34 @@ int dt;
     
     NSLog(@"TIMER DONE.");
     
-    // TODO: need to prepare new data before the TIMER is DONE.
-    
-    
-    [self setSkipButtonStatus:NO];
-    [self showNextContent:NO];
-    [self getBiddingInfo];
+    // continue the cycle only if there is a login user
+    if (appDelegateInst.loginUser != nil) {
+        
+        [self showNextContent:NO isBecauseSkip:isFromSkipAction];
+        isFromSkipAction = NO;
+        
+        [self setSkipButtonStatus:NO];
+        [self getBiddingInfo];
+    }
 }
 
 
 #pragma mark - Channel related
 - (void)initBiddingAndBonusInfoViews {
     
-    [[self.view viewWithTag:2001] setHidden:YES];
-    [[self.view viewWithTag:2002] setHidden:YES];
+    if (appDelegateInst.myBiddingAndBonusInfo == nil) {
+        
+        [[self.view viewWithTag:2001] setHidden:YES];
+        [[self.view viewWithTag:2002] setHidden:YES];
+    }
+    else {
+        
+        [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+        [oddsBonusLabel setText:[FormattingHelper formatLabelTextForCurrentOddBonus:appDelegateInst.myBiddingAndBonusInfo.bonusOdds]];
+        
+        [[self.view viewWithTag:2001] setHidden:[appDelegateInst.myBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+        [[self.view viewWithTag:2002] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+    }
     
     [self getBiddingInfo];
 }
@@ -293,7 +325,7 @@ int dt;
                        aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
                    }
                    aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
-                   aBiddingAndBonusInfo.bonusOdds = [NSString stringWithFormat:@"+%@", [repDict objectForKey:@"bonusOdds"]];
+                   aBiddingAndBonusInfo.bonusOdds = [FormattingHelper formatLabelTextForCurrentOddBonus:[repDict objectForKey:@"bonusOdds"]];
                    
                    [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
                    
@@ -350,7 +382,7 @@ int dt;
     ];
 }
 
-- (void)loadNextContent {
+- (void)callGetContent {
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -362,14 +394,21 @@ int dt;
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
-               NSLog(@"App API - Reply: Channel Get Content [SUCCESS] %@", responseObject);  // TODO: remove the %@
+               NSLog(@"App API - Reply: Channel Get Content [SUCCESS]");
                
                NSDictionary *repDict = [AppAPI_Channel_Modal processReply_GetContent:responseObject];
                
                if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                    
-                   contentIndex = 0;
-                   contentList = [repDict objectForKey:@"biddings"];
+                   // empty the skipQueue
+                   DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
+                   [skipQueue clear];
+                   
+                   [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
+               }
+               else {
+                   
+                   // TODO: what to do with the ERROR ??
                }
                
            } // End of Request 'Success'
@@ -378,15 +417,79 @@ int dt;
                NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
                NSLog(@"%@", error);
                
-               // do nothing
+               // TODO: what to do with the ERROR ??
                
            } // End of Request 'Failure'
     ];
 }
 
-- (void)showNextContent:(BOOL)isFirst {
+- (void)callSkipWithActionType:(int)actionType timerPoint:(long)timerPoint postId:(NSString *)postId {
     
-    if (isFirst == NO) {
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_Skip:postId timerPoint:timerPoint actionType:actionType];
+    
+    NSLog(@"App API - Request: Channel Skip");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Channel Skip [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_Skip:responseObject];
+               
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
+               }
+               else {
+                   
+                   // TODO: what to do with the ERROR ??
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Channel Skip [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // TODO: what to do with the ERROR ??
+               
+           } // End of Request 'Failure'
+    ];
+}
+
+- (void)pushContentsListsToQueuesAndCacheImages:(NSArray *)mainContentList skipContentList:(NSArray *)skipContentList {
+    
+    DKQueue *mainQueue = (isMainQueue_1 == YES) ? contentQueue_1 : contentQueue_2;
+    DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
+    
+//    for (int i=0; i<[mainContentList count]; i++) {  // TODO: what should I do ???
+    for (int i=0; i<1; i++) {
+        
+        NSDictionary *aContentObj = [mainContentList objectAtIndex:i];
+        [mainQueue enqueue:aContentObj];
+        
+        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
+        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
+    }
+    
+//    for (int i=0; i<[skipContentList count]; i++) {  // TODO: what should I do ???
+    for (int i=0; i<1; i++) {
+        
+        NSDictionary *aContentObj = [skipContentList objectAtIndex:i];
+        [skipQueue enqueue:aContentObj];
+        
+        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
+        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
+    }
+}
+
+- (void)showNextContent:(BOOL)isFirstUse isBecauseSkip:(BOOL)isBecauseSkip {
+    
+    // will do fade out & then fade in
+    if (isFirstUse == NO) {
         
         //fade out
         UIView *aView = [self.view viewWithTag:1000];
@@ -396,41 +499,77 @@ int dt;
         }
         completion:^(BOOL finished) {
             
-            [self setContentViews:YES];
+            [self setContentViews:YES isBecauseSkip:isBecauseSkip];
         }];
     }
+    // will do only the fade in
     else {
         
-        [self setContentViews:YES];
+        [self setContentViews:YES isBecauseSkip:isBecauseSkip];
     }
 }
 
-- (void)setContentViews:(BOOL)animated {  // TODO: incomplete
+- (void)setContentViews:(BOOL)animated isBecauseSkip:(BOOL)isBecauseSkip {
     
-    NSDictionary *currentContent = [contentList objectAtIndex:contentIndex];
-    contentIndex++;
+    NSLog(@"SET CONTENT VIEWS");
     
-    if (contentIndex+1 == [contentList count]) {
+    NSDictionary *currentContent = nil;
+    
+    // use main Queue
+    if (isBecauseSkip == NO) {
         
-        [self loadNextContent];
+        DKQueue *mainQueue = (isMainQueue_1) ? contentQueue_1 : contentQueue_2;
+        currentContent = [mainQueue dequeue];
     }
+    // use the other Queue, and swap their roles
+    else {
+        
+        DKQueue *mainQueue = (isMainQueue_1) ? contentQueue_1 : contentQueue_2;
+        [mainQueue clear];
+        
+        isMainQueue_1 = !isMainQueue_1;
+        
+        mainQueue = (isMainQueue_1) ? contentQueue_1 : contentQueue_2;
+        currentContent = [mainQueue dequeue];
+    }
+    
+    // verify 'currentContent' is not nil.
+    if (currentContent == nil) {  // TODO: does this works???
+        
+        int64_t delayInSeconds = 1;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self setContentViews:animated isBecauseSkip:isBecauseSkip];
+        });
+        
+        return;
+    }
+    
+    // TODO: DEBUG - REMOVE
+    NSLog(@"NOW:  %@", currentContent_postId);
+    NSLog(@"NEXT: %@", [currentContent objectForKey:@"postId"]);
+    
     
     currentContent_postId = [currentContent objectForKey:@"postId"];
     NSString *currentContent_imageURL = [currentContent objectForKey:@"contentUrl"];
-    NSInteger currentContent_timerDuration_sec = [[currentContent objectForKey:@"timerDuration"] integerValue] / 1000;
-    NSInteger currentContent_timerStart_sec = 0;//[[currentContent objectForKey:@"timerStart"] integerValue] / 1000;  // TODO: SERVER BUG
     NSString *currentContent_userId = [currentContent objectForKey:@"userId"];
     NSString *currentContent_userDisplayName = [currentContent objectForKey:@"userDisplayName"];
     NSString *currentContent_userImageURL = [currentContent objectForKey:@"userImageUrl"];
     
-    [self setImageWithShortCache:currentContent_imageURL imageView:contentImageView];
-    [self setImageWithShortCache:currentContent_userImageURL imageView:userImageView];
+    
+    // adjust start time to match elapse time since we queued the content to nowTime.
+    NSTimeInterval nowTime_msec = [[NSDate date] timeIntervalSince1970] * 1000;
+    NSInteger currentContent_timerStart_msec = 0;  // nowTime_msec - [[currentContent objectForKey:@"timerStart"] integerValue];  // TODO: SERVER BUG
+    NSInteger currentContent_timerDuration_msec = 15000; //[[currentContent objectForKey:@"timerDuration"] integerValue];  // TODO: SERVER BUG
+    
+    
+    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];
+    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:@""];   // TODO: need to pass the placeholder image name
     
     [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
     
-    [self startTimer:currentContent_timerStart_sec finishSeconds:currentContent_timerDuration_sec];
-    
-    // TODO: need to preload the image before the need to display it
+    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
     
     UIView *aView = [self.view viewWithTag:1000];
     if (animated == YES) {
@@ -448,25 +587,6 @@ int dt;
     }
 }
 
-- (void)setImageWithShortCache:(NSString *)imageURL imageView:(UIImageView *)imageView {  // TODO: make this into a helper
-    
-    DFImageRequestOptions *options = [[DFImageRequestOptions alloc] init];
-    options.expirationAge = 60;
-    
-    DFImageRequest *request = [DFImageRequest requestWithResource:[NSURL URLWithString:imageURL] targetSize:imageView.frame.size contentMode:DFImageContentModeAspectFill options:options];
-    
-    [[DFImageManager sharedManager] requestImageForRequest:request completion:^(UIImage *image, NSDictionary *info) {
-        
-        if (info != nil) {
-            
-            [imageView setImage:image];
-        }
-        
-        // TODO: need to set a placeholder
-        
-    }];
-}
-
 - (void)setSkipButtonStatus:(BOOL)newStatus {
     
     if (newStatus) {
@@ -481,24 +601,34 @@ int dt;
     }
 }
 
-- (IBAction)skipButtonPressed:(id)sender {
+- (IBAction)niceButtonPressed:(id)sender {
     
-    NSLog(@"SKIP PRESSED.");
+    // TODO: show something cool
+    
+    NSLog(@"NICE PRESSED.");
+    
+    isFromSkipAction = YES;
     
     // once the timerController stops
     // it triggers the 'didStopProgressTimer' method.
-    [timer invalidate];
-    timer = nil;
-    [timerController stop];
-
+    [self stopTimer];
+    
+    [self callSkipWithActionType:0 timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
 }
 
-- (IBAction)niceButtonPressed:(id)sender {
+- (IBAction)skipButtonPressed:(id)sender {
     
-    // TODO: send to server
-    // TODO: indicate 'selection'
+    // TODO: show something cool
     
-    NSLog(@"NICE PRESSED.");
+    NSLog(@"SKIP PRESSED.");
+    
+    isFromSkipAction = YES;
+    
+    // once the timerController stops
+    // it triggers the 'didStopProgressTimer' method.
+    [self stopTimer];
+    
+    [self callSkipWithActionType:1 timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
 }
 
 #pragma mark - Camera related
@@ -632,8 +762,8 @@ int dt;
 }
 
 - (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
-    
-    [self showNextContent:NO];
+
+    // TODO: restore content
     
     [popup dismiss:YES];
 }
@@ -642,7 +772,7 @@ int dt;
     
     [popup dismiss:YES];
     
-    [self showNextContent:NO];
+    // TODO: restore content
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
