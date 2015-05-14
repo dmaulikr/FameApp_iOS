@@ -7,6 +7,7 @@
 //
 
 #import "SignUp_ViewController.h"
+#import "Tutorial_ViewController.h"
 
 int dt;
 
@@ -14,9 +15,6 @@ int dt;
 
 @interface SignUp_ViewController ()
 @end
-
-
-// TODO: after sign up -> show WELCOME screen (OR EVEN TUTORIAL) -> make a login verify request (to send all the additional info: deviceInfo, appVersion, notificationToken)
 
 
 @implementation SignUp_ViewController
@@ -51,6 +49,10 @@ int dt;
     self.navigationItem.title = @"SIGN UP";
     
     [self initSubViews];
+    
+    // TODO: DEBUG - REMOVE
+    Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
+    [self.navigationController pushViewController:myViewController animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -107,8 +109,9 @@ int dt;
                    appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
                    [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                    
-                   UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
-                   [self presentViewController:myNavigationController animated:YES completion:nil];
+                   // show tutorial
+                   Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
+                   [self.navigationController pushViewController:myViewController animated:YES];
                }
                // Bad SignUp
                else {
@@ -287,4 +290,11 @@ int dt;
 }
 
 @end
+
+
+
+
+
+
+
 

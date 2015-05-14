@@ -18,7 +18,7 @@
 @property (nonatomic) bool isPublished;
 @property (nonatomic) int countViews;
 @property (nonatomic) int countNices;
-@property (nonatomic) long timerMSec;
+@property (nonatomic) int timerMSec;
 
 @end
 

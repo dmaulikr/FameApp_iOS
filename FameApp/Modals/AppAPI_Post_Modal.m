@@ -70,7 +70,7 @@
     
     NSDictionary *parameters = [AppAPI_GeneralInfo_Modal addGeneralRequestInfoDictFull_toRequestDict:
                                 [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 reqData_postId, @"imageUrl",
+                                 reqData_postId, @"postId",
                                  nil]];
     
     return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@", baseURL, reqPath], parameters, nil];

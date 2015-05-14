@@ -21,6 +21,7 @@ pod 'WPAttributedMarkup',           '~> 1.0.0'
 pod 'KLCPopup',                     '~> 1.0'
 pod 'DLRadioButton',                '~> 1.1.1'
 pod 'KBContactsSelection',          '~> 1.2.3'
+pod 'ICETutorial',                  '~> 1.1.1'
 
 
 

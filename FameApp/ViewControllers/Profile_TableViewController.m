@@ -350,15 +350,140 @@ int dt;
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_REPOST);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
     
-    // TODO: re-post
+    UIImage *imageToSave = [ImageStorageHelper loadImageFromLocalDirectory:aPost.contentFileName];
     
+    // saving image locally - part 1/3
+    PostHistory *currentPost = [[PostHistory alloc] init];
+    currentPost.userId = appDelegateInst.loginUser.userId;
+    currentPost.contentFileName = [ImageStorageHelper saveImageToLocalDirectory:imageToSave aUsername:appDelegateInst.loginUser.userId];
+    currentPost.timerMSec = aPost.timerMSec;
+    
+    // re-posting
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSData *imageData = UIImageJPEGRepresentation(imageToSave, 1.0f);
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
+    
+    NSLog(@"App API - Request: (Re)Post Image");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+         constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+         
+             [formData appendPartWithFileData:imageData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
+             
+         }
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             NSLog(@"App API - Reply: (Re)Post Image [SUCCESS]");
+             
+             NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostImage:responseObject];
+             
+             // Success
+             if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                 
+                 // post info
+                 [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:currentPost.timerMSec contentImageItself:imageToSave currentPost:currentPost];
+                 
+             }
+             // Failure
+             else {
+                 
+                 // delete locally stored image
+                 [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+                 
+                 [self.navigationItem stopAnimating];
+                 
+                 [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+             NSLog(@"App API - Reply: (Re)Post Image [FAILURE]");
+             NSLog(@"%@", error);
+             
+             // delete locally stored image
+             [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+             
+             [self.navigationItem stopAnimating];
+             
+             [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+         }
+     ];
+
     [popup dismiss:YES];
+}
+
+- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself currentPost:(PostHistory *)currentPost {
+        
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostInfo:imageURL timer:timer];
+    
+    NSLog(@"App API - Request: Post Info");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               
+               NSLog(@"App API - Reply: Post Info [SUCCESS]");
+               
+               NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostInfo:responseObject];
+               
+               // Success
+               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                   
+                   // saving image locally - part 2/3
+                   currentPost.timestamp = [[NSDate alloc] init];
+                   currentPost.postId = [repDict objectForKey:@"postId"];
+                   
+                   // show next screen
+                   Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+                   myViewController.contentImage = contentImageItself;
+                   myViewController.currentPost = currentPost;
+                   [self presentViewController:myViewController animated:YES completion:nil];
+                   
+               }
+               // Failure
+               else {
+                   
+                   // delete locally stored image
+                   [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+                   
+                   [self.navigationItem stopAnimating];
+                   
+                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+               }
+               
+           } // End of Request 'Success'
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               
+               NSLog(@"App API - Reply: Post Info [FAILURE]");
+               NSLog(@"%@", error);
+               
+               // delete locally stored image
+               [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+               
+               [self.navigationItem stopAnimating];
+               
+               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               
+           } // End of Request 'Failure'
+     ];
 }
 
 - (void)deletePostAction:(UIButton *)aButton {
     
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_DELETE);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
+    
+    [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
+    [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
+    [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
+    [popup dismiss:YES];
+    [postsTableView reloadData];
+    [self showStatusPopup:YES message:@"Post is gone forever."];
+    
     
     // tell server the user deleted the post from the local device
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
@@ -378,20 +503,12 @@ int dt;
                // Success
                if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                    
-                   [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
-                   [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
-                   [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
-                   
-                   [popup dismiss:YES];
-                   
-                   [postsTableView reloadData];
-                   
-                   [self showStatusPopup:YES message:@"Post is gone forever."];
+                   // do nothing
                }
                // Failure
                else {
                    
-                   [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
+                   //[self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
                }
                
            } // End of Request 'Success'
@@ -400,7 +517,7 @@ int dt;
                NSLog(@"App API - Reply: Deleted Post History [FAILURE]");
                NSLog(@"%@", error);
                
-               [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
+               //[self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
                
            } // End of Request 'Failure'
      ];

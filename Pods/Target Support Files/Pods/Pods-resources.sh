@@ -51,6 +51,13 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "ICETutorial/Resources/background-gradient.png"
+  install_resource "ICETutorial/Resources/background-gradient@2x.png"
+  install_resource "ICETutorial/Resources/button-background.png"
+  install_resource "ICETutorial/Resources/button-background@2x.png"
+  install_resource "ICETutorial/Resources/Default-568h@2x.png"
+  install_resource "ICETutorial/Resources/Default.png"
+  install_resource "ICETutorial/Resources/Default@2x.png"
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "IQLabelView/IQLabelView/IQLabelView.bundle"
   install_resource "KBContactsSelection/KBContactsSelection/KBContactCell.xib"
@@ -66,6 +73,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TOWebViewController/TOWebViewController/zh-Hant.lproj"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "ICETutorial/Resources/background-gradient.png"
+  install_resource "ICETutorial/Resources/background-gradient@2x.png"
+  install_resource "ICETutorial/Resources/button-background.png"
+  install_resource "ICETutorial/Resources/button-background@2x.png"
+  install_resource "ICETutorial/Resources/Default-568h@2x.png"
+  install_resource "ICETutorial/Resources/Default.png"
+  install_resource "ICETutorial/Resources/Default@2x.png"
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "IQLabelView/IQLabelView/IQLabelView.bundle"
   install_resource "KBContactsSelection/KBContactsSelection/KBContactCell.xib"

@@ -187,7 +187,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
-               NSLog(@"App API - Reply: Post Status [SUCCESS]");
+               NSLog(@"App API - Reply: Post Status [SUCCESS] %@", responseObject);
                
                NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostStatus:responseObject];
                
@@ -253,6 +253,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                    // for error, make it look like the user lost
                    isWin = NO;
                    
+                   // TODO: set the earned bonus to ZERO
+                   
                    [sampleTimer_postStatus invalidate];
                    sampleTimer_postStatus = nil;
                    
@@ -281,6 +283,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                
                // for error, make it look like the user lost
                isWin = NO;
+               
+               // TODO: set the earned bonus to ZERO
                
                [sampleTimer_postStatus invalidate];
                sampleTimer_postStatus = nil;

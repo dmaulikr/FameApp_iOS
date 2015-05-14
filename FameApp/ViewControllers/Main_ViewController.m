@@ -213,7 +213,7 @@ int dt;
     }
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(timerInverval:) userInfo:nil repeats:YES];
     timerFinishSeconds = finishSeconds;
-    timerPercentCount = startSeconds;
+    timerPercentCount = startSeconds / (CGFloat)finishSeconds * 100;
     [timerController startWithBlock:^CGFloat {
         
         return timerPercentCount / 100;
@@ -299,161 +299,173 @@ int dt;
 
 - (void)getBiddingInfo {
     
-    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
-    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    // continue the cycle only if there is a login user
+    if (appDelegateInst.loginUser != nil) {
     
-    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_BiddingInfo];
-    
-    NSLog(@"App API - Request: Channel Bidding Info");
-    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
-           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               
-               NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
-               
-               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
-               
-               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+        AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+        operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_BiddingInfo];
+        
+        NSLog(@"App API - Request: Channel Bidding Info");
+        [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
-                   if (aBiddingAndBonusInfo == nil) {
+                   NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
+                   
+                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
+                   
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                        
-                       aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
-                   }
-                   aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
-                   aBiddingAndBonusInfo.bonusOdds = [FormattingHelper formatLabelTextForCurrentOddBonus:[repDict objectForKey:@"bonusOdds"]];
-                   
-                   [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
-                   
-                   [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
-                   [[self.view viewWithTag:2002] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
-                   
-                   if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
-                       
-                       [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
-                       
-                       CGAffineTransform transform_oddsLabel = oddsLabel.transform;
-                       [UIView animateWithDuration:1.0 animations:^{
+                       BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
+                       if (aBiddingAndBonusInfo == nil) {
                            
-                           oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
+                           aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
                        }
-                       completion:^(BOOL finished) {
+                       aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
+                       aBiddingAndBonusInfo.bonusOdds = [FormattingHelper formatLabelTextForCurrentOddBonus:[repDict objectForKey:@"bonusOdds"]];
+                       
+                       [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
+                       
+                       [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+                       [[self.view viewWithTag:2002] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+                       
+                       if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
                            
-                           [UIView animateWithDuration:0.8 animations:^{
+                           [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+                           
+                           CGAffineTransform transform_oddsLabel = oddsLabel.transform;
+                           [UIView animateWithDuration:1.0 animations:^{
                                
-                               oddsLabel.transform = transform_oddsLabel;
+                               oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
+                           }
+                           completion:^(BOOL finished) {
+                               
+                               [UIView animateWithDuration:0.8 animations:^{
+                                   
+                                   oddsLabel.transform = transform_oddsLabel;
+                               }];
                            }];
-                       }];
-                   }
-                   
-                   if ([oddsBonusLabel.text isEqualToString:aBiddingAndBonusInfo.bonusOdds] == NO) {
-                       
-                       [oddsBonusLabel setText:appDelegateInst.myBiddingAndBonusInfo.bonusOdds];
-                       
-                       CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
-                       [UIView animateWithDuration:1.0 animations:^{
-                           
-                           oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
                        }
-                       completion:^(BOOL finished) {
+                       
+                       if ([oddsBonusLabel.text isEqualToString:aBiddingAndBonusInfo.bonusOdds] == NO) {
                            
-                           [UIView animateWithDuration:0.8 animations:^{
+                           [oddsBonusLabel setText:appDelegateInst.myBiddingAndBonusInfo.bonusOdds];
+                           
+                           CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
+                           [UIView animateWithDuration:1.0 animations:^{
                                
-                               oddsBonusLabel.transform = transform_oddsBonusLabel;
+                               oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
+                           }
+                           completion:^(BOOL finished) {
+                               
+                               [UIView animateWithDuration:0.8 animations:^{
+                                   
+                                   oddsBonusLabel.transform = transform_oddsBonusLabel;
+                               }];
                            }];
-                       }];
+                       }
+                       
                    }
                    
-               }
-               
-           } // End of Request 'Success'
-           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               
-               NSLog(@"App API - Reply: Channel Bidding Info [FAILURE]");
-               NSLog(@"%@", error);
-               
-               // do nothing
-               
-           } // End of Request 'Failure'
-    ];
+               } // End of Request 'Success'
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   
+                   NSLog(@"App API - Reply: Channel Bidding Info [FAILURE]");
+                   NSLog(@"%@", error);
+                   
+                   // do nothing
+                   
+               } // End of Request 'Failure'
+        ];
+    }
 }
 
 - (void)callGetContent {
     
-    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
-    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_GetContent];
-    
-    NSLog(@"App API - Request: Channel Get Content");
-    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
-           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               
-               NSLog(@"App API - Reply: Channel Get Content [SUCCESS]");
-               
-               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_GetContent:responseObject];
-               
-               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+    // continue the cycle only if there is a login user
+    if (appDelegateInst.loginUser != nil) {
+        
+        AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+        operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_GetContent];
+        
+        NSLog(@"App API - Request: Channel Get Content");
+        [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   // empty the skipQueue
-                   DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
-                   [skipQueue clear];
+                   NSLog(@"App API - Reply: Channel Get Content [SUCCESS]");
                    
-                   [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
-               }
-               else {
+                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_GetContent:responseObject];
+                   
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       // empty the skipQueue
+                       DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
+                       [skipQueue clear];
+                       
+                       [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
+                   }
+                   else {
+                       
+                       // TODO: what to do with the ERROR ??
+                   }
+                   
+               } // End of Request 'Success'
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   
+                   NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
+                   NSLog(@"%@", error);
                    
                    // TODO: what to do with the ERROR ??
-               }
-               
-           } // End of Request 'Success'
-           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               
-               NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
-               NSLog(@"%@", error);
-               
-               // TODO: what to do with the ERROR ??
-               
-           } // End of Request 'Failure'
-    ];
+                   
+               } // End of Request 'Failure'
+        ];
+    }
 }
 
 - (void)callSkipWithActionType:(int)actionType timerPoint:(long)timerPoint postId:(NSString *)postId {
     
-    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
-    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_Skip:postId timerPoint:timerPoint actionType:actionType];
-    
-    NSLog(@"App API - Request: Channel Skip");
-    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
-           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               
-               NSLog(@"App API - Reply: Channel Skip [SUCCESS]");
-               
-               NSDictionary *repDict = [AppAPI_Channel_Modal processReply_Skip:responseObject];
-               
-               if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+    // continue the cycle only if there is a login user
+    if (appDelegateInst.loginUser != nil) {
+        
+        AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+        operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_Skip:postId timerPoint:timerPoint actionType:actionType];
+        
+        NSLog(@"App API - Request: Channel Skip");
+        [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
-               }
-               else {
+                   NSLog(@"App API - Reply: Channel Skip [SUCCESS]");
+                   
+                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_Skip:responseObject];
+                   
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
+                   }
+                   else {
+                       
+                       // TODO: what to do with the ERROR ??
+                   }
+                   
+               } // End of Request 'Success'
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   
+                   NSLog(@"App API - Reply: Channel Skip [FAILURE]");
+                   NSLog(@"%@", error);
                    
                    // TODO: what to do with the ERROR ??
-               }
-               
-           } // End of Request 'Success'
-           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               
-               NSLog(@"App API - Reply: Channel Skip [FAILURE]");
-               NSLog(@"%@", error);
-               
-               // TODO: what to do with the ERROR ??
-               
-           } // End of Request 'Failure'
-    ];
+                   
+               } // End of Request 'Failure'
+        ];
+    }
 }
 
 - (void)pushContentsListsToQueuesAndCacheImages:(NSArray *)mainContentList skipContentList:(NSArray *)skipContentList {
@@ -461,9 +473,9 @@ int dt;
     DKQueue *mainQueue = (isMainQueue_1 == YES) ? contentQueue_1 : contentQueue_2;
     DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
     
-//    for (int i=0; i<[mainContentList count]; i++) {  // TODO: what should I do ???
-    for (int i=0; i<1; i++) {
-        
+    for (int i=0; i<[mainContentList count]; i++) {  // TODO: what should I do ???
+//    for (int i=0; i<1; i++) {
+    
         NSDictionary *aContentObj = [mainContentList objectAtIndex:i];
         [mainQueue enqueue:aContentObj];
         
@@ -471,15 +483,17 @@ int dt;
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
     
-//    for (int i=0; i<[skipContentList count]; i++) {  // TODO: what should I do ???
-    for (int i=0; i<1; i++) {
-        
+    for (int i=0; i<[skipContentList count]; i++) {  // TODO: what should I do ???
+//    for (int i=0; i<1; i++) {
+    
         NSDictionary *aContentObj = [skipContentList objectAtIndex:i];
         [skipQueue enqueue:aContentObj];
         
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
+    
+    NSLog(@"DEBUG");  // TODO: DEBUG - REMOVE
 }
 
 - (void)showNextContent:(BOOL)isFirstUse isBecauseSkip:(BOOL)isBecauseSkip {
@@ -556,8 +570,14 @@ int dt;
     
     // adjust start time to match elapse time since we queued the content to nowTime.
     NSTimeInterval nowTime_msec = [[NSDate date] timeIntervalSince1970] * 1000;
-    NSInteger currentContent_timerStart_msec = 0;  // nowTime_msec - [[currentContent objectForKey:@"timerStart"] integerValue];  // TODO: SERVER BUG
-    NSInteger currentContent_timerDuration_msec = 15000; //[[currentContent objectForKey:@"timerDuration"] integerValue];  // TODO: SERVER BUG
+    NSInteger currentContent_timerStart_msec = nowTime_msec - [[currentContent objectForKey:@"timerStart"] integerValue];
+    NSInteger currentContent_timerDuration_msec = [[currentContent objectForKey:@"timerDuration"] integerValue];
+    
+    // TODO: DEBUG - REMOVE
+    NSLog(@"%f", nowTime_msec);
+    NSLog(@"%ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
+    NSLog(@"%ld", currentContent_timerStart_msec);
+    NSLog(@"%ld", currentContent_timerDuration_msec);
     
     
     [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];  // TODO: the defualt image should be different ???
@@ -589,11 +609,17 @@ int dt;
         
         [skipButton setEnabled:YES];
         [skipButton setAlpha:1.0f];
+        
+        [niceButton setEnabled:YES];
+        [niceButton setAlpha:1.0f];
     }
     else {
         
         [skipButton setEnabled:NO];
         [skipButton setAlpha:0.6f];
+        
+        [niceButton setEnabled:NO];
+        [niceButton setAlpha:0.6f];
     }
 }
 
