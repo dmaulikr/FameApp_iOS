@@ -1,4 +1,4 @@
-![ios_project_banner.png](https://bitbucket.org/repo/a94xRK/images/3398210870-ios_project_banner.png)
+![ios_project_banner.png](https://bitbucket.org/repo/a94xRK/images/492821692-ios_project_banner.png)
 # Fame App - iOS app
 
 ## Release Notes
@@ -40,6 +40,7 @@ com.fameapp
 - L360Confetti (directly from Git)
 
 ### Non-Pods:
+- MaterialDesign
 - GHWalkThrough
 - DKStack_DKQueue
 - DynamicGraphView
