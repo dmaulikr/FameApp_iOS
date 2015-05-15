@@ -51,8 +51,8 @@ int dt;
     [self initSubViews];
     
     // TODO: DEBUG - REMOVE
-    Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
-    [self.navigationController pushViewController:myViewController animated:YES];
+//    Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
+//    [self.navigationController pushViewController:myViewController animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -109,9 +109,13 @@ int dt;
                    appDelegateInst.loginUser.userToken = [repDict objectForKey:@"access_token"];
                    [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                    
-                   // show tutorial
-                   Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
-                   [self.navigationController pushViewController:myViewController animated:YES];
+//                   // show tutorial
+//                   Tutorial_ViewController *myViewController = [[Tutorial_ViewController alloc] init];
+//                   [self.navigationController pushViewController:myViewController animated:YES];
+                   
+                   // TODO: DEBUG - REMOVE
+                   UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
+                   [self presentViewController:myNavigationController animated:YES completion:nil];
                }
                // Bad SignUp
                else {

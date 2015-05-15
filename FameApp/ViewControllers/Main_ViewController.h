@@ -22,6 +22,7 @@
 #import "AppAPI_Channel_Modal.h"
 #import "AppAPI_Report_Modal.h"
 #import "DKQueue.h"
+#import "UIView+MaterialDesign.h"
 
 
 @interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
@@ -49,7 +50,7 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSInteger timerFinishSeconds;
 @property (nonatomic) BOOL isReachedTimerOnLastMoments;
-@property (nonatomic) BOOL isFromSkipAction;
+@property (nonatomic) int reasonToShowNextContent;
 
 @property (nonatomic, strong) KLCPopup* popup;
 @property (nonatomic, strong) DLRadioButton *radio1;

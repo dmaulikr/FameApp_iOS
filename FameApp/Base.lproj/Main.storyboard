@@ -21,24 +21,11 @@
                                         <rect key="frame" x="8" y="65" width="360" height="360"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2rY-xk-Y4a">
-                                        <rect key="frame" x="40" y="378" width="130" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.14117647058823529" green="0.8666666666666667" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
-                                        <state key="normal" title="Nice !!!">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="niceButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hK6-Qo-xjY"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tvS-6w-1GL">
-                                        <rect key="frame" x="207" y="378" width="130" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tvS-6w-1GL">
+                                        <rect key="frame" x="-53" y="195" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
-                                        <state key="normal" title="        Skip &gt;">
+                                        <state key="normal" backgroundImage="NotNiceIcon">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -56,7 +43,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view tag="1002" contentMode="scaleToFill" id="RJi-B5-B4R">
-                                        <rect key="frame" x="217" y="381" width="35" height="35"/>
+                                        <rect key="frame" x="322" y="75" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -72,10 +59,21 @@
                                             <action selector="showReportThisPopup:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dFr-I6-xAC"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2rY-xk-Y4a">
+                                        <rect key="frame" x="329" y="195" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.14117647058823529" green="0.8666666666666667" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" backgroundImage="NiceIcon">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="niceButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hK6-Qo-xjY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18806703629999999" green="0.2978515625" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view tag="2000" contentMode="scaleToFill" id="vkY-EO-W5I">
+                            <view tag="2000" contentMode="scaleToFill" id="vkY-EO-W5I" customClass="CSAnimationView">
                                 <rect key="frame" x="0.0" y="443" width="375" height="160.5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -179,6 +177,15 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.2978515625" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="type" value="bounceLeft"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="delay">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -209,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="771" y="253"/>
+            <point key="canvasLocation" x="770.5" y="252.5"/>
         </scene>
         <!--YOU-->
         <scene sceneID="6S7-Pb-ia3">
@@ -1217,6 +1224,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NiceIcon" width="120" height="120"/>
+        <image name="NotNiceIcon" width="120" height="120"/>
         <image name="Placeholder_ProfileImage_1" width="210" height="210"/>
         <image name="Placeholder_ProfileImage_Edit_1" width="210" height="210"/>
         <image name="StarLogo" width="171" height="171"/>

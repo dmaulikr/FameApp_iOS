@@ -26,6 +26,9 @@
     appAPIBaseURL = @"http://54.171.157.215:8080/FameApp/api/";   // TODO: change IP to domain
     appAPIBaseUploaderURL = @"http://54.171.157.215:8080/Uploader/api/";   // TODO: change IP to domain
     
+//    appAPIBaseURL = @"http://10.0.0.10:8080/FameApp/api/";   // TODO: change IP to domain
+//    appAPIBaseUploaderURL = @"http://10.0.0.10:8080/Uploader/api/";   // TODO: change IP to domain
+    
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
                 @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use REAL path
                 @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"PRIVACY_POLICY",  // TODO: use REAL path

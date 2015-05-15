@@ -1,6 +1,6 @@
 platform :ios, '7.0'
 
-pod 'MTLog'  ### TODO: DEBUG
+pod 'MTLog'  ### TODO: DEBUG - NOT FOR PRODUCTION
 
 pod 'AFNetworking',                 '~> 2.5.3'
 pod 'INTULocationManager',          '~> 3.0.1'
@@ -9,7 +9,7 @@ pod 'IQKeyboardManager',            '~> 3.2.2'
 pod 'IQDropDownTextField',          '~> 1.0.4.1'
 pod 'NVDate',                       '~> 0.0.2'
 pod 'UINavigationItem+Loading',     '~> 1.1'
-pod 'BlocksKit',                    '~> 2.2.5' #:git => 'https://github.com/zwaldowski/BlocksKit.git'
+pod 'BlocksKit',                    '~> 2.2.5'
 
 pod 'DFImageManager',               '~> 0.3.1'
 pod 'DFImageManager/AFNetworking'
@@ -21,7 +21,6 @@ pod 'WPAttributedMarkup',           '~> 1.0.0'
 pod 'KLCPopup',                     '~> 1.0'
 pod 'DLRadioButton',                '~> 1.1.1'
 pod 'KBContactsSelection',          '~> 1.2.3'
-pod 'ICETutorial',                  '~> 1.1.1'
 
 
 

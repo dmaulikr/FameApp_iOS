@@ -63,7 +63,6 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
-  - ICETutorial (1.1.1)
   - INTULocationManager (3.0.1)
   - IQDropDownTextField (1.0.4.1)
   - IQKeyboardManager (3.2.2)
@@ -87,7 +86,6 @@ DEPENDENCIES:
   - DFImageManager (~> 0.3.1)
   - DFImageManager/AFNetworking
   - DLRadioButton (~> 1.1.1)
-  - ICETutorial (~> 1.1.1)
   - INTULocationManager (~> 3.0.1)
   - IQDropDownTextField (~> 1.0.4.1)
   - IQKeyboardManager (~> 3.2.2)
@@ -124,7 +122,6 @@ SPEC CHECKSUMS:
   DFImageManager: 2ee9701b09a96e7ab4d94f3ca1a6708027587473
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
-  ICETutorial: 6cb15e46066afc359357f048d1b5fca444d69c83
   INTULocationManager: c27483113e1bbc5952ead6417f9b39824a240ebb
   IQDropDownTextField: 4e6fc6dbfd46a922fbc3fb76ac855d05ccfdc962
   IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31

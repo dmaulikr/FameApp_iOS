@@ -25,6 +25,10 @@ com.fameapp
 - IQDropDownTextField
 - NVDate
 - UINavigationItem+Loading
+- BlocksKit
+
+- DFImageManager (with AFNetworking support)
+
 - IQLabelView
 - ABMenuTableViewCell
 - WPAttributedMarkup
@@ -36,6 +40,8 @@ com.fameapp
 - L360Confetti (directly from Git)
 
 ### Non-Pods:
+- GHWalkThrough
+- DKStack_DKQueue
 - DynamicGraphView
 - ZCSlotMachine
 - KKProgressTimer

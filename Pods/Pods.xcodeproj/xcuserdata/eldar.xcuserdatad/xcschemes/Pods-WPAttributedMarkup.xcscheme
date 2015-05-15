@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7396A0CD801C674AFCC2CAEE"
+               BlueprintIdentifier = "48D637778846404A6E2FB713"
                BuildableName = "libPods-WPAttributedMarkup.a"
                BlueprintName = "Pods-WPAttributedMarkup"
                ReferencedContainer = "container:Pods.xcodeproj">

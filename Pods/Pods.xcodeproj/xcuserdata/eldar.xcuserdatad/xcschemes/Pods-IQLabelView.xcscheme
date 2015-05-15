@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD83B1E754FD1B93DF6CDF0E"
+               BlueprintIdentifier = "74AF12082C1284A2B9BCB4AF"
                BuildableName = "libPods-IQLabelView.a"
                BlueprintName = "Pods-IQLabelView"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -8,8 +8,14 @@
 
 #import "Main_ViewController.h"
 
+static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE = 0;
+static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE = 1;
+static int const REASON_TO_SHOW_NEXT_CONTENT__REGULAR = 2;
+
 int dt;
 
+
+// TODO: USE THIS NOW: https://github.com/moqod/ios-material-design
 
 // TODO: NOW - the nice/skip button are covering the image... this is BAD!!!
 
@@ -18,7 +24,10 @@ int dt;
 // TODO: left/right gestures for NICE/SKIP
 
 
-@interface Main_ViewController ()
+@interface Main_ViewController () {
+    
+    NSInteger appTimeOffset;
+}
 @end
 
 
@@ -30,7 +39,7 @@ int dt;
 @synthesize userImageView, userDisplayName, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
-@synthesize timerController, timerPercentCount, timer, timerFinishSeconds, isReachedTimerOnLastMoments, isFromSkipAction;
+@synthesize timerController, timerPercentCount, timer, timerFinishSeconds, isReachedTimerOnLastMoments, reasonToShowNextContent;
 @synthesize popup, radio1, reportMsgField, popupStatus;
 
 
@@ -51,7 +60,8 @@ int dt;
     isMainQueue_1 = YES;
     
     [self callGetContent];
-    [self showNextContent:YES isBecauseSkip:NO];
+    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
+    [self showNextContent:YES becauseType:reasonToShowNextContent];
     
     [self initLocationService];
     
@@ -86,9 +96,6 @@ int dt;
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
     
-    // starting point for the View on which the content info is displayed
-    [[self.view viewWithTag:1000] setAlpha:0.0f];
-    
     [self initBiddingAndBonusInfoViews];
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
@@ -100,34 +107,44 @@ int dt;
     [((UILabel *)[self.view viewWithTag:3003]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     
     [niceButton setBackgroundColor:[Colors_Modal getUIColorForMain_5]];
+    [UIHelper setRoundedCornersCircleToView:niceButton];
+    [skipButton setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+    [UIHelper setRoundedCornersCircleToView:skipButton];
+    
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
     dt = [DeviceTypeHelper getDeviceType];
     
-    if (dt == IPHONE_6PLUS) {
-        
-        [self initSubViews_iPhone6Plus];
-    }
-    else if (dt == IPHONE_6) {
-        
-        [self initSubViews_iPhone6];
-    }
-    else if (dt == IPHONE_5x) {
-        
-        [self initSubViews_iPhone5x];
-    }
-    else if (dt == IPHONE_4x) {
-        
-        [self initSubViews_iPhone4x];
-    }
     
-    [UIHelper addShadowToView:niceButton];
-    [UIHelper addShadowToView:skipButton];
+    // TODO: TESTING - RESTORE CODE
+//    if (dt == IPHONE_6PLUS) {
+//        
+//        [self initSubViews_iPhone6Plus];
+//    }
+//    else if (dt == IPHONE_6) {
+//        
+//        [self initSubViews_iPhone6];
+//    }
+//    else if (dt == IPHONE_5x) {
+//        
+//        [self initSubViews_iPhone5x];
+//    }
+//    else if (dt == IPHONE_4x) {
+//        
+//        [self initSubViews_iPhone4x];
+//    }
+//    
+//    [UIHelper addShadowToView:niceButton];
+//    [UIHelper addShadowToView:skipButton];
+//    
+//    if (dt != IPHONE_4x) {
+//        
+//        [UIHelper addShadowToView:bidPostButton];
+//    }
     
-    if (dt != IPHONE_4x) {
-        
-        [UIHelper addShadowToView:bidPostButton];
-    }
+    [self initViewForColorTransition];
+    
+    [self.view bringSubviewToFront:[self.view viewWithTag:2000]];
 }
 
 - (void)initSubViews_iPhone6Plus {
@@ -235,13 +252,16 @@ int dt;
     
     if (timerPercentCount >= 100) {
         
+        reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
         [self stopTimer];
     }
-    else if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
+    
+    if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
         
         [self setSkipButtonStatus:YES];
     }
-    else if ((timerPercentCount > 75) && (isReachedTimerOnLastMoments == NO)) {
+    
+    if ((timerPercentCount > 75) && (isReachedTimerOnLastMoments == NO)) {
         
         isReachedTimerOnLastMoments = YES;
         
@@ -268,8 +288,8 @@ int dt;
     // continue the cycle only if there is a login user
     if (appDelegateInst.loginUser != nil) {
         
-        [self showNextContent:NO isBecauseSkip:isFromSkipAction];
-        isFromSkipAction = NO;
+        [self showNextContent:NO becauseType:reasonToShowNextContent];
+        reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
         
         [self setSkipButtonStatus:NO];
         [self getBiddingInfo];
@@ -407,6 +427,8 @@ int dt;
                        DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
                        [skipQueue clear];
                        
+                       [self setAppTimeOffset:[[repDict objectForKey:@"serverTime"] integerValue]];
+                       
                        [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
                    }
                    else {
@@ -447,6 +469,8 @@ int dt;
                    NSDictionary *repDict = [AppAPI_Channel_Modal processReply_Skip:responseObject];
                    
                    if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       [self setAppTimeOffset:[[repDict objectForKey:@"serverTime"] integerValue]];
                        
                        [self pushContentsListsToQueuesAndCacheImages:[repDict objectForKey:@"biddingsMain"] skipContentList:[repDict objectForKey:@"biddingsSkip"]];
                    }
@@ -492,41 +516,52 @@ int dt;
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
-    
-    NSLog(@"DEBUG");  // TODO: DEBUG - REMOVE
 }
 
-- (void)showNextContent:(BOOL)isFirstUse isBecauseSkip:(BOOL)isBecauseSkip {
+- (void)setAppTimeOffset:(NSInteger)serverTime_msec {
     
-    // will do fade out & then fade in
+    NSInteger nowTime_msec = (NSInteger)([[NSDate date] timeIntervalSince1970] * 1000);
+    appTimeOffset = nowTime_msec - serverTime_msec;
+    
+    NSLog(@">>>>>OFFSET: %ld", appTimeOffset);  // TODO: DEBUG - REMOVE
+}
+
+- (NSInteger)getAdjustedAppTime {
+    
+    NSInteger nowTime_msec = (NSInteger)([[NSDate date] timeIntervalSince1970] * 1000);
+    return (nowTime_msec - appTimeOffset);
+}
+
+- (void)showNextContent:(BOOL)isFirstUse becauseType:(int)becauseType {
+    
+    // open & then close, transitions
     if (isFirstUse == NO) {
         
-        //fade out
-        UIView *aView = [self.view viewWithTag:1000];
-        [UIView animateWithDuration:1.5f animations:^{
+        [self colorTransitionBetweenContents_CloseType:becauseType completion:^(void) {
             
-            [aView setAlpha:0.2f];
-        }
-        completion:^(BOOL finished) {
-            
-            [self setContentViews:YES isBecauseSkip:isBecauseSkip];
+            // delay
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                
+                [self setContentViews:YES becauseType:becauseType];
+            });
         }];
     }
-    // will do only the fade in
+    // only the open transition
     else {
         
-        [self setContentViews:YES isBecauseSkip:isBecauseSkip];
+        [self setContentViews:YES becauseType:becauseType];
     }
 }
 
-- (void)setContentViews:(BOOL)animated isBecauseSkip:(BOOL)isBecauseSkip {
+- (void)setContentViews:(BOOL)animated becauseType:(int)becauseType {
     
-    NSLog(@"SET CONTENT VIEWS");
+    NSLog(@"SET CONTENT VIEWS");  // TODO: DEBUG - REMOVE
     
     NSDictionary *currentContent = nil;
     
     // use main Queue
-    if (isBecauseSkip == NO) {
+    if (becauseType == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
         
         DKQueue *mainQueue = (isMainQueue_1) ? contentQueue_1 : contentQueue_2;
         currentContent = [mainQueue dequeue];
@@ -546,19 +581,21 @@ int dt;
     // verify 'currentContent' is not nil.
     if (currentContent == nil) {  // TODO: does this works???
         
+        // TODO: if after 5 seconds there is nothing in the queue, call for get content
+        
         int64_t delayInSeconds = 1;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [self setContentViews:animated isBecauseSkip:isBecauseSkip];
+            [self setContentViews:animated becauseType:becauseType];
         });
         
         return;
     }
     
     // TODO: DEBUG - REMOVE
-    NSLog(@"NOW:  %@", currentContent_postId);
-    NSLog(@"NEXT: %@", [currentContent objectForKey:@"postId"]);
+    NSLog(@"NOW POST_ID:  %@", currentContent_postId);
+    NSLog(@"NEXT POST_ID: %@", [currentContent objectForKey:@"postId"]);
     
     
     currentContent_postId = [currentContent objectForKey:@"postId"];
@@ -569,15 +606,16 @@ int dt;
     
     
     // adjust start time to match elapse time since we queued the content to nowTime.
-    NSTimeInterval nowTime_msec = [[NSDate date] timeIntervalSince1970] * 1000;
+    long nowTime_msec = [self getAdjustedAppTime];
     NSInteger currentContent_timerStart_msec = nowTime_msec - [[currentContent objectForKey:@"timerStart"] integerValue];
     NSInteger currentContent_timerDuration_msec = [[currentContent objectForKey:@"timerDuration"] integerValue];
     
     // TODO: DEBUG - REMOVE
-    NSLog(@"%f", nowTime_msec);
-    NSLog(@"%ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
-    NSLog(@"%ld", currentContent_timerStart_msec);
-    NSLog(@"%ld", currentContent_timerDuration_msec);
+    NSLog(@"NOW APP:  %ld", (long)([[NSDate date] timeIntervalSince1970] * 1000));
+    NSLog(@"NOW REAL: %ld", [self getAdjustedAppTime]);
+    NSLog(@"START:    %ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
+    NSLog(@"START:    %ld", currentContent_timerStart_msec);
+    NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
     
     
     [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];  // TODO: the defualt image should be different ???
@@ -585,22 +623,11 @@ int dt;
     
     [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
     
-    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
+    // TODO: DEBUG - RESTORE CODE
+//    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
+    [self startTimer:0 finishSeconds:currentContent_timerDuration_msec / 1000];  // TODO: DEBUG - REMOVE
     
-    UIView *aView = [self.view viewWithTag:1000];
-    if (animated == YES) {
-        
-        //fade in
-        [UIView animateWithDuration:0.5f animations:^{
-            
-            [aView setAlpha:1.0f];
-            
-        } completion:nil];
-    }
-    else {
-        
-        [aView setAlpha:1.0f];
-    }
+    [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
 }
 
 - (void)setSkipButtonStatus:(BOOL)newStatus {
@@ -625,32 +652,87 @@ int dt;
 
 - (IBAction)niceButtonPressed:(id)sender {
     
-    // TODO: show something cool
-    
     NSLog(@"NICE PRESSED.");
     
-    isFromSkipAction = YES;
+    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE;
     
     // once the timerController stops
     // it triggers the 'didStopProgressTimer' method.
     [self stopTimer];
     
-    [self callSkipWithActionType:0 timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
+    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
 }
 
 - (IBAction)skipButtonPressed:(id)sender {
     
-    // TODO: show something cool
-    
     NSLog(@"SKIP PRESSED.");
     
-    isFromSkipAction = YES;
+    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE;
     
     // once the timerController stops
     // it triggers the 'didStopProgressTimer' method.
     [self stopTimer];
     
-    [self callSkipWithActionType:1 timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
+    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
+}
+
+#pragma mark - Color Transition related
+- (void)initViewForColorTransition {
+    
+    UIView *aboveAllView = [[UIView alloc] initWithFrame:[self.view viewWithTag:1000].frame];
+    aboveAllView.tag = 1234;
+    [aboveAllView setUserInteractionEnabled:NO];
+    [aboveAllView setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [self.view addSubview:aboveAllView];
+    [self.view bringSubviewToFront:aboveAllView];
+}
+
+/*!
+ @param - type<br/>
+ 0 = close: skip with nice.<br/>
+ 1 = close: skip with not nice.<br/>
+ 2 = close: regular.
+ */
+- (void)colorTransitionBetweenContents_CloseType:(int)type completion:(void (^)(void))block {
+    
+    // close: skip with Nice
+    if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
+        
+        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:niceButton.center backgroundColor:[Colors_Modal getUIColorForMain_5] duration:1.0 completion:block];
+    }
+    // close: skip with Not Nice
+    else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
+    
+        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:skipButton.center backgroundColor:[Colors_Modal getUIColorForMain_4] duration:1.0 completion:block];
+    }
+    // close: regular
+    else if (type == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
+        
+        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:timerController.center backgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor] duration:1.0 completion:block];
+    }
+}
+
+/*!
+ @param - type<br/>
+ 0 OR 1 = open: all skip related.<br/>
+ 2 = open: regular.
+ */
+- (void)colorTransitionBetweenContents_OpenType:(int)type completion:(void (^)(void))block {
+    
+    if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
+        
+        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:niceButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+    }
+    // open: all skip related
+    else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
+        
+        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:skipButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+    }
+    // open: regular
+    else if (type == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
+        
+        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:timerController.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+    }
 }
 
 #pragma mark - Camera related
