@@ -15,7 +15,8 @@ int dt;
 
 // TODO: left/right gestures for NICE/SKIP
 
-// FIXME: re-adjust screen to all iPhone types.
+// TODO: stop timer on report. When popup dismissed, flush the queues and get content.
+
 
 
 @interface Main_ViewController ()
@@ -51,6 +52,8 @@ int dt;
     isMainQueue_1 = YES;
     
     [self callGetContent];
+    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
+    [self showNextContent:YES becauseType:reasonToShowNextContent];
     
     [self initLocationService];
     
@@ -80,9 +83,6 @@ int dt;
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
-    
-    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
-    [self showNextContent:YES becauseType:reasonToShowNextContent];
 }
 
 #pragma mark - Subviews init by device type
