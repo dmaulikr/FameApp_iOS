@@ -29,6 +29,7 @@
 
 @property (nonatomic, strong) AppDelegate *appDelegateInst;
 
+@property (nonatomic) NSInteger appTimeOffset;
 @property (nonatomic, strong) DKQueue *contentQueue_1;
 @property (nonatomic, strong) DKQueue *contentQueue_2;
 @property (nonatomic) BOOL isMainQueue_1;

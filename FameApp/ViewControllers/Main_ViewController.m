@@ -11,30 +11,21 @@
 static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE = 0;
 static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE = 1;
 static int const REASON_TO_SHOW_NEXT_CONTENT__REGULAR = 2;
-
 int dt;
-
-
-// TODO: USE THIS NOW: https://github.com/moqod/ios-material-design
-
-// TODO: NOW - the nice/skip button are covering the image... this is BAD!!!
-
-// TODO: change the Nice button to be active/inactive like the Skip button.
 
 // TODO: left/right gestures for NICE/SKIP
 
+// FIXME: re-adjust screen to all iPhone types.
 
-@interface Main_ViewController () {
-    
-    NSInteger appTimeOffset;
-}
+
+@interface Main_ViewController ()
 @end
 
 
 @implementation Main_ViewController
 
 @synthesize appDelegateInst;
-@synthesize contentQueue_1, contentQueue_2, isMainQueue_1;
+@synthesize appTimeOffset, contentQueue_1, contentQueue_2, isMainQueue_1;
 @synthesize currentContent_postId;
 @synthesize userImageView, userDisplayName, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
@@ -60,8 +51,6 @@ int dt;
     isMainQueue_1 = YES;
     
     [self callGetContent];
-    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
-    [self showNextContent:YES becauseType:reasonToShowNextContent];
     
     [self initLocationService];
     
@@ -91,12 +80,42 @@ int dt;
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
+    
+    reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
+    [self showNextContent:YES becauseType:reasonToShowNextContent];
 }
 
 #pragma mark - Subviews init by device type
 - (void)initSubViews {
     
     [self initBiddingAndBonusInfoViews];
+    
+    dt = [DeviceTypeHelper getDeviceType];
+    
+    if (dt == IPHONE_6PLUS) {
+        
+        [self initSubViews_iPhone6Plus];
+    }
+    else if (dt == IPHONE_6) {
+        
+        [self initSubViews_iPhone6];
+    }
+    else if (dt == IPHONE_5x) {
+        
+        [self initSubViews_iPhone5x];
+    }
+    else if (dt == IPHONE_4x) {
+        
+        [self initSubViews_iPhone4x];
+    }
+    
+    [UIHelper addShadowToView:niceButton];
+    [UIHelper addShadowToView:skipButton];
+    
+    if (dt != IPHONE_4x) {
+        
+        [UIHelper addShadowToView:bidPostButton];
+    }
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
@@ -113,35 +132,6 @@ int dt;
     
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
-    dt = [DeviceTypeHelper getDeviceType];
-    
-    
-    // TODO: TESTING - RESTORE CODE
-//    if (dt == IPHONE_6PLUS) {
-//        
-//        [self initSubViews_iPhone6Plus];
-//    }
-//    else if (dt == IPHONE_6) {
-//        
-//        [self initSubViews_iPhone6];
-//    }
-//    else if (dt == IPHONE_5x) {
-//        
-//        [self initSubViews_iPhone5x];
-//    }
-//    else if (dt == IPHONE_4x) {
-//        
-//        [self initSubViews_iPhone4x];
-//    }
-//    
-//    [UIHelper addShadowToView:niceButton];
-//    [UIHelper addShadowToView:skipButton];
-//    
-//    if (dt != IPHONE_4x) {
-//        
-//        [UIHelper addShadowToView:bidPostButton];
-//    }
-    
     [self initViewForColorTransition];
     
     [self.view bringSubviewToFront:[self.view viewWithTag:2000]];
@@ -154,9 +144,9 @@ int dt;
     userDisplayName.frame = CGRectMake(100, 30, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(319, 67, 87, 21);
     contentImageView.frame = CGRectMake(10, 87, 394, 394);
-    niceButton.frame = CGRectMake(40, 431, 150, 40);
-    skipButton.frame = CGRectMake(224, 431, 150, 40);
-    [self.view viewWithTag:1002].frame = CGRectMake(238, 433, 35, 35);
+    niceButton.frame = CGRectMake(368, 234, 100, 100);
+    skipButton.frame = CGRectMake(-53, 234, 100, 100);
+    [self.view viewWithTag:1002].frame = CGRectMake(359, 97, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 576-64, 414, 160);
     [self.view viewWithTag:2001].frame = CGRectMake(39, 95, 144, 58);
@@ -171,9 +161,9 @@ int dt;
     userDisplayName.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(280, 45, 87, 21);
     contentImageView.frame = CGRectMake(8, 65, 360, 360);
-    niceButton.frame = CGRectMake(40, 378, 130, 40);
-    skipButton.frame = CGRectMake(207, 378, 130, 40);
-    [self.view viewWithTag:1002].frame = CGRectMake(217, 381, 35, 35);
+    niceButton.frame = CGRectMake(329, 195, 100, 100);
+    skipButton.frame = CGRectMake(-53, 195, 100, 100);
+    [self.view viewWithTag:1002].frame = CGRectMake(323, 75, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 506-64, 375, 161);
     [self.view viewWithTag:2001].frame = CGRectMake(16, 98, 144, 58);
@@ -188,9 +178,9 @@ int dt;
     userDisplayName.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 45, 87, 21);
     contentImageView.frame = CGRectMake(10, 65, 300, 300);
-    niceButton.frame = CGRectMake(20, 320, 130, 40);
-    skipButton.frame = CGRectMake(170, 320, 130, 40);
-    [self.view viewWithTag:1002].frame = CGRectMake(178, 323, 35, 35);
+    niceButton.frame = CGRectMake(274, 165, 100, 100);
+    skipButton.frame = CGRectMake(-53, 165, 100, 100);
+    [self.view viewWithTag:1002].frame = CGRectMake(265, 75, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 441-64, 320, 160);
     [self.view viewWithTag:2001].frame = CGRectMake(8, 72, 144, 58);
@@ -205,9 +195,9 @@ int dt;
     userDisplayName.frame = CGRectMake(44, 2, 184, 26);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 14, 87, 21);
     contentImageView.frame = CGRectMake(25, 33, 270, 270);
-    niceButton.frame = CGRectMake(29, 258, 116, 40);
-    skipButton.frame = CGRectMake(174, 258, 116, 40);
-    [self.view viewWithTag:1002].frame = CGRectMake(182, 261, 35, 35);
+    niceButton.frame = CGRectMake(274, 118, 100, 100);
+    skipButton.frame = CGRectMake(-53, 118, 100, 100);
+    [self.view viewWithTag:1002].frame = CGRectMake(250, 43, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 370-64, 320, 160);
     [self.view viewWithTag:2001].frame = CGRectMake(8, 59, 144, 58);
@@ -523,7 +513,7 @@ int dt;
     NSInteger nowTime_msec = (NSInteger)([[NSDate date] timeIntervalSince1970] * 1000);
     appTimeOffset = nowTime_msec - serverTime_msec;
     
-    NSLog(@">>>>>OFFSET: %ld", appTimeOffset);  // TODO: DEBUG - REMOVE
+    NSLog(@">>>>>OFFSET: %ld", (long)appTimeOffset);  // TODO: DEBUG - REMOVE
 }
 
 - (NSInteger)getAdjustedAppTime {
@@ -617,15 +607,33 @@ int dt;
     NSLog(@"START:    %ld", currentContent_timerStart_msec);
     NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
     
+    // protection against irrelevant content
+    if (currentContent_timerStart_msec >= currentContent_timerDuration_msec) {
+        
+        NSLog(@"IRRELEVANT CONTENT!!! FLUSHING QUEUES... CALLING GET CONTENT...");  // TODO: DEBUG - REMOVE
+        
+        [contentQueue_1 clear];
+        [contentQueue_2 clear];
+        
+        [self callGetContent];
+        
+        int64_t delayInSeconds = 1;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self setContentViews:animated becauseType:becauseType];
+        });
+        
+        return;
+    }
     
-    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];  // TODO: the defualt image should be different ???
-    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]];   // TODO: need to pass the placeholder image name
+    
+    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];
+    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]];
     
     [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
     
-    // TODO: DEBUG - RESTORE CODE
-//    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
-    [self startTimer:0 finishSeconds:currentContent_timerDuration_msec / 1000];  // TODO: DEBUG - REMOVE
+    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
     
     [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
 }

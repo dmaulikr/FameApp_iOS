@@ -21,7 +21,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 
 // TODO: update server on bonus earned ? (or the server already knows???)
 
-// TODO: adjust to all iPhone types
+// FIXME: re-adjust screen to all iPhone types.
 
 // TODO: better looking screen design - more like the main screen maybe ?
 
