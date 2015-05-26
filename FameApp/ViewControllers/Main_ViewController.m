@@ -13,9 +13,9 @@ static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE = 1;
 static int const REASON_TO_SHOW_NEXT_CONTENT__REGULAR = 2;
 int dt;
 
-// TODO: left/right gestures for NICE/SKIP
+// FIXME: short cache is not released
 
-// TODO: stop timer on report. When popup dismissed, flush the queues and get content.
+// FIXME: stop timer on report. When popup dismissed, flush the queues and get content.
 
 
 
@@ -27,8 +27,8 @@ int dt;
 
 @synthesize appDelegateInst;
 @synthesize appTimeOffset, contentQueue_1, contentQueue_2, isMainQueue_1;
-@synthesize currentContent_postId;
-@synthesize userImageView, userDisplayName, contentImageView;
+@synthesize labelAttributeStyle1, currentContent_postId;
+@synthesize userImageView, userInfoLabel, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds, isReachedTimerOnLastMoments, reasonToShowNextContent;
@@ -66,9 +66,10 @@ int dt;
     
     
     [self initSubViews];
-    [self initTimerView];
     
     [self setSkipButtonStatus:NO];
+    
+    [self initVotingGestures];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -109,8 +110,8 @@ int dt;
         [self initSubViews_iPhone4x];
     }
     
-    [UIHelper addShadowToView:niceButton];
-    [UIHelper addShadowToView:skipButton];
+//    [UIHelper addShadowToView:niceButton];
+//    [UIHelper addShadowToView:skipButton];
     
     if (dt != IPHONE_4x) {
         
@@ -132,6 +133,9 @@ int dt;
     
     [bidPostButton setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     
+    [self initUserInfoLabel];
+    
+    [self initTimerView];
     [self initViewForColorTransition];
     
     [self.view bringSubviewToFront:[self.view viewWithTag:2000]];
@@ -141,7 +145,7 @@ int dt;
     
     [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 414, 512);
     userImageView.frame = CGRectMake(20, 10, 70, 70);
-    userDisplayName.frame = CGRectMake(100, 30, 184, 42);
+    userInfoLabel.frame = CGRectMake(100, 30, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(319, 67, 87, 21);
     contentImageView.frame = CGRectMake(10, 87, 394, 394);
     niceButton.frame = CGRectMake(368, 234, 100, 100);
@@ -158,7 +162,7 @@ int dt;
     
     [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 375, 476);
     userImageView.frame = CGRectMake(20, 10, 50, 50);
-    userDisplayName.frame = CGRectMake(76, 16, 184, 42);
+    userInfoLabel.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(280, 45, 87, 21);
     contentImageView.frame = CGRectMake(8, 65, 360, 360);
     niceButton.frame = CGRectMake(329, 195, 100, 100);
@@ -175,7 +179,7 @@ int dt;
     
     [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 446);
     userImageView.frame = CGRectMake(20, 10, 50, 50);
-    userDisplayName.frame = CGRectMake(76, 16, 184, 42);
+    userInfoLabel.frame = CGRectMake(76, 16, 184, 42);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 45, 87, 21);
     contentImageView.frame = CGRectMake(10, 65, 300, 300);
     niceButton.frame = CGRectMake(274, 165, 100, 100);
@@ -192,7 +196,7 @@ int dt;
     
     [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 320, 446);
     userImageView.frame = CGRectMake(6, 1, 30, 30);
-    userDisplayName.frame = CGRectMake(44, 2, 184, 26);
+    userInfoLabel.frame = CGRectMake(44, 2, 184, 26);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 14, 87, 21);
     contentImageView.frame = CGRectMake(25, 33, 270, 270);
     niceButton.frame = CGRectMake(274, 118, 100, 100);
@@ -334,7 +338,7 @@ int dt;
                            aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
                        }
                        aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
-                       aBiddingAndBonusInfo.bonusOdds = [FormattingHelper formatLabelTextForCurrentOddBonus:[repDict objectForKey:@"bonusOdds"]];
+                       aBiddingAndBonusInfo.bonusOdds = [repDict objectForKey:@"bonusOdds"];
                        
                        [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
                        
@@ -487,8 +491,7 @@ int dt;
     DKQueue *mainQueue = (isMainQueue_1 == YES) ? contentQueue_1 : contentQueue_2;
     DKQueue *skipQueue = (isMainQueue_1 == NO) ? contentQueue_1 : contentQueue_2;
     
-    for (int i=0; i<[mainContentList count]; i++) {  // TODO: what should I do ???
-//    for (int i=0; i<1; i++) {
+    for (int i=0; i<[mainContentList count]; i++) {
     
         NSDictionary *aContentObj = [mainContentList objectAtIndex:i];
         [mainQueue enqueue:aContentObj];
@@ -497,8 +500,7 @@ int dt;
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
     
-    for (int i=0; i<[skipContentList count]; i++) {  // TODO: what should I do ???
-//    for (int i=0; i<1; i++) {
+    for (int i=0; i<[skipContentList count]; i++) {
     
         NSDictionary *aContentObj = [skipContentList objectAtIndex:i];
         [skipQueue enqueue:aContentObj];
@@ -513,7 +515,7 @@ int dt;
     NSInteger nowTime_msec = (NSInteger)([[NSDate date] timeIntervalSince1970] * 1000);
     appTimeOffset = nowTime_msec - serverTime_msec;
     
-    NSLog(@">>>>>OFFSET: %ld", (long)appTimeOffset);  // TODO: DEBUG - REMOVE
+//    NSLog(@">>>>>OFFSET: %ld", (long)appTimeOffset);  // TODO: DEBUG - REMOVE
 }
 
 - (NSInteger)getAdjustedAppTime {
@@ -529,12 +531,7 @@ int dt;
         
         [self colorTransitionBetweenContents_CloseType:becauseType completion:^(void) {
             
-            // delay
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                
-                [self setContentViews:YES becauseType:becauseType];
-            });
+            [self setContentViews:YES becauseType:becauseType];
         }];
     }
     // only the open transition
@@ -569,7 +566,7 @@ int dt;
     }
     
     // verify 'currentContent' is not nil.
-    if (currentContent == nil) {  // TODO: does this works???
+    if (currentContent == nil) {
         
         // TODO: if after 5 seconds there is nothing in the queue, call for get content
         
@@ -583,9 +580,9 @@ int dt;
         return;
     }
     
-    // TODO: DEBUG - REMOVE
-    NSLog(@"NOW POST_ID:  %@", currentContent_postId);
-    NSLog(@"NEXT POST_ID: %@", [currentContent objectForKey:@"postId"]);
+//    // TODO: DEBUG - REMOVE
+//    NSLog(@"NOW POST_ID:  %@", currentContent_postId);
+//    NSLog(@"NEXT POST_ID: %@", [currentContent objectForKey:@"postId"]);
     
     
     currentContent_postId = [currentContent objectForKey:@"postId"];
@@ -600,13 +597,13 @@ int dt;
     NSInteger currentContent_timerStart_msec = nowTime_msec - [[currentContent objectForKey:@"timerStart"] integerValue];
     NSInteger currentContent_timerDuration_msec = [[currentContent objectForKey:@"timerDuration"] integerValue];
     
-    // TODO: DEBUG - REMOVE
-    NSLog(@"NOW APP:  %ld", (long)([[NSDate date] timeIntervalSince1970] * 1000));
-    NSLog(@"NOW REAL: %ld", [self getAdjustedAppTime]);
-    NSLog(@"START:    %ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
-    NSLog(@"START:    %ld", currentContent_timerStart_msec);
-    NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
-    
+//    // TODO: DEBUG - REMOVE
+//    NSLog(@"NOW APP:  %ld", (long)([[NSDate date] timeIntervalSince1970] * 1000));
+//    NSLog(@"NOW REAL: %ld", [self getAdjustedAppTime]);
+//    NSLog(@"START:    %ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
+//    NSLog(@"START:    %ld", currentContent_timerStart_msec);
+//    NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
+//    
     // protection against irrelevant content
     if (currentContent_timerStart_msec >= currentContent_timerDuration_msec) {
         
@@ -631,11 +628,16 @@ int dt;
     [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];
     [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]];
     
-    [userDisplayName setText:([currentContent_userDisplayName isEqualToString:@""]) ? currentContent_userId : currentContent_userDisplayName];
+    [self setUserInfoLabel:currentContent_userId userDisplayName:currentContent_userDisplayName];
     
     [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
     
-    [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
+    // delay
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
+    });
 }
 
 - (void)setSkipButtonStatus:(BOOL)newStatus {
@@ -651,10 +653,10 @@ int dt;
     else {
         
         [skipButton setEnabled:NO];
-        [skipButton setAlpha:0.6f];
+//        [skipButton setAlpha:0.6f];
         
         [niceButton setEnabled:NO];
-        [niceButton setAlpha:0.6f];
+//        [niceButton setAlpha:0.6f];
     }
 }
 
@@ -663,6 +665,8 @@ int dt;
     NSLog(@"NICE PRESSED.");
     
     reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE;
+    
+    [self animateSkipAction:reasonToShowNextContent];
     
     // once the timerController stops
     // it triggers the 'didStopProgressTimer' method.
@@ -673,9 +677,11 @@ int dt;
 
 - (IBAction)skipButtonPressed:(id)sender {
     
-    NSLog(@"SKIP PRESSED.");
+    NSLog(@"NOT NICE PRESSED.");
     
     reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE;
+    
+    [self animateSkipAction:reasonToShowNextContent];
     
     // once the timerController stops
     // it triggers the 'didStopProgressTimer' method.
@@ -691,8 +697,8 @@ int dt;
     aboveAllView.tag = 1234;
     [aboveAllView setUserInteractionEnabled:NO];
     [aboveAllView setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
-    [self.view addSubview:aboveAllView];
-    [self.view bringSubviewToFront:aboveAllView];
+    [[self.view viewWithTag:1000] addSubview:aboveAllView];
+    [[self.view viewWithTag:1000] bringSubviewToFront:aboveAllView];
 }
 
 /*!
@@ -706,15 +712,23 @@ int dt;
     // close: skip with Nice
     if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
         
+        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
+        [[self.view viewWithTag:1000] bringSubviewToFront:niceButton];
+        
         [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:niceButton.center backgroundColor:[Colors_Modal getUIColorForMain_5] duration:1.0 completion:block];
     }
     // close: skip with Not Nice
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
-    
+        
+        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
+        [[self.view viewWithTag:1000] bringSubviewToFront:skipButton];
+        
         [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:skipButton.center backgroundColor:[Colors_Modal getUIColorForMain_4] duration:1.0 completion:block];
     }
     // close: regular
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
+        
+        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
         
         [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:timerController.center backgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor] duration:1.0 completion:block];
     }
@@ -727,11 +741,12 @@ int dt;
  */
 - (void)colorTransitionBetweenContents_OpenType:(int)type completion:(void (^)(void))block {
     
+    // open: skip with Nice
     if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
         
         [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:niceButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
     }
-    // open: all skip related
+    // open: skip with Not Nice
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
         
         [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:skipButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
@@ -741,6 +756,126 @@ int dt;
         
         [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:timerController.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
     }
+}
+
+- (void)animateSkipAction:(int)type {
+    
+    if (type != REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
+        
+        UIButton *aButton = (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) ? niceButton : skipButton;
+        
+        CGAffineTransform saveTransform = aButton.transform;
+        CGAffineTransform transform = CGAffineTransformMakeScale(2.5, 2.5);
+        aButton.transform = transform;
+        [UIView animateWithDuration:1.0f delay:0 usingSpringWithDamping:0.35f initialSpringVelocity:0.3f options:UIViewAnimationOptionCurveEaseInOut
+            animations:^{
+                
+                aButton.transform = saveTransform;
+                
+        } completion:nil];
+    }
+    
+    
+    
+//    [UIView animateWithDuration:0.5f
+//         animations:^{
+//             
+//             // move to the middle & grow
+//             aButton.frame = CGRectOffset(aButton.frame, -100, 0);
+//             aButton.transform = CGAffineTransformMakeScale(2, 2);
+//             
+//         }
+//         completion:^(BOOL completed) {
+//             
+//             
+//             
+////             CGPoint origin = aButton.center;
+////             CGPoint target = CGPointMake(aButton.center.x-10, aButton.center.y);
+////             CABasicAnimation *bounce = [CABasicAnimation animationWithKeyPath:@"position.x"];
+////             bounce.duration = 0.1f;
+////             bounce.fromValue = [NSNumber numberWithInt:origin.x];
+////             bounce.toValue = [NSNumber numberWithInt:target.x];
+////             bounce.repeatCount = 3;
+////             bounce.autoreverses = YES;
+////             [niceButton.layer addAnimation:bounce forKey:@"position"];
+//         }
+//    ];
+
+    
+    
+    
+    
+    
+//    CGPoint origin = aButton.center;
+//    CGPoint target = CGPointMake(aButton.center.x-10, aButton.center.y);
+//    CABasicAnimation *bounce = [CABasicAnimation animationWithKeyPath:@"position.x"];
+//    bounce.duration = 0.05f;
+//    bounce.fromValue = [NSNumber numberWithInt:origin.x];
+//    bounce.toValue = [NSNumber numberWithInt:target.x];
+//    bounce.repeatCount = 3;
+//    bounce.autoreverses = YES;
+//    [niceButton.layer addAnimation:bounce forKey:@"position"];
+}
+
+#pragma mark - User Info Label related
+- (void)initUserInfoLabel {
+    
+    labelAttributeStyle1 = @{
+        @"body":@[ [UIFont fontWithName:@"HelveticaNeue-Light" size:22.0], [Colors_Modal getUIColorForNavigationBar_tintColor] ],
+        @"userId":@[ [UIFont fontWithName:@"HelveticaNeue-Thin" size:13.0], [Colors_Modal getUIColorForNavigationBar_tintColor] ]
+    };
+    
+    [userInfoLabel setTextAlignment:NSTextAlignmentLeft];
+    [userInfoLabel setNumberOfLines:2];
+}
+
+- (void)setUserInfoLabel:(NSString *)userId userDisplayName:(NSString *)userDisplayName {
+    
+    if ([userDisplayName isEqualToString:@""]) {
+        
+        NSString *labelString = [NSString stringWithFormat:@"%@", userId];
+        [userInfoLabel setAttributedText:[labelString attributedStringWithStyleBook:labelAttributeStyle1]];
+    }
+    else {
+        
+        NSString *labelString = [NSString stringWithFormat:@"%@\n<userId>%@</userId>", userDisplayName, userId];
+        [userInfoLabel setAttributedText:[labelString attributedStringWithStyleBook:labelAttributeStyle1]];
+    }
+}
+
+#pragma mark - Gesture related
+- (void)initVotingGestures {
+    
+    // nice related swipes
+    SHGestureRecognizerBlock niceSwipeBlock = ^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        
+        NSLog(@"NICE SWIPE");
+        
+        [self niceButtonPressed:niceButton];
+    };
+    UISwipeGestureRecognizer *swipeNice_fromButton = [UISwipeGestureRecognizer SH_gestureRecognizerWithBlock:niceSwipeBlock];
+    [swipeNice_fromButton setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [niceButton addGestureRecognizer:swipeNice_fromButton];
+    
+    UISwipeGestureRecognizer *swipeNice_fromContentImageView = [UISwipeGestureRecognizer SH_gestureRecognizerWithBlock:niceSwipeBlock];
+    [swipeNice_fromContentImageView setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [contentImageView addGestureRecognizer:swipeNice_fromContentImageView];
+    
+    
+    // skip related swipes
+    SHGestureRecognizerBlock skipSwipeBlock = ^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        
+        NSLog(@"NOT NICE SWIPE");
+        
+        [self skipButtonPressed:skipButton];
+    };
+    UISwipeGestureRecognizer *swipeSkip_fromButton = [UISwipeGestureRecognizer SH_gestureRecognizerWithBlock:skipSwipeBlock];
+    [swipeSkip_fromButton setDirection:UISwipeGestureRecognizerDirectionRight];
+    [skipButton addGestureRecognizer:swipeSkip_fromButton];
+    
+    UISwipeGestureRecognizer *swipeSkip_fromContentImageView = [UISwipeGestureRecognizer SH_gestureRecognizerWithBlock:skipSwipeBlock];
+    [swipeSkip_fromContentImageView setDirection:UISwipeGestureRecognizerDirectionRight];
+    [contentImageView addGestureRecognizer:swipeSkip_fromContentImageView];
 }
 
 #pragma mark - Camera related
@@ -862,11 +997,11 @@ int dt;
     KLCPopupLayout layout = KLCPopupLayoutMake(KLCPopupHorizontalLayoutCenter, KLCPopupVerticalLayoutCenter);
     
     popup = [KLCPopup popupWithContentView:popupView
-                                            showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
-                                         dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
-                                            maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
-                            dismissOnBackgroundTouch:NO
-                               dismissOnContentTouch:NO];
+                                showType:(KLCPopupShowType)KLCPopupShowTypeBounceIn
+                             dismissType:(KLCPopupDismissType)KLCPopupDismissTypeBounceOutToTop
+                                maskType:(KLCPopupMaskType)KLCPopupMaskTypeDimmed
+                dismissOnBackgroundTouch:NO
+                   dismissOnContentTouch:NO];
     
     [popup showWithLayout:layout];
 }

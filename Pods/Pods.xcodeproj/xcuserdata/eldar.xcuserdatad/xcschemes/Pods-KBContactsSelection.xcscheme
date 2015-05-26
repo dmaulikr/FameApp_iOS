@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4054D9566DF30C2FA65C27FC"
+               BlueprintIdentifier = "98092C9D73A6ABBAA8BF93BA"
                BuildableName = "libPods-KBContactsSelection.a"
                BlueprintName = "Pods-KBContactsSelection"
                ReferencedContainer = "container:Pods.xcodeproj">

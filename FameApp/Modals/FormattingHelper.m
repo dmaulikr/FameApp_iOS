@@ -21,25 +21,34 @@
     return [NSString stringWithFormat:@"+%@ Bonus", percentString];
 }
 
+#pragma mark - General Number String related
++ (NSString *)formatNumberIntoString:(int)aNumber {
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setGroupingSeparator:[[NSLocale currentLocale] objectForKey:NSLocaleGroupingSeparator]];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    return [formatter stringFromNumber:[NSNumber numberWithInt:aNumber]];
+}
+
 #pragma mark - Invite related
 /*!
  @param sourceRef - <br/>
                     0: From main screen.<br/>
                     1: From lost fame screen.
  */
-+ (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef {   // TODO: incomplete
++ (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef {
     
     if (sourceRef == 0) {
         
-        return @"You must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0";
+        return @"Have you seen all the wacky stuff on Fame App?!\nhttp://thefameapp.co/ref=0";
     }
     else if (sourceRef == 1) {
         
-        return @"You must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=1";
+        return @"You just must try Fame App\nIt's crazy..\nhttp://thefameapp.co/ref=1";
     }
     else {
         
-        return @"Have you head of Fame app?\nhttp://xxxxxxxx.co";
+        return @"Have you heard of Fame App?\nhttp://thefameapp.co";
     }
 }
 
@@ -48,20 +57,22 @@
  0: From main screen.<br/>
  1: From lost fame screen.
  */
-+ (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name {   // TODO: incomplete
++ (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name {
     
-    if (sourceRef == 0) {
-        
-        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0", name];
-    }
-    else if (sourceRef == 1) {
-        
-        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://xxxxxxxx.co/ref=0", name];
-    }
-    else {
-        
-        return [NSString stringWithFormat:@"%@, have you head of Fame app?\nhttp://xxxxxxxx.co", name];
-    }
+//    if (sourceRef == 0) {
+//        
+//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/ref=0", name];
+//    }
+//    else if (sourceRef == 1) {
+//        
+//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/ref=0", name];
+//    }
+//    else {
+//        
+//        return [NSString stringWithFormat:@"%@, have you head of Fame app?\nhttp://thefameapp.co", name];
+//    }
+    
+    return [FormattingHelper formatSMSInviteGeneralMessage:sourceRef];
 }
 
 #pragma mark - Date Time related

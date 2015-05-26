@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F410A825B8E4CB87AB7669EA"
+               BlueprintIdentifier = "BDB8A8FE6970863503C6F30E"
                BuildableName = "libPods-INTULocationManager.a"
                BlueprintName = "Pods-INTULocationManager"
                ReferencedContainer = "container:Pods.xcodeproj">

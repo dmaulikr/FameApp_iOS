@@ -73,6 +73,7 @@ PODS:
   - L360Confetti (1.1.1)
   - MTLog (0.6.1)
   - NVDate (0.0.2)
+  - SHGestureRecognizerBlocks (1.1.1)
   - SQPersist (1.0.3):
     - FMDB (~> 2.4)
   - TOWebViewController (2.0.14)
@@ -95,6 +96,7 @@ DEPENDENCIES:
   - L360Confetti (from `https://github.com/life360/confetti.git`)
   - MTLog
   - NVDate (~> 0.0.2)
+  - SHGestureRecognizerBlocks (~> 1.1.1)
   - SQPersist (~> 1.0.3)
   - TOWebViewController (from `https://github.com/TimOliver/TOWebViewController.git`)
   - UINavigationItem+Loading (~> 1.1)
@@ -131,6 +133,7 @@ SPEC CHECKSUMS:
   L360Confetti: 57ac02ba415ce3723dd04d11a57880d30783e87a
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NVDate: 1656c43f183b7cbdede2dde59e8fbd4083bade4c
+  SHGestureRecognizerBlocks: 20419fac0f8dcec8e2a339c078df1993aeae07e4
   SQPersist: 9c176f532d159cc3a0777a6e885d9cd9e2731c01
   TOWebViewController: 2cfd0032d781cabd88a0995fbca9692c11f0797e
   UINavigationItem+Loading: e61d7963495d8a19b6d3825d867ed60db9b218b6

@@ -23,6 +23,7 @@
 #import "AppAPI_Report_Modal.h"
 #import "DKQueue.h"
 #import "UIView+MaterialDesign.h"
+#import "UIGestureRecognizer+SHGestureRecognizerBlocks.h"
 
 
 @interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
@@ -34,10 +35,11 @@
 @property (nonatomic, strong) DKQueue *contentQueue_2;
 @property (nonatomic) BOOL isMainQueue_1;
 
+@property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 @property (nonatomic, strong) NSString *currentContent_postId;
 
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
-@property (nonatomic, strong) IBOutlet UILabel *userDisplayName;
+@property (nonatomic, strong) IBOutlet UILabel *userInfoLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *contentImageView;
 @property (nonatomic, strong) IBOutlet UIButton *niceButton;
 @property (nonatomic, strong) IBOutlet UIButton *skipButton;

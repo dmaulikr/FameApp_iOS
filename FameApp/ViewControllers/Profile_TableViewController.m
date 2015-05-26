@@ -203,7 +203,7 @@ int dt;
                     
                     UILabel *rankingSeenCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 55, imageView.frame.origin.x - 20, 50)];
                     [rankingSeenCountLabel setNumberOfLines:2];
-                    NSString *rankingSeenCountString = [NSString stringWithFormat:@"Seen by <number>%d</number>.", aPost.countViews];  // TODO: need to format the number into 100,000
+                    NSString *rankingSeenCountString = [NSString stringWithFormat:@"Seen by <number>%@</number>.", [FormattingHelper formatNumberIntoString:aPost.countViews]];
                     [rankingSeenCountLabel setAttributedText:[rankingSeenCountString attributedStringWithStyleBook:labelAttributeStyle1]];
                     [theView addSubview:rankingSeenCountLabel];
                 }
@@ -213,7 +213,7 @@ int dt;
                     
                     UILabel *rankingNiceCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, imageView.frame.origin.x - 20, 50)];
                     [rankingNiceCountLabel setNumberOfLines:2];
-                    NSString *rankingNiceCountString = [NSString stringWithFormat:@"<green><number>%d</number></green> people loved it!!", aPost.countNices];
+                    NSString *rankingNiceCountString = [NSString stringWithFormat:@"<green><number>%@</number></green> people loved it!!", [FormattingHelper formatNumberIntoString:aPost.countNices]];
                     [rankingNiceCountLabel setAttributedText:[rankingNiceCountString attributedStringWithStyleBook:labelAttributeStyle1]];
                     [theView addSubview:rankingNiceCountLabel];
                 }
@@ -441,7 +441,8 @@ int dt;
                    Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
                    myViewController.contentImage = contentImageItself;
                    myViewController.currentPost = currentPost;
-                   [self presentViewController:myViewController animated:YES completion:nil];
+                   
+                   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:myViewController] animated:YES completion:nil];
                    
                }
                // Failure

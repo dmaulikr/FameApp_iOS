@@ -15,6 +15,9 @@
 + (NSString *)formatLabelTextForCurrentOddBonus:(NSString *)percentString;
 + (NSString *)formatLabelTextForBonusInfo:(NSString *)percentString;
 
+#pragma mark - General Number String related
++ (NSString *)formatNumberIntoString:(int)aNumber;
+
 #pragma mark - Invite related
 + (NSString *)formatSMSInviteGeneralMessage:(int)sourceRef;
 + (NSString *)formatSMSInvitePersonalMessage:(int)sourceRef name:(NSString *)name;

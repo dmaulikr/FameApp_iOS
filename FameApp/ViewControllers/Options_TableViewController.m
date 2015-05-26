@@ -96,6 +96,9 @@
     webViewController.navigationButtonsHidden = YES;
     webViewController.showActionButton = NO;
     
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
+    
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 

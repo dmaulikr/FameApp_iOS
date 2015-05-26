@@ -23,16 +23,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    appAPIBaseURL = @"http://54.171.157.215:8080/FameApp/api/";   // TODO: change IP to domain
-    appAPIBaseUploaderURL = @"http://54.171.157.215:8080/Uploader/api/";   // TODO: change IP to domain
+    appAPIBaseURL = @"http://thefameapp.co:8080/FameApp/api/";
+    appAPIBaseUploaderURL = @"http://thefameapp.co:8080/Uploader/api/";  //54.171.157.215
     
-//    appAPIBaseURL = @"http://10.0.0.10:8080/FameApp/api/";   // TODO: change IP to domain
-//    appAPIBaseUploaderURL = @"http://10.0.0.10:8080/Uploader/api/";   // TODO: change IP to domain
+//    appAPIBaseURL = @"http://10.0.0.10:8080/FameApp/api/";
+//    appAPIBaseUploaderURL = @"http://10.0.0.10:8080/Uploader/api/";
     
     webLinks = [[NSDictionary alloc] initWithObjectsAndKeys:
-                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"TERMS_OF_USE",  // TODO: use REAL path
-                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"PRIVACY_POLICY",  // TODO: use REAL path
-                @"https://www.youtube.com/watch?v=CMm6tDavSXg", @"FORGOT_PASSWORD",  // TODO: use REAL path
+                @"http://thefameapp.co/terms?app", @"TERMS_OF_USE",
+                @"http://thefameapp.co/privacy?app", @"PRIVACY_POLICY",
+                @"http://thefameapp.co/forgot?app", @"FORGOT_PASSWORD",
                 nil];
     
     // global UI appearance

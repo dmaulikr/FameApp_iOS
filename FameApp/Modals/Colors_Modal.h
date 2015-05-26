@@ -13,7 +13,9 @@
 
 #pragma mark - Navigation Bar Color
 + (UIColor *) getUIColorForNavigationBar_backgroundColor;
+/*! DARK */
 + (UIColor *) getUIColorForNavigationBar_tintColor;
+/*! WHITE */
 + (UIColor *) getUIColorForNavigationBar_tintColor_1;
 
 #pragma mark - Main Colors

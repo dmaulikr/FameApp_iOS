@@ -69,7 +69,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
     [self.navigationController.navigationBar setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor_1]];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
+                                                                     [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     self.navigationItem.title = @"POSTING YOUR FAME...";
     
     [self setStateForCloseButton:NO];
@@ -177,6 +177,23 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 
 - (void)samplePostStatus:(NSTimer *)timer {
     
+//    // TODO: DEBUG - REMOVE
+//    isWin = YES;
+//    isBeingPublished = YES;
+//    
+//    // set slotmachine to win
+//    [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
+//                                    [NSNumber numberWithInteger:0],
+//                                    [NSNumber numberWithInteger:0],
+//                                    [NSNumber numberWithInteger:0],
+//                                    [NSNumber numberWithInteger:0],
+//                                    nil]];
+//    
+//    currentPost.isPublished = true;
+//    currentPost.countViews += arc4random() % 5000;
+//    currentPost.countNices += arc4random() % 500;
+//    [self updateWinningGraphAndLabels:currentPost.countViews niceCount:currentPost.countNices updateCount:sampleCount++];
+    
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -195,12 +212,12 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                    
                    // LIMBO: waiting
-                   if ([[repDict objectForKey:@"postStatus"] intValue] == 0) {
+                   if ([[repDict objectForKey:@"postStatus"] intValue] == 1) {
                        
                        // do nothing for now
                    }
                    // WIN: published. WEEEE!!
-                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 2) {
+                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 3) {
                        
                        if (isBeingPublished == NO) {
                            
@@ -238,7 +255,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                                                        [NSNumber numberWithInteger:0],
                                                        [NSNumber numberWithInteger:0],
                                                        nil]];
-                       
+
                        currentPost.isPublished = false;
                        currentPost.countViews = 0;
                        currentPost.countNices = 0;
@@ -369,7 +386,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     
     [self initGraphView];
     [self initTimerView];
-    [self startTimer:0 finishSeconds:currentPost.timerMSec];
+    [self startTimer:0 finishSeconds:currentPost.timerMSec / 1000];
     
     [winView setAlpha:0.0f];
     [winView setHidden:NO];
@@ -450,10 +467,10 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     winGraphView.frame = aFrame;
     
     
-    NSString *niceLabelString = [NSString stringWithFormat:@"<niceNumber>%d</niceNumber> <niceText>loved it</niceText>", niceCount];
+    NSString *niceLabelString = [NSString stringWithFormat:@"<niceNumber>%@</niceNumber> <niceText>loved it</niceText>", [FormattingHelper formatNumberIntoString:niceCount]];
     [winGraphNicesLabel setAttributedText:[niceLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
     
-    NSString *viewsLabelString = [NSString stringWithFormat:@"<viewsText>seen by</viewsText> <viewsNumber>%d</viewsNumber>", viewsCount];
+    NSString *viewsLabelString = [NSString stringWithFormat:@"<viewsText>seen by</viewsText> <viewsNumber>%@</viewsNumber>", [FormattingHelper formatNumberIntoString:viewsCount]];
     [winGraphViewsLabel setAttributedText:[viewsLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
 }
 

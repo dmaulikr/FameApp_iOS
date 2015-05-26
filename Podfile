@@ -10,6 +10,7 @@ pod 'IQDropDownTextField',          '~> 1.0.4.1'
 pod 'NVDate',                       '~> 0.0.2'
 pod 'UINavigationItem+Loading',     '~> 1.1'
 pod 'BlocksKit',                    '~> 2.2.5'
+pod 'SHGestureRecognizerBlocks',    '~> 1.1.1'
 
 pod 'DFImageManager',               '~> 0.3.1'
 pod 'DFImageManager/AFNetworking'

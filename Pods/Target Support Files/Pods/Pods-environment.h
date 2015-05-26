@@ -223,6 +223,12 @@
 #define COCOAPODS_VERSION_MINOR_NVDate 0
 #define COCOAPODS_VERSION_PATCH_NVDate 2
 
+// SHGestureRecognizerBlocks
+#define COCOAPODS_POD_AVAILABLE_SHGestureRecognizerBlocks
+#define COCOAPODS_VERSION_MAJOR_SHGestureRecognizerBlocks 1
+#define COCOAPODS_VERSION_MINOR_SHGestureRecognizerBlocks 1
+#define COCOAPODS_VERSION_PATCH_SHGestureRecognizerBlocks 1
+
 // SQPersist
 #define COCOAPODS_POD_AVAILABLE_SQPersist
 #define COCOAPODS_VERSION_MAJOR_SQPersist 1

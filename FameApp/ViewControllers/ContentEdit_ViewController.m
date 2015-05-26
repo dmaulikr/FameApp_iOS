@@ -259,7 +259,8 @@ int dt;
                    Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
                    myViewController.contentImage = contentImageItself;
                    myViewController.currentPost = currentPost;
-                   [self presentViewController:myViewController animated:YES completion:nil];
+                   
+                   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:myViewController] animated:YES completion:nil];
                    
                }
                // Failure
