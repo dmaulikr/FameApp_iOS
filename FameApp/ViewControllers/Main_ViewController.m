@@ -13,7 +13,7 @@ static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE = 1;
 static int const REASON_TO_SHOW_NEXT_CONTENT__REGULAR = 2;
 int dt;
 
-// FIXME: short cache is not released
+// FIXME: short cache is not released  ???
 
 // FIXME: stop timer on report. When popup dismissed, flush the queues and get content.
 
@@ -31,7 +31,8 @@ int dt;
 @synthesize userImageView, userInfoLabel, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
-@synthesize timerController, timerPercentCount, timer, timerFinishSeconds, isReachedTimerOnLastMoments, reasonToShowNextContent;
+@synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
+@synthesize isReachedTimerOnLastMoments, reasonToShowNextContent, seenTimeBeforeSkipped_mSec;
 @synthesize popup, radio1, reportMsgField, popupStatus;
 
 
@@ -222,7 +223,8 @@ int dt;
     if (timer != nil) {
         [timer invalidate];
     }
-    timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(timerInverval:) userInfo:nil repeats:YES];
+    seenTimeBeforeSkipped_mSec = 0;
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10 target:self selector:@selector(contentTimerInverval:) userInfo:nil repeats:YES];
     timerFinishSeconds = finishSeconds;
     timerPercentCount = startSeconds / (CGFloat)finishSeconds * 100;
     [timerController startWithBlock:^CGFloat {
@@ -240,7 +242,9 @@ int dt;
     isReachedTimerOnLastMoments = NO;
 }
 
-- (void)timerInverval:(NSTimer *)aTimer {
+- (void)contentTimerInverval:(NSTimer *)aTimer {
+    
+    seenTimeBeforeSkipped_mSec += aTimer.timeInterval * 1000;
     
     timerPercentCount += 100/(CGFloat)timerFinishSeconds/10;
     
@@ -531,17 +535,17 @@ int dt;
         
         [self colorTransitionBetweenContents_CloseType:becauseType completion:^(void) {
             
-            [self setContentViews:YES becauseType:becauseType];
+            [self setContentViews:YES becauseType:becauseType attemptCount:0];
         }];
     }
     // only the open transition
     else {
         
-        [self setContentViews:YES becauseType:becauseType];
+        [self setContentViews:YES becauseType:becauseType attemptCount:0];
     }
 }
 
-- (void)setContentViews:(BOOL)animated becauseType:(int)becauseType {
+- (void)setContentViews:(BOOL)animated becauseType:(int)becauseType attemptCount:(int)attemptCount {
     
     NSLog(@"SET CONTENT VIEWS");  // TODO: DEBUG - REMOVE
     
@@ -568,13 +572,18 @@ int dt;
     // verify 'currentContent' is not nil.
     if (currentContent == nil) {
         
-        // TODO: if after 5 seconds there is nothing in the queue, call for get content
+        // if after 5 retries there is nothing in the queue, call get content
+        if (attemptCount == 5) {
+            
+            attemptCount = -1;
+            [self callGetContent];
+        }
         
         int64_t delayInSeconds = 1;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [self setContentViews:animated becauseType:becauseType];
+            [self setContentViews:animated becauseType:becauseType attemptCount:attemptCount+1];
         });
         
         return;
@@ -618,7 +627,7 @@ int dt;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [self setContentViews:animated becauseType:becauseType];
+            [self setContentViews:animated becauseType:becauseType attemptCount:0];
         });
         
         return;
@@ -653,10 +662,10 @@ int dt;
     else {
         
         [skipButton setEnabled:NO];
-//        [skipButton setAlpha:0.6f];
+//        [skipButton setAlpha:0.6f];  // TODO: what should be done when the button is disabled ???
         
         [niceButton setEnabled:NO];
-//        [niceButton setAlpha:0.6f];
+//        [niceButton setAlpha:0.6f];  // TODO: what should be done when the button is disabled ???
     }
 }
 
@@ -672,7 +681,7 @@ int dt;
     // it triggers the 'didStopProgressTimer' method.
     [self stopTimer];
     
-    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
+    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE timerPoint:seenTimeBeforeSkipped_mSec postId:currentContent_postId];
 }
 
 - (IBAction)skipButtonPressed:(id)sender {
@@ -687,7 +696,7 @@ int dt;
     // it triggers the 'didStopProgressTimer' method.
     [self stopTimer];
     
-    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE timerPoint:100 postId:currentContent_postId];  // TODO: what should be the timerPoint ???
+    [self callSkipWithActionType:REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE timerPoint:seenTimeBeforeSkipped_mSec postId:currentContent_postId];
 }
 
 #pragma mark - Color Transition related

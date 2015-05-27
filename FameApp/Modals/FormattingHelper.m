@@ -40,11 +40,11 @@
     
     if (sourceRef == 0) {
         
-        return @"Have you seen all the wacky stuff on Fame App?!\nhttp://thefameapp.co/ref=0";
+        return @"Have you seen all the wacky stuff on Fame App?!\nhttp://thefameapp.co/?ref=0";
     }
     else if (sourceRef == 1) {
         
-        return @"You just must try Fame App\nIt's crazy..\nhttp://thefameapp.co/ref=1";
+        return @"You just must try Fame App\nIt's crazy..\nhttp://thefameapp.co/?ref=1";
     }
     else {
         
@@ -61,11 +61,11 @@
     
 //    if (sourceRef == 0) {
 //        
-//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/ref=0", name];
+//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/?ref=0", name];
 //    }
 //    else if (sourceRef == 1) {
 //        
-//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/ref=0", name];
+//        return [NSString stringWithFormat:@"%@, you must checkout Fame app\nIt's crazy..\nhttp://thefameapp.co/?ref=0", name];
 //    }
 //    else {
 //        

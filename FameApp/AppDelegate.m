@@ -33,6 +33,7 @@
                 @"http://thefameapp.co/terms?app", @"TERMS_OF_USE",
                 @"http://thefameapp.co/privacy?app", @"PRIVACY_POLICY",
                 @"http://thefameapp.co/forgot?app", @"FORGOT_PASSWORD",
+                @"http://thefameapp.co/licenses?app", @"LICENSES",
                 nil];
     
     // global UI appearance

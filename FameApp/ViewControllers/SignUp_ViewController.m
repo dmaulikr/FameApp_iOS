@@ -11,7 +11,7 @@
 
 int dt;
 
-// TODO: should be ask for the SEX ?
+// TODO: LATER - should be ask for the SEX ?
 
 @interface SignUp_ViewController ()
 @end
@@ -297,11 +297,4 @@ int dt;
 }
 
 @end
-
-
-
-
-
-
-
 

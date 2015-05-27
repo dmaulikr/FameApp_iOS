@@ -79,6 +79,11 @@
             
             [self showWebPage:[appDelegateInst.webLinks objectForKey:@"TERMS_OF_USE"] title:@"TERMS OF USE"];
         }
+        // Terms of Use
+        else if (indexPath.row == 2) {
+            
+            [self showWebPage:[appDelegateInst.webLinks objectForKey:@"LICENSES"] title:@"LICENSES"];
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

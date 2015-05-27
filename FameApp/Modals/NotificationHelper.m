@@ -10,7 +10,7 @@
 
 @implementation NotificationHelper
 
-+ (NSString *)getNotificationToken {  // TODO: incomplete
++ (NSString *)getNotificationToken {  // TODO: LATER - incomplete
     
     return @"-1";
 }

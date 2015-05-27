@@ -54,6 +54,7 @@
 @property (nonatomic) NSInteger timerFinishSeconds;
 @property (nonatomic) BOOL isReachedTimerOnLastMoments;
 @property (nonatomic) int reasonToShowNextContent;
+@property (nonatomic) int seenTimeBeforeSkipped_mSec;
 
 @property (nonatomic, strong) KLCPopup* popup;
 @property (nonatomic, strong) DLRadioButton *radio1;
