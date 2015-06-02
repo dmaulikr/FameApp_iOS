@@ -96,6 +96,10 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+//    CGRect aFrame = [self.view viewWithTag:666].frame;
+//    aFrame.size.height = aFrame.size.width;
+//    [[self.view viewWithTag:666] setFrame:aFrame];
+    
     if (initializeCamera){
         initializeCamera = NO;
         

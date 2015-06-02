@@ -15,9 +15,7 @@ int dt;
 
 // FIXME: short cache is not released  ???
 
-// FIXME: stop timer on report. When popup dismissed, flush the queues and get content.
-
-
+// FIXME: on reply from App API methods: each reply method should handle NSNull by replacing it with a value that the app can handle without crashing, or getting stuck.
 
 @interface Main_ViewController ()
 @end
@@ -549,6 +547,16 @@ int dt;
     
     NSLog(@"SET CONTENT VIEWS");  // TODO: DEBUG - REMOVE
     
+    
+    // for when the logout was called
+    if (appDelegateInst.loginUser == nil) {
+        
+        [timer invalidate];
+        timer = nil;
+        
+        return;
+    }
+    
     NSDictionary *currentContent = nil;
     
     // use main Queue
@@ -599,6 +607,10 @@ int dt;
     NSString *currentContent_userId = [currentContent objectForKey:@"userId"];
     NSString *currentContent_userDisplayName = [currentContent objectForKey:@"userDisplayName"];
     NSString *currentContent_userImageURL = [currentContent objectForKey:@"userImageUrl"];
+    
+    NSLog(@"\t\t\tUSER_ID: %@", currentContent_userId);
+    NSLog(@"\t\t\tPOST:    %@", currentContent_postId);
+    NSLog(@"\t\t\tCONTENT: %@", currentContent_imageURL);
     
     
     // adjust start time to match elapse time since we queued the content to nowTime.
@@ -911,6 +923,12 @@ int dt;
 #pragma mark - 'Report This?' related
 - (IBAction)showReportThisPopup:(UIButton *)aButton {
     
+    // stop timer on report. flush the queues.
+    [timer invalidate];
+    timer = nil;
+    [contentQueue_1 clear];
+    [contentQueue_2 clear];
+    
     // Generate content view to present
     UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 300 / 2, 50, 300, 370)];
     popupView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -1018,11 +1036,19 @@ int dt;
 - (void)cancelButtonPressed_reportThis:(UIButton *)aButton {
     
     [popup dismiss:YES];
+    
+    // getContent. restart.
+    [self callGetContent];
+    [self stopTimer];
 }
 
 - (void)reportButtonPressed_reportThis:(UIButton *)aButton {
     
     [popup dismiss:YES];
+    
+    // getContent. restart.
+    [self callGetContent];
+    [self stopTimer];
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -1123,7 +1149,7 @@ int dt;
             else {
                 // An error occurred, more info is available by looking at the specific status returned.
                 
-                NSLog(@"LOC ERROR 2");  // TODO: need to try again, next time the app opens
+                NSLog(@"LOC ERROR 2");  // TODO: LATER - need to try again, next time the app opens
             }
         }];
 }

@@ -37,6 +37,11 @@ int dt;
     
     appDelegateInst = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [CustomSegueHelper_Modal setCustomBackButton:self];
+    
+    [self initSubViews];
+    [self initLabelAttributes];
+    
+    [self initTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -48,10 +53,7 @@ int dt;
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     self.navigationItem.title = @"YOU";
     
-    [self initSubViews];
-    [self initLabelAttributes];
-    
-    [self initTableView];
+    [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
 }
 
 #pragma mark - Subviews init by device type
@@ -65,8 +67,6 @@ int dt;
         [userDisplayNameLabel setText:appDelegateInst.loginUser.userDisplayName];
     }
     [userIdLabel setText:appDelegateInst.loginUser.userId];
-    
-    [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
     
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_6]];
@@ -314,6 +314,11 @@ int dt;
     // bind Re-Post action
     if (isRePostButton) {
         
+        UIActivityIndicatorView *mActivity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(aButton.center.x, aButton.center.y+30, 10, 10)];
+        [aButton addSubview:mActivity];
+        [mActivity startAnimating];
+        [aButton setEnabled:NO];
+        
         [yesButton addTarget:self action:@selector(rePostAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     // bind Delete action
@@ -340,12 +345,15 @@ int dt;
 
 - (void)noButtonPressed:(UIButton *)aButton {
     
+    [postsTableView reloadData];
     [popup dismiss:YES];
 }
 
 - (void)rePostAction:(UIButton *)aButton {
     
     NSLog(@"REPOST: %ld", (long)aButton.tag);
+    
+    [popup dismiss:YES];
     
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_REPOST);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
@@ -376,6 +384,8 @@ int dt;
              
              NSLog(@"App API - Reply: (Re)Post Image [SUCCESS]");
              
+             [postsTableView reloadData];
+             
              NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostImage:responseObject];
              
              // Success
@@ -402,6 +412,8 @@ int dt;
              NSLog(@"App API - Reply: (Re)Post Image [FAILURE]");
              NSLog(@"%@", error);
              
+             [postsTableView reloadData];
+             
              // delete locally stored image
              [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
              
@@ -410,8 +422,6 @@ int dt;
              [self showStatusPopup:NO message:[FormattingHelper formatGeneralErrorMessage]];
          }
      ];
-
-    [popup dismiss:YES];
 }
 
 - (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself currentPost:(PostHistory *)currentPost {
@@ -427,6 +437,8 @@ int dt;
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
                NSLog(@"App API - Reply: Post Info [SUCCESS]");
+               
+               [postsTableView reloadData];
                
                NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostInfo:responseObject];
                
@@ -461,6 +473,8 @@ int dt;
                
                NSLog(@"App API - Reply: Post Info [FAILURE]");
                NSLog(@"%@", error);
+               
+               [postsTableView reloadData];
                
                // delete locally stored image
                [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
@@ -551,7 +565,7 @@ int dt;
                      dismissOnContentTouch:NO];
     
     [popup showWithLayout:layout];
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(dismissStatusPopup:) userInfo:nil repeats:NO];
 }
 
 - (void)dismissStatusPopup:(NSTimer *)aTimer {
@@ -620,7 +634,7 @@ int dt;
 
 -(void)didFinishPickingImage:(UIImage *)image {
     
-    [userImageView setImage:image];
+//    [userImageView setImage:image];
     
     
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
@@ -647,6 +661,8 @@ int dt;
                  
                  appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
                  [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
+                 
+                 [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
                  
                  [self showStatusPopup:YES message:@"Profile image updated."];
              }

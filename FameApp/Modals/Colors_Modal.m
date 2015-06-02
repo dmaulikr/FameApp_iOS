@@ -11,7 +11,7 @@
 @implementation Colors_Modal
 
 
-// TODO: need to adjust the color shown in real device to be exactly like in the simulator.
+// FIXME: need to adjust the color shown in real device to be exactly like in the simulator.
 
 
 #pragma mark - Navigation Bar Color

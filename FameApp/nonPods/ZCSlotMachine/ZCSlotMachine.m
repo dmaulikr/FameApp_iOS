@@ -52,7 +52,7 @@ static const NSUInteger kMinTurn = 6;
         [self addSubview:_contentView];
         
         _coverImageView = [[UIImageView alloc] initWithFrame:frame];
-        _coverImageView.contentMode = UIViewContentModeCenter;
+        _coverImageView.contentMode = UIViewContentModeScaleAspectFit;//UIViewContentModeCenter;
         [self addSubview:_coverImageView];
         
         _slotScrollLayerArray = [NSMutableArray array];

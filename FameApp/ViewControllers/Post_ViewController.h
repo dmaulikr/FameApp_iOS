@@ -22,6 +22,7 @@
 #import "FormattingHelper.h"
 #import "AFNetworking.h"
 #import "AppAPI_Post_Modal.h"
+#import "DeviceTypeHelper.h"
 
 
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource, KKProgressTimerDelegate>
@@ -55,6 +56,7 @@
 @property (nonatomic) NSInteger winTimerFinishSeconds;
 @property (nonatomic) int sampleCount;
 
+@property (nonatomic) CGFloat bonusPoints;
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseLabel;
 @property (nonatomic, strong) IBOutlet WPHotspotLabel *loseWantMoreLabel;
 

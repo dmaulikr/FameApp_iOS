@@ -124,19 +124,19 @@ int dt;
                    
                    if ([errorField isEqualToString:@"userId"]) {
                        
-                       [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                       [[self.view viewWithTag:999] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
                    }
                    else if ([errorField isEqualToString:@"password"]) {
                        
-                       [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                       [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
                    }
                    else if ([errorField isEqualToString:@"email"]) {
                        
-                       [[self.view viewWithTag:1002] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                       [[self.view viewWithTag:1001] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
                    }
                    else if ([errorField isEqualToString:@"bday"]) {
                        
-                       [[self.view viewWithTag:1003] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
+                       [[self.view viewWithTag:1002] setBackgroundColor:[Colors_Modal getUIColorForMain_4]];
                    }
                    
                    [self showStatusPopup:NO message:[repDict objectForKey:@"statusMsg"]];
@@ -217,6 +217,7 @@ int dt;
 #pragma mark - Text Fields & Date Picker related
 - (void)initTextFields {
     
+    [userIdField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [passwordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }

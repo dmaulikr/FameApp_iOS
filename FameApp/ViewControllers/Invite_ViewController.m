@@ -39,6 +39,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [self.navigationController.navigationBar setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     self.navigationItem.title = @"INVITE";
     
     invitedContacts = [[NSMutableArray alloc] init];
@@ -110,7 +111,7 @@
                 }];
            }];
                
-               // TODO: LATER need to use the 'shareBonus'
+               // TODO: LATER - need to use the 'shareBonus'
                
            } // End of Request 'Success'
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {

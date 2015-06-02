@@ -9,6 +9,7 @@
 #import "Post_ViewController.h"
 
 const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
+int dt;
 
 @interface Post_ViewController () {
     
@@ -17,11 +18,6 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     NSDictionary *restoreNavBar_titleTextAttributes;
 }
 @end
-
-
-// TODO: update server on bonus earned ? (or the server already knows???)
-
-// FIXME: re-adjust screen to all iPhone types.
 
 // TODO: better looking screen design - more like the main screen maybe ?
 
@@ -39,7 +35,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 @synthesize isBeingPublished;
 @synthesize winningOddsLabel, bonusOddsLabel;
 @synthesize winHeaderLabel, winImageView, winGraphView, winGraphNicesLabel, winGraphViewsLabel;
-@synthesize loseLabel, loseWantMoreLabel;
+@synthesize bonusPoints, loseLabel, loseWantMoreLabel;
 @synthesize labelAttributeStyle1;
 @synthesize winTimer, winTimerController, winTimerPercentCount, winTimerFinishSeconds, sampleCount;
 
@@ -64,29 +60,27 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     restoreNavBar_tintColor = self.navigationController.navigationBar.tintColor;
     restoreNavBar_titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;
     
+    self.navigationItem.title = @"POSTING YOUR FAME...";
+    
+    [self setStateForCloseButton:NO];
+    [self initLabelStyles];
+    
+    [self initSlotMachine];
+    [self startSlotMachine];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForMain_3]];
     [self.navigationController.navigationBar setTintColor:[Colors_Modal getUIColorForNavigationBar_tintColor_1]];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                      [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
-    self.navigationItem.title = @"POSTING YOUR FAME...";
     
-    [self setStateForCloseButton:NO];
-    [self initLabelStyles];
     [self initSubViews];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [super viewDidAppear:animated];
-    
-    [self startSlotMachine];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -116,10 +110,55 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [self presentViewController:myNavigationController animated:YES completion:nil];
 }
 
+// FIXME: adjust the damn screen to match all iPhones.  -->  TEST iPhone4.x & iPhone5.x
 - (void)initSubViews {
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [self initBiddingView];
+    
+    dt = [DeviceTypeHelper getDeviceType];
+    if (dt == IPHONE_6PLUS) {
+        
+        [self initSubViews_iPhone6Plus];
+    }
+    else if (dt == IPHONE_6) {
+        
+        [self initSubViews_iPhone6];
+    }
+    else if (dt == IPHONE_5x) {
+        
+        [self initSubViews_iPhone5x];
+    }
+    else if (dt == IPHONE_4x) {
+        
+        [self initSubViews_iPhone4x];
+    }
+    
+    [[self.view viewWithTag:3002] setFrame:winImageView.frame];
+    
+    CGRect aFrame = winGraphViewsLabel.frame;
+    aFrame.origin.y = winImageView.frame.origin.y + winImageView.frame.size.height - 57;
+    [winGraphViewsLabel setFrame:aFrame];
+}
+
+- (void)initSubViews_iPhone6Plus {
+    
+    [winImageView setFrame:CGRectMake(winImageView.frame.origin.x, winImageView.frame.origin.y, 394, 394)];
+}
+
+- (void)initSubViews_iPhone6 {
+    
+    [winImageView setFrame:CGRectMake(winImageView.frame.origin.x, winImageView.frame.origin.y, 360, 360)];
+}
+
+- (void)initSubViews_iPhone5x {
+    
+    [winImageView setFrame:CGRectMake(winImageView.frame.origin.x, winImageView.frame.origin.y, 300, 300)];
+}
+
+- (void)initSubViews_iPhone4x {
+    
+    [winImageView setFrame:CGRectMake(winImageView.frame.origin.x, winImageView.frame.origin.y, 300, 300)];
 }
 
 - (void)initBiddingView {
@@ -130,7 +169,6 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     [loseLabel setHidden:YES];
     
     [self initBiddingAndBonusInfoViews];
-    [self initSlotMachine];
 }
 
 - (void)initBiddingAndBonusInfoViews {
@@ -154,8 +192,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 - (void)initSlotMachine {
     
     slotIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"SlotMachine_Win"],
-                                          [UIImage imageNamed:@"SlotMachine_Lose1"],
-                                          [UIImage imageNamed:@"SlotMachine_Lose2"],
+                                          [UIImage imageNamed:@"SlotMachine_Lose1"],  // 0.5% bonus
+                                          [UIImage imageNamed:@"SlotMachine_Lose2"],  // 1.0% bonus
                                           [UIImage imageNamed:@"SlotMachine_Lose3"], nil];
     
     mySlotMachine = [[ZCSlotMachine alloc] initWithFrame:CGRectMake(0, 0, 291, 193)];
@@ -248,13 +286,10 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                        [sampleTimer_postStatus invalidate];
                        sampleTimer_postStatus = nil;
                        
+                       bonusPoints = [[repDict objectForKey:@"bonusPoints"] floatValue];
+                       
                        // set slotmachine to lose
-                       [mySlotMachine setFinalResults:[NSArray arrayWithObjects:
-                                                       [NSNumber numberWithInteger:0],  // TODO: incomplete - lose values are to be set by the server
-                                                       [NSNumber numberWithInteger:0],
-                                                       [NSNumber numberWithInteger:0],
-                                                       [NSNumber numberWithInteger:0],
-                                                       nil]];
+                       [mySlotMachine setFinalResults:[self getArrayForLost:bonusPoints]];
 
                        currentPost.isPublished = false;
                        currentPost.countViews = 0;
@@ -270,7 +305,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                    // for error, make it look like the user lost
                    isWin = NO;
                    
-                   // TODO: set the earned bonus to ZERO
+                   bonusPoints = 0;
                    
                    [sampleTimer_postStatus invalidate];
                    sampleTimer_postStatus = nil;
@@ -301,7 +336,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                // for error, make it look like the user lost
                isWin = NO;
                
-               // TODO: set the earned bonus to ZERO
+               bonusPoints = 0;
                
                [sampleTimer_postStatus invalidate];
                sampleTimer_postStatus = nil;
@@ -373,6 +408,31 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 - (CGFloat)slotSpacingInSlotMachine:(ZCSlotMachine *)slotMachine {
     
     return 5.0f;
+}
+
+- (NSArray *)getArrayForLost:(CGFloat)aBonusPoints {
+    
+    NSMutableArray *retArray = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<4; i++) {
+        
+        if (aBonusPoints >= 1) {
+            
+            aBonusPoints--;
+            [retArray addObject:[NSNumber numberWithInteger:2]];  // add 1.0% bonus
+        }
+        else if ((aBonusPoints > 0) && (aBonusPoints < 1)) {
+            
+            aBonusPoints = 0;
+            [retArray addObject:[NSNumber numberWithInteger:1]];  // add 0.5% bonus
+        }
+        else {
+            
+            [retArray addObject:[NSNumber numberWithInteger:3]];  // :(
+        }
+    }
+    
+    return retArray;
 }
 
 #pragma mark - Winning related
@@ -486,6 +546,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
         [loseWantMoreLabel setHidden:NO];
         [self setStateForCloseButton:YES];
         
+        [winHeaderLabel setText:@"WELL DONE!!"];
+        
         // TODO: do I need to get status one more time to get the FINAL SCORE?
         
         // TODO: Show a really cool message that the user is a fucking mega star!!!!
@@ -555,8 +617,8 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
     
     self.navigationItem.title = @"NOT PUBLISHED :(";
     
-    BOOL isEarnedBonus = YES;  // TODO: need to set the value using real results
-    NSString *earnedBonusString = @"1.5%";  // TODO: need to set from real result
+    BOOL isEarnedBonus = (bonusPoints > 0) ? YES : NO;
+    NSString *earnedBonusString = [NSString stringWithFormat:@"%f%%", bonusPoints];
     
     NSString *loseLabelString = @"";
     NSString *loseWantMoreLabelString = @"";
@@ -603,6 +665,12 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
 #pragma mark - Label style related
 - (void)initLabelStyles {
     
+    CGFloat bonusOddsNumberFontSize = 50.0;
+    if ((dt == IPHONE_4x) || (dt == IPHONE_5x)) {
+        
+        bonusOddsNumberFontSize = 30.0;
+    }
+    
     labelAttributeStyle1 = @{
                              @"body":[UIFont fontWithName:@"HelveticaNeue" size:30.0],
                              @"niceNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:50.0], [Colors_Modal getUIColorForMain_5]],
@@ -610,7 +678,7 @@ const NSTimeInterval POST_STATUS__SAMPLE_INTERVAL_SECONDS = 1;
                              @"viewsNumber":@[[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0], [UIColor whiteColor]],
                              @"viewsText":@[[UIFont fontWithName:@"HelveticaNeue" size:20.0], [UIColor whiteColor]],
                              
-                             @"bonusOddsNumber":@[[UIFont fontWithName:@"HelveticaNeue-Bold" size:50.0], [Colors_Modal getUIColorForContentLabel_1]],
+                             @"bonusOddsNumber":@[[UIFont fontWithName:@"HelveticaNeue-Bold" size:bonusOddsNumberFontSize], [Colors_Modal getUIColorForContentLabel_1]],
                              @"wantMoreLink":[WPAttributedStyleAction styledActionWithAction:^{
                                  
                                  UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
