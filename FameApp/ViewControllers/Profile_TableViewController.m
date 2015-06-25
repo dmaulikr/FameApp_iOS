@@ -53,7 +53,7 @@ int dt;
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
     self.navigationItem.title = @"YOU";
     
-    [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
+    [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit] completeBlock:nil];
 }
 
 #pragma mark - Subviews init by device type
@@ -662,7 +662,7 @@ int dt;
                  appDelegateInst.loginUser.userImageURL = [repDict objectForKey:@"imageUrl"];
                  [DataStorageHelper setLoginUserInfo:appDelegateInst.loginUser];
                  
-                 [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit]];
+                 [URLHelper setImageWithDefaultCache:appDelegateInst.loginUser.userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfileEdit] completeBlock:nil];
                  
                  [self showStatusPopup:YES message:@"Profile image updated."];
              }

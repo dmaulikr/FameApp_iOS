@@ -67,6 +67,8 @@ int dt;
     
     [self initSlotMachine];
     [self startSlotMachine];
+    
+    [self initSubViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,7 +82,6 @@ int dt;
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                      [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     
-    [self initSubViews];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -618,7 +619,7 @@ int dt;
     self.navigationItem.title = @"NOT PUBLISHED :(";
     
     BOOL isEarnedBonus = (bonusPoints > 0) ? YES : NO;
-    NSString *earnedBonusString = [NSString stringWithFormat:@"%f%%", bonusPoints];
+    NSString *earnedBonusString = [NSString stringWithFormat:@"%.1f%%", bonusPoints];
     
     NSString *loseLabelString = @"";
     NSString *loseWantMoreLabelString = @"";

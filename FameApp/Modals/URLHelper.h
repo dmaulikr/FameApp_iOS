@@ -12,12 +12,13 @@
 #import "DFImageRequest.h"
 #import "DFImageRequestOptions.h"
 
+typedef void(^myCompleteBlock)(BOOL);
 
 @interface URLHelper : NSObject
 
 #pragma mark - Set Image with cache, related
-+ (void)setImageWithDefaultCache:(NSString *)imageURL imageView:(UIImageView *)imageView placeholderImageName:(NSString *)placeholderImageName;
-+ (void)setImageWithShortCache:(NSString *)imageURL imageView:(UIImageView *)imageView placeholderImageName:(NSString *)placeholderImageName;
++ (void)setImageWithDefaultCache:(NSString *)imageURL imageView:(UIImageView *)imageView placeholderImageName:(NSString *)placeholderImageName completeBlock:(myCompleteBlock)completeBlock;
++ (void)setImageWithShortCache:(NSString *)imageURL imageView:(UIImageView *)imageView placeholderImageName:(NSString *)placeholderImageName completeBlock:(myCompleteBlock)completeBlock;
 
 #pragma mark - Preload Image into cache, related
 + (void)preloadImageWithDefaultCache:(NSString *)imageURL;

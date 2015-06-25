@@ -8,6 +8,8 @@
 
 #import "Options_TableViewController.h"
 
+// TODO: add copyright notice
+
 @interface Options_TableViewController ()
 @end
 

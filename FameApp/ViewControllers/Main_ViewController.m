@@ -17,6 +17,7 @@ int dt;
 
 // FIXME: on reply from App API methods: each reply method should handle NSNull by replacing it with a value that the app can handle without crashing, or getting stuck.
 
+
 @interface Main_ViewController ()
 @end
 
@@ -229,6 +230,8 @@ int dt;
         
         return timerPercentCount / 100;
     }];
+    
+    [self setSkipButtonStatus:YES];
 }
 
 - (void)stopTimer {
@@ -252,10 +255,10 @@ int dt;
         [self stopTimer];
     }
     
-    if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
-        
-        [self setSkipButtonStatus:YES];
-    }
+//    if ((timerPercentCount > 25) && ([skipButton isEnabled] == NO)) {
+//        
+//        [self setSkipButtonStatus:YES];
+//    }
     
     if ((timerPercentCount > 75) && (isReachedTimerOnLastMoments == NO)) {
         
@@ -279,7 +282,9 @@ int dt;
 
 - (void)didStopProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
     
-    NSLog(@"TIMER DONE.");
+    //NSLog(@"TIMER DONE.");
+    
+    [self setSkipButtonStatus:NO];
     
     // continue the cycle only if there is a login user
     if (appDelegateInst.loginUser != nil) {
@@ -287,7 +292,6 @@ int dt;
         [self showNextContent:NO becauseType:reasonToShowNextContent];
         reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__REGULAR;
         
-        [self setSkipButtonStatus:NO];
         [self getBiddingInfo];
     }
 }
@@ -299,7 +303,8 @@ int dt;
     if (appDelegateInst.myBiddingAndBonusInfo == nil) {
         
         [[self.view viewWithTag:2001] setHidden:YES];
-        [[self.view viewWithTag:2002] setHidden:YES];
+        [[self.view viewWithTag:20021] setHidden:YES];
+        [[self.view viewWithTag:20022] setHidden:YES];
     }
     else {
         
@@ -307,7 +312,8 @@ int dt;
         [oddsBonusLabel setText:[FormattingHelper formatLabelTextForCurrentOddBonus:appDelegateInst.myBiddingAndBonusInfo.bonusOdds]];
         
         [[self.view viewWithTag:2001] setHidden:[appDelegateInst.myBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
-        [[self.view viewWithTag:2002] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+        [[self.view viewWithTag:20021] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+        [[self.view viewWithTag:20022] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
     }
     
     [self getBiddingInfo];
@@ -324,11 +330,11 @@ int dt;
         
         NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_BiddingInfo];
         
-        NSLog(@"App API - Request: Channel Bidding Info");
+        //NSLog(@"App API - Request: Channel Bidding Info");
         [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
+                   //NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
                    
                    NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
                    
@@ -345,7 +351,8 @@ int dt;
                        [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
                        
                        [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
-                       [[self.view viewWithTag:2002] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+                       [[self.view viewWithTag:20021] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+                       [[self.view viewWithTag:20022] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
                        
                        if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
                            
@@ -365,9 +372,10 @@ int dt;
                            }];
                        }
                        
-                       if ([oddsBonusLabel.text isEqualToString:aBiddingAndBonusInfo.bonusOdds] == NO) {
+                       NSString *oddsBonusLabelString = [FormattingHelper formatLabelTextForCurrentOddBonus:aBiddingAndBonusInfo.bonusOdds];
+                       if ([oddsBonusLabel.text isEqualToString:oddsBonusLabelString] == NO) {
                            
-                           [oddsBonusLabel setText:appDelegateInst.myBiddingAndBonusInfo.bonusOdds];
+                           [oddsBonusLabel setText:oddsBonusLabelString];
                            
                            CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
                            [UIView animateWithDuration:1.0 animations:^{
@@ -388,8 +396,8 @@ int dt;
                } // End of Request 'Success'
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                    
-                   NSLog(@"App API - Reply: Channel Bidding Info [FAILURE]");
-                   NSLog(@"%@", error);
+                   //NSLog(@"App API - Reply: Channel Bidding Info [FAILURE]");
+                   //NSLog(@"%@", error);
                    
                    // do nothing
                    
@@ -409,11 +417,11 @@ int dt;
         
         NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_GetContent];
         
-        NSLog(@"App API - Request: Channel Get Content");
+        //NSLog(@"App API - Request: Channel Get Content");
         [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   NSLog(@"App API - Reply: Channel Get Content [SUCCESS]");
+                   //NSLog(@"App API - Reply: Channel Get Content [SUCCESS]");
                    
                    NSDictionary *repDict = [AppAPI_Channel_Modal processReply_GetContent:responseObject];
                    
@@ -435,8 +443,8 @@ int dt;
                } // End of Request 'Success'
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                    
-                   NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
-                   NSLog(@"%@", error);
+                   //NSLog(@"App API - Reply: Channel Get Content [FAILURE]");
+                   //NSLog(@"%@", error);
                    
                    // TODO: what to do with the ERROR ??
                    
@@ -456,11 +464,11 @@ int dt;
         
         NSArray *postReqInfo = [AppAPI_Channel_Modal requestContruct_Skip:postId timerPoint:timerPoint actionType:actionType];
         
-        NSLog(@"App API - Request: Channel Skip");
+        //NSLog(@"App API - Request: Channel Skip");
         [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                    
-                   NSLog(@"App API - Reply: Channel Skip [SUCCESS]");
+                   //NSLog(@"App API - Reply: Channel Skip [SUCCESS]");
                    
                    NSDictionary *repDict = [AppAPI_Channel_Modal processReply_Skip:responseObject];
                    
@@ -478,8 +486,8 @@ int dt;
                } // End of Request 'Success'
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                    
-                   NSLog(@"App API - Reply: Channel Skip [FAILURE]");
-                   NSLog(@"%@", error);
+                   //NSLog(@"App API - Reply: Channel Skip [FAILURE]");
+                   //NSLog(@"%@", error);
                    
                    // TODO: what to do with the ERROR ??
                    
@@ -498,7 +506,8 @@ int dt;
         NSDictionary *aContentObj = [mainContentList objectAtIndex:i];
         [mainQueue enqueue:aContentObj];
         
-        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
+        // TODO: TESTING BUG
+//        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];  // TODO: DEBUG - REMOVE
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
     
@@ -507,7 +516,8 @@ int dt;
         NSDictionary *aContentObj = [skipContentList objectAtIndex:i];
         [skipQueue enqueue:aContentObj];
         
-        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
+        // TODO: TESTING BUG
+//        [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"userImageUrl"]];
         [URLHelper preloadImageWithShortCache:[aContentObj objectForKey:@"contentUrl"]];
     }
 }
@@ -517,7 +527,7 @@ int dt;
     NSInteger nowTime_msec = (NSInteger)([[NSDate date] timeIntervalSince1970] * 1000);
     appTimeOffset = nowTime_msec - serverTime_msec;
     
-//    NSLog(@">>>>>OFFSET: %ld", (long)appTimeOffset);  // TODO: DEBUG - REMOVE
+//    //NSLog(@">>>>>OFFSET: %ld", (long)appTimeOffset);  // TODO: DEBUG - REMOVE
 }
 
 - (NSInteger)getAdjustedAppTime {
@@ -545,7 +555,7 @@ int dt;
 
 - (void)setContentViews:(BOOL)animated becauseType:(int)becauseType attemptCount:(int)attemptCount {
     
-    NSLog(@"SET CONTENT VIEWS");  // TODO: DEBUG - REMOVE
+    //NSLog(@"SET CONTENT VIEWS");  // TODO: DEBUG - REMOVE
     
     
     // for when the logout was called
@@ -598,8 +608,8 @@ int dt;
     }
     
 //    // TODO: DEBUG - REMOVE
-//    NSLog(@"NOW POST_ID:  %@", currentContent_postId);
-//    NSLog(@"NEXT POST_ID: %@", [currentContent objectForKey:@"postId"]);
+//    //NSLog(@"NOW POST_ID:  %@", currentContent_postId);
+//    //NSLog(@"NEXT POST_ID: %@", [currentContent objectForKey:@"postId"]);
     
     
     currentContent_postId = [currentContent objectForKey:@"postId"];
@@ -609,8 +619,9 @@ int dt;
     NSString *currentContent_userImageURL = [currentContent objectForKey:@"userImageUrl"];
     
     NSLog(@"\t\t\tUSER_ID: %@", currentContent_userId);
-    NSLog(@"\t\t\tPOST:    %@", currentContent_postId);
+    //NSLog(@"\t\t\tPOST:    %@", currentContent_postId);
     NSLog(@"\t\t\tCONTENT: %@", currentContent_imageURL);
+    NSLog(@"");
     
     
     // adjust start time to match elapse time since we queued the content to nowTime.
@@ -619,11 +630,11 @@ int dt;
     NSInteger currentContent_timerDuration_msec = [[currentContent objectForKey:@"timerDuration"] integerValue];
     
 //    // TODO: DEBUG - REMOVE
-//    NSLog(@"NOW APP:  %ld", (long)([[NSDate date] timeIntervalSince1970] * 1000));
-//    NSLog(@"NOW REAL: %ld", [self getAdjustedAppTime]);
-//    NSLog(@"START:    %ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
-//    NSLog(@"START:    %ld", currentContent_timerStart_msec);
-//    NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
+//    //NSLog(@"NOW APP:  %ld", (long)([[NSDate date] timeIntervalSince1970] * 1000));
+//    //NSLog(@"NOW REAL: %ld", [self getAdjustedAppTime]);
+//    //NSLog(@"START:    %ld", [[currentContent objectForKey:@"timerStart"] integerValue]);
+//    //NSLog(@"START:    %ld", currentContent_timerStart_msec);
+//    //NSLog(@"DURATION: %ld", currentContent_timerDuration_msec);
 //    
     // protection against irrelevant content
     if (currentContent_timerStart_msec >= currentContent_timerDuration_msec) {
@@ -646,19 +657,20 @@ int dt;
     }
     
     
-    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil];
-    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]];
-    
-    [self setUserInfoLabel:currentContent_userId userDisplayName:currentContent_userDisplayName];
-    
-    [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
-    
-    // delay
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [URLHelper setImageWithShortCache:currentContent_userImageURL imageView:userImageView placeholderImageName:[PlaceholderImageHelper imageNameForUserProfile]  completeBlock:nil];
+    [URLHelper setImageWithShortCache:currentContent_imageURL imageView:contentImageView placeholderImageName:nil completeBlock:^(BOOL finished) {
         
+        [self setUserInfoLabel:currentContent_userId userDisplayName:currentContent_userDisplayName];
+        [self startTimer:currentContent_timerStart_msec/1000 finishSeconds:currentContent_timerDuration_msec/1000];
         [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
-    });
+    }];
+    
+//    // delay
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        
+//        [self colorTransitionBetweenContents_OpenType:becauseType completion:nil];
+//    });
 }
 
 - (void)setSkipButtonStatus:(BOOL)newStatus {
@@ -666,24 +678,28 @@ int dt;
     if (newStatus) {
         
         [skipButton setEnabled:YES];
-        [skipButton setAlpha:1.0f];
+//        [skipButton setAlpha:1.0f];
         
         [niceButton setEnabled:YES];
-        [niceButton setAlpha:1.0f];
+//        [niceButton setAlpha:1.0f];
+        
+        [contentImageView setUserInteractionEnabled:YES];
     }
     else {
         
         [skipButton setEnabled:NO];
-//        [skipButton setAlpha:0.6f];  // TODO: what should be done when the button is disabled ???
+//        [skipButton setAlpha:0.6f];
         
         [niceButton setEnabled:NO];
-//        [niceButton setAlpha:0.6f];  // TODO: what should be done when the button is disabled ???
+//        [niceButton setAlpha:0.6f];
+        
+        [contentImageView setUserInteractionEnabled:NO];
     }
 }
 
 - (IBAction)niceButtonPressed:(id)sender {
     
-    NSLog(@"NICE PRESSED.");
+    //NSLog(@"NICE PRESSED.");
     
     reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE;
     
@@ -698,7 +714,7 @@ int dt;
 
 - (IBAction)skipButtonPressed:(id)sender {
     
-    NSLog(@"NOT NICE PRESSED.");
+    //NSLog(@"NOT NICE PRESSED.");
     
     reasonToShowNextContent = REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE;
     
@@ -870,7 +886,7 @@ int dt;
     // nice related swipes
     SHGestureRecognizerBlock niceSwipeBlock = ^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
         
-        NSLog(@"NICE SWIPE");
+        //NSLog(@"NICE SWIPE");
         
         [self niceButtonPressed:niceButton];
     };
@@ -886,7 +902,7 @@ int dt;
     // skip related swipes
     SHGestureRecognizerBlock skipSwipeBlock = ^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
         
-        NSLog(@"NOT NICE SWIPE");
+        //NSLog(@"NOT NICE SWIPE");
         
         [self skipButtonPressed:skipButton];
     };
@@ -1059,19 +1075,19 @@ int dt;
     
     NSArray *postReqInfo = [AppAPI_Report_Modal requestContruct_ReportContent:currentContent_postId reportReason:reasonString msg:msgFromUser];
     
-    NSLog(@"App API - Request: Report Content");
+    //NSLog(@"App API - Request: Report Content");
     [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
-               NSLog(@"App API - Reply: Report Content [SUCCESS]");
+               //NSLog(@"App API - Reply: Report Content [SUCCESS]");
                
                [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
                
            } // End of Request 'Success'
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                
-               NSLog(@"App API - Reply: Report Content [FAILURE]");
-               NSLog(@"%@", error);
+               //NSLog(@"App API - Reply: Report Content [FAILURE]");
+               //NSLog(@"%@", error);
                
                [self showStatusPopup:YES message:@"Content Reported.\nThank you."];
                
@@ -1149,7 +1165,7 @@ int dt;
             else {
                 // An error occurred, more info is available by looking at the specific status returned.
                 
-                NSLog(@"LOC ERROR 2");  // TODO: LATER - need to try again, next time the app opens
+                //NSLog(@"LOC ERROR 2");  // TODO: LATER - need to try again, next time the app opens
             }
         }];
 }
