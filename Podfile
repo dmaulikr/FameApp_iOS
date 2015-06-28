@@ -3,6 +3,8 @@ platform :ios, '7.0'
 pod 'MTLog'  ### TODO: DEBUG - NOT FOR PRODUCTION
 
 pod 'AppsFlyer-SDK',                '~> 2.5.3.16'
+#pod 'GoogleAnalytics',              '~> 3.12.0'
+pod 'Google/Analytics'
 
 pod 'AFNetworking',                 '~> 2.5.3'
 pod 'INTULocationManager',          '~> 3.0.1'

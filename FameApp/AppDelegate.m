@@ -23,16 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // Initialize the SDK **** THE NEXT 2 LINES ARE MANDATORY *****
-    [AppsFlyerTracker sharedTracker].appleAppID = @"1000219460";
-    [AppsFlyerTracker sharedTracker].appsFlyerDevKey = @"fQ27trRPBoYrNJcqx8ib3j";
-    
-    // (optional) uncomment the following line to set a user id used by your app:
-    // [[AppsFlyerTracker sharedTracker].customerUserID = myAppsUserId];
-    
-    
     appAPIBaseURL = @"http://thefameapp.co:8080/FameApp/api/";
-    appAPIBaseUploaderURL = @"http://thefameapp.co:8080/Uploader/api/";  //54.171.157.215
+    appAPIBaseUploaderURL = @"http://thefameapp.co:8080/Uploader/api/";
     
 //    appAPIBaseURL = @"http://10.0.0.10:8080/FameApp/api/";
 //    appAPIBaseUploaderURL = @"http://10.0.0.10:8080/Uploader/api/";
@@ -52,8 +44,31 @@
                                                             [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     [UIActivityIndicatorView appearanceWhenContainedIn:[UINavigationBar class], nil].color = [Colors_Modal getUIColorForNavigationBar_tintColor];
     
-    // connect to DB
+    // connect to local DB
     [DataStorageHelper setupDB];
+    
+    
+    /* Init AppsFlyer Analytics */
+    
+    [AppsFlyerTracker sharedTracker].appleAppID = @"1000219460";
+    [AppsFlyerTracker sharedTracker].appsFlyerDevKey = @"fQ27trRPBoYrNJcqx8ib3j";
+    
+    // (optional) uncomment the following line to set a user id used by your app:
+    // [[AppsFlyerTracker sharedTracker].customerUserID = myAppsUserId];
+    
+    
+    /* Init Google Analytics */
+    
+    // Configure tracker from GoogleService-Info.plist.
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
+    // Optional: configure GAI options.
+    GAI *gai = [GAI sharedInstance];
+    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+    gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+    
     
     return YES;
 }

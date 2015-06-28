@@ -64,6 +64,19 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
+  - Google/Analytics (1.0.7):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (1.0.7):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleAnalytics (3.12.0)
+  - GoogleNetworkingUtilities (1.0.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.0.0)
+  - GoogleUtilities (1.0.1):
+    - GoogleSymbolUtilities (~> 1.0)
   - INTULocationManager (3.0.1)
   - IQDropDownTextField (1.0.4.1)
   - IQKeyboardManager (3.2.2)
@@ -89,6 +102,7 @@ DEPENDENCIES:
   - DFImageManager (~> 0.3.1)
   - DFImageManager/AFNetworking
   - DLRadioButton (~> 1.1.1)
+  - Google/Analytics
   - INTULocationManager (~> 3.0.1)
   - IQDropDownTextField (~> 1.0.4.1)
   - IQKeyboardManager (~> 3.2.2)
@@ -127,6 +141,11 @@ SPEC CHECKSUMS:
   DFImageManager: 2ee9701b09a96e7ab4d94f3ca1a6708027587473
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
+  GoogleAnalytics: ef2e0b800ef3c1e62688cdfc959e0d3132bc246c
+  GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
+  GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
+  GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
   INTULocationManager: c27483113e1bbc5952ead6417f9b39824a240ebb
   IQDropDownTextField: 4e6fc6dbfd46a922fbc3fb76ac855d05ccfdc962
   IQKeyboardManager: 99df8006864663a4126a77b9a2f7ea70077eff31

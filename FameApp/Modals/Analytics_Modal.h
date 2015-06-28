@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-//#import <objc/objc-runtime.h>
+#import <Google/Analytics.h>
 #import "AppsFlyerTracker.h"
 
 @interface Analytics_Modal : NSObject
