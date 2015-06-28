@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "Analytics_Modal.h"
 #import "Colors_Modal.h"
 #import "DeviceTypeHelper.h"
 #import "PlaceholderImageHelper.h"

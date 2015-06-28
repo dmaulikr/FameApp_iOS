@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Analytics_Modal.h"
 #import "GHWalkThroughView.h"
 #import "Colors_Modal.h"
 

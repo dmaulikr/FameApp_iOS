@@ -2,6 +2,8 @@ platform :ios, '7.0'
 
 pod 'MTLog'  ### TODO: DEBUG - NOT FOR PRODUCTION
 
+pod 'AppsFlyer-SDK',                '~> 2.5.3.16'
+
 pod 'AFNetworking',                 '~> 2.5.3'
 pod 'INTULocationManager',          '~> 3.0.1'
 pod 'SQPersist',                    '~> 1.0.3'

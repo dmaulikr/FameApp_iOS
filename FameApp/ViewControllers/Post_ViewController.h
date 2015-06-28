@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "Analytics_Modal.h"
 #import "AppDelegate.h"
 #import "NSString+WPAttributedMarkup.h"
 #import "WPAttributedStyleAction.h"

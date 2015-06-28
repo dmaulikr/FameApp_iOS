@@ -44,6 +44,8 @@ static NSString * const descText3 = @"\nCCCCCCCC";
     
     [super viewWillAppear:animated];
     
+    [Analytics_Modal trackScreen:self];
+    
     ghView = [[GHWalkThroughView alloc] initWithFrame:self.navigationController.view.bounds];
     [ghView setDataSource:self];
     [ghView setDelegate:self];

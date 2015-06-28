@@ -23,6 +23,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    // Initialize the SDK **** THE NEXT 2 LINES ARE MANDATORY *****
+    [AppsFlyerTracker sharedTracker].appleAppID = @"1000219460";
+    [AppsFlyerTracker sharedTracker].appsFlyerDevKey = @"fQ27trRPBoYrNJcqx8ib3j";
+    
+    // (optional) uncomment the following line to set a user id used by your app:
+    // [[AppsFlyerTracker sharedTracker].customerUserID = myAppsUserId];
+    
+    
     appAPIBaseURL = @"http://thefameapp.co:8080/FameApp/api/";
     appAPIBaseUploaderURL = @"http://thefameapp.co:8080/Uploader/api/";  //54.171.157.215
     
@@ -66,10 +74,40 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // track launch - It's VERY important that this code will be located in the applicationDidBecomeActive of your app delegate!
+    [[AppsFlyerTracker sharedTracker] trackAppLaunch]; //***** THIS LINE IS MANDATORY *****
+    
+    // (Optional) to get AppsFlyer's attribution data you can use AppsFlyerTrackerDelegate as follow . Note that the callback will fail as long as the appleAppID and developer key are not set properly.
+    [AppsFlyerTracker sharedTracker].delegate = self; //Delegate methods below
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma AppsFlyerTrackerDelegate methods
+- (void) onConversionDataReceived:(NSDictionary*) installData {
+    
+    id status = [installData objectForKey:@"af_status"];
+    if([status isEqualToString:@"Non-organic"]) {
+        
+        id sourceID = [installData objectForKey:@"media_source"];
+        id campaign = [installData objectForKey:@"campaign"];
+        NSLog(@"This is a none organic install.");
+        NSLog(@"Media source: %@",sourceID);
+        NSLog(@"Campaign: %@",campaign);
+    }
+    else if([status isEqualToString:@"Organic"]) {
+        
+        NSLog(@"This is an organic install.");
+    }
+}
+
+- (void) onConversionDataRequestFailure:(NSError *)error {
+    
+    NSLog(@"Failed to get data from AppsFlyer's server: %@",[error localizedDescription]);
 }
 
 @end

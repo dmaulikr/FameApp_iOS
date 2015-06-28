@@ -86,6 +86,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2014 AppsFlyer Ltd. All rights reserved.
+</string>
+			<key>Title</key>
+			<string>AppsFlyer-SDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>//
 //  LICENSE
 //  BlocksKit

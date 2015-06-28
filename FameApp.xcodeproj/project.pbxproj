@@ -19,6 +19,7 @@
 		78104EB61B052D15005F2E27 /* Tutorial_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78104EB51B052D15005F2E27 /* Tutorial_ViewController.m */; };
 		781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781074CF1ADD37A700B02F4A /* Options_TableViewController.m */; };
 		7812F7891B06524800F34B01 /* UIView+MaterialDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 7812F7881B06524800F34B01 /* UIView+MaterialDesign.m */; };
+		7815FC351B404C2300ECA3D9 /* Analytics_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 7815FC341B404C2300ECA3D9 /* Analytics_Modal.m */; };
 		78165D611AFD12A2000A910B /* CustomSegueHelper_Modal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78165D601AFD12A2000A910B /* CustomSegueHelper_Modal.m */; };
 		781870131AD013C100988275 /* YCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781870121AD013C100988275 /* YCameraViewController.xib */; };
 		783AD1181ADDCCDA00D7DC1B /* Password_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AD1171ADDCCDA00D7DC1B /* Password_ViewController.m */; };
@@ -121,6 +122,8 @@
 		781074CF1ADD37A700B02F4A /* Options_TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Options_TableViewController.m; path = ViewControllers/Options_TableViewController.m; sourceTree = "<group>"; };
 		7812F7871B06524800F34B01 /* UIView+MaterialDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MaterialDesign.h"; sourceTree = "<group>"; };
 		7812F7881B06524800F34B01 /* UIView+MaterialDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MaterialDesign.m"; sourceTree = "<group>"; };
+		7815FC331B404C2300ECA3D9 /* Analytics_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Analytics_Modal.h; path = Modals/Analytics_Modal.h; sourceTree = "<group>"; };
+		7815FC341B404C2300ECA3D9 /* Analytics_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Analytics_Modal.m; path = Modals/Analytics_Modal.m; sourceTree = "<group>"; };
 		78165D5F1AFD12A2000A910B /* CustomSegueHelper_Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSegueHelper_Modal.h; path = Modals/CustomSegueHelper_Modal.h; sourceTree = "<group>"; };
 		78165D601AFD12A2000A910B /* CustomSegueHelper_Modal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSegueHelper_Modal.m; path = Modals/CustomSegueHelper_Modal.m; sourceTree = "<group>"; };
 		78165D621AFD182A000A910B /* libPods-BlocksKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-BlocksKit.a"; path = "Pods/../build/Debug-iphoneos/libPods-BlocksKit.a"; sourceTree = "<group>"; };
@@ -401,6 +404,15 @@
 			path = MaterialDesign;
 			sourceTree = "<group>";
 		};
+		7815FC321B404C0800ECA3D9 /* Analytics Modal */ = {
+			isa = PBXGroup;
+			children = (
+				7815FC331B404C2300ECA3D9 /* Analytics_Modal.h */,
+				7815FC341B404C2300ECA3D9 /* Analytics_Modal.m */,
+			);
+			name = "Analytics Modal";
+			sourceTree = "<group>";
+		};
 		78165D5E1AFD1206000A910B /* Custom Segue Modal */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,6 +441,7 @@
 		782B74731AC99F8900E18F7F /* Modals */ = {
 			isa = PBXGroup;
 			children = (
+				7815FC321B404C0800ECA3D9 /* Analytics Modal */,
 				78165D5E1AFD1206000A910B /* Custom Segue Modal */,
 				789244DC1AEAAFBA0071445C /* App API Modals */,
 				782B74741AC99FA300E18F7F /* Colors Modal */,
@@ -1019,6 +1032,7 @@
 				78FFF4801AF24E6200E8C61D /* ZCSlotMachine.m in Sources */,
 				788640481AF70521002342AD /* AppAPI_Options_Modal.m in Sources */,
 				78BB90151AED25B00037FB00 /* Invite_ViewController.m in Sources */,
+				7815FC351B404C2300ECA3D9 /* Analytics_Modal.m in Sources */,
 				7864270F1AFE635900569EDD /* AppAPI_Report_Modal.m in Sources */,
 				781074D01ADD37A700B02F4A /* Options_TableViewController.m in Sources */,
 				78A452FC1AF693F0008DD84C /* GraphView.m in Sources */,

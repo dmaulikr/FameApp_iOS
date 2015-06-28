@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Analytics_Modal.h"
 #import "CustomSegueHelper_Modal.h"
 #import "AFNetworking.h"
 #import "AppAPI_Profile_Modal.h"

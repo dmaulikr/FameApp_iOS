@@ -43,6 +43,8 @@ int dt;
     
     [super viewWillAppear:animated];
     
+    [Analytics_Modal trackScreen:self];
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];

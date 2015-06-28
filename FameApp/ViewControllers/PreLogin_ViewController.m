@@ -34,6 +34,8 @@
     
     [super viewWillAppear:animated];
     
+    [Analytics_Modal trackScreen:self];
+    
     [self.navigationController setNavigationBarHidden:YES];
     
     [self initSubViews];

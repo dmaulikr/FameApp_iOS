@@ -52,6 +52,8 @@ int dt;
     
     [super viewWillAppear:animated];
     
+    [Analytics_Modal trackScreen:self];
+    
     restoreNavBar_barTintColor = self.navigationController.navigationBar.barTintColor;
     restoreNavBar_tintColor = self.navigationController.navigationBar.tintColor;
     restoreNavBar_titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;

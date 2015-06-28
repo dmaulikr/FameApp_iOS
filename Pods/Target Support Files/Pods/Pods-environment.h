@@ -66,6 +66,13 @@
 #define COCOAPODS_VERSION_MINOR_APAddressBook_Core 1
 #define COCOAPODS_VERSION_PATCH_APAddressBook_Core 5
 
+// AppsFlyer-SDK
+#define COCOAPODS_POD_AVAILABLE_AppsFlyer_SDK
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 2.5.3.16.
+
 // BlocksKit
 #define COCOAPODS_POD_AVAILABLE_BlocksKit
 #define COCOAPODS_VERSION_MAJOR_BlocksKit 2

@@ -24,6 +24,7 @@ PODS:
   - APAddressBook (0.1.5):
     - APAddressBook/Core (= 0.1.5)
   - APAddressBook/Core (0.1.5)
+  - AppsFlyer-SDK (2.5.3.16)
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
   - BlocksKit/All (2.2.5):
@@ -83,6 +84,7 @@ PODS:
 DEPENDENCIES:
   - ABMenuTableViewCell (~> 1.0.2)
   - AFNetworking (~> 2.5.3)
+  - AppsFlyer-SDK (~> 2.5.3.16)
   - BlocksKit (~> 2.2.5)
   - DFImageManager (~> 0.3.1)
   - DFImageManager/AFNetworking
@@ -120,6 +122,7 @@ SPEC CHECKSUMS:
   ABMenuTableViewCell: 9ae466fd77d467ae46963c60ad592d8af7637693
   AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
   APAddressBook: c72fec93464d57f39966ce28c107c10253fa7d39
+  AppsFlyer-SDK: a0f130e510e924b3e46d583d775034fb9fe8cabf
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   DFImageManager: 2ee9701b09a96e7ab4d94f3ca1a6708027587473
   DLRadioButton: 1aad82f913b621432d51f8d5f4139265c39d202d

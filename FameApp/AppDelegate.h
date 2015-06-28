@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Analytics_Modal.h"
 #import "DataStorageHelper.h"
 #import "UserInfo.h"
 #import "BiddingAndBonusInfo.h"
 #import "Colors_Modal.h"
 #import "INTULocationManager.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, AppsFlyerTrackerDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 
