@@ -25,6 +25,9 @@
 #import "DKQueue.h"
 #import "UIView+MaterialDesign.h"
 #import "UIGestureRecognizer+SHGestureRecognizerBlocks.h"
+#import "NSString+WPAttributedMarkup.h"
+#import "WPAttributedStyleAction.h"
+#import "WPHotspotLabel.h"
 
 
 @interface Main_ViewController : UIViewController <YCameraViewControllerDelegate, KKProgressTimerDelegate, UITextViewDelegate>
@@ -39,6 +42,7 @@
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
 @property (nonatomic, strong) NSString *currentContent_postId;
 
+@property (nonatomic, strong) UIView *colorSplashView;
 @property (nonatomic, strong) IBOutlet UIImageView *userImageView;
 @property (nonatomic, strong) IBOutlet UILabel *userInfoLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *contentImageView;
@@ -48,6 +52,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *oddsLabel;
 @property (nonatomic, strong) IBOutlet UILabel *oddsBonusLabel;
 @property (nonatomic, strong) IBOutlet UIButton *inviteFriendsButton;
+@property (nonatomic, strong) IBOutlet WPHotspotLabel *inviteFriendsLabelAction;
 
 @property (nonatomic, strong) KKProgressTimer *timerController;
 @property (nonatomic) CGFloat timerPercentCount;

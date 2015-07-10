@@ -27,9 +27,9 @@ int dt;
 @synthesize appDelegateInst;
 @synthesize appTimeOffset, contentQueue_1, contentQueue_2, isMainQueue_1;
 @synthesize labelAttributeStyle1, currentContent_postId;
-@synthesize userImageView, userInfoLabel, contentImageView;
+@synthesize colorSplashView, userImageView, userInfoLabel, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
-@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton;
+@synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton, inviteFriendsLabelAction;
 @synthesize timerController, timerPercentCount, timer, timerFinishSeconds;
 @synthesize isReachedTimerOnLastMoments, reasonToShowNextContent, seenTimeBeforeSkipped_mSec;
 @synthesize popup, radio1, reportMsgField, popupStatus;
@@ -81,11 +81,19 @@ int dt;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    
+    [colorSplashView setHidden:NO];
+    [niceButton setHidden:NO];
+    [skipButton setHidden:NO];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     
-    [super viewDidAppear:animated];
+    [super viewWillDisappear:animated];
+    
+    [colorSplashView setHidden:YES];
+    [niceButton setHidden:YES];
+    [skipButton setHidden:YES];
 }
 
 #pragma mark - Subviews init by device type
@@ -115,14 +123,11 @@ int dt;
 //    [UIHelper addShadowToView:niceButton];
 //    [UIHelper addShadowToView:skipButton];
     
-    if (dt != IPHONE_4x) {
-        
-        [UIHelper addShadowToView:bidPostButton];
-    }
+    [UIHelper addShadowToView:bidPostButton];
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
     [[self.view viewWithTag:1000] setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
-    [[self.view viewWithTag:2000] setBackgroundColor:[Colors_Modal getUIColorForMain_1]];
+    [[self.view viewWithTag:2000] setBackgroundColor:[UIColor clearColor]];
     [UIHelper setRoundedCornersCircleToView:userImageView];
     [((UILabel *)[self.view viewWithTag:3001]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
     [((UILabel *)[self.view viewWithTag:3002]) setTextColor:[Colors_Modal getUIColorForNavigationBar_tintColor]];
@@ -141,6 +146,26 @@ int dt;
     [self initViewForColorTransition];
     
     [self.view bringSubviewToFront:[self.view viewWithTag:2000]];
+    
+    [self initTipsLabel];
+}
+
+- (void)initTipsLabel {
+    
+    NSDictionary *labelAttributeStyle2 = @{
+                             @"body":@[ [UIFont fontWithName:@"HelveticaNeue" size:18.0], [Colors_Modal getUIColorForMain_7]],
+                             @"inviteLink":[WPAttributedStyleAction styledActionWithAction:^{
+                                 
+                                 UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
+                                 [self.navigationController pushViewController:myViewController animated:YES];
+                             }],
+                             @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:19.0], [Colors_Modal getUIColorForMain_1], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                             };
+    
+    [inviteFriendsLabelAction setNumberOfLines:2];
+    
+    NSString *tipString = (dt != IPHONE_4x) ? @"TIP: Skyrocket your special\nmoment to shine by <inviteLink>Inviting a Friend</inviteLink>." : @"TIP:Share your fame with <inviteLink>Friends</inviteLink>";
+    [inviteFriendsLabelAction setAttributedText:[tipString attributedStringWithStyleBook:labelAttributeStyle2]];
 }
 
 - (void)initSubViews_iPhone6Plus {
@@ -154,10 +179,11 @@ int dt;
     skipButton.frame = CGRectMake(-53, 234, 100, 100);
     [self.view viewWithTag:1002].frame = CGRectMake(359, 97, 35, 35);
     
-    [self.view viewWithTag:2000].frame = CGRectMake(0, 576-64, 414, 160);
-    [self.view viewWithTag:2001].frame = CGRectMake(39, 95, 144, 58);
-    [self.view viewWithTag:2002].frame = CGRectMake(205, 95, 175, 58);
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 576-64-20, 414, 160);
+//    [self.view viewWithTag:2001].frame = CGRectMake(39, 95, 144, 58);
+//    [self.view viewWithTag:2002].frame = CGRectMake(205, 95, 175, 58);
     [self.view viewWithTag:2003].frame = CGRectMake(90, 20, 235, 62);
+    inviteFriendsLabelAction.frame = CGRectMake(54, 75+35, 300, 61);
 }
 
 - (void)initSubViews_iPhone6 {
@@ -172,9 +198,10 @@ int dt;
     [self.view viewWithTag:1002].frame = CGRectMake(323, 75, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 506-64, 375, 161);
-    [self.view viewWithTag:2001].frame = CGRectMake(16, 98, 144, 58);
-    [self.view viewWithTag:2002].frame = CGRectMake(190, 98, 175, 58);
+//    [self.view viewWithTag:2001].frame = CGRectMake(16, 98, 144, 58);
+//    [self.view viewWithTag:2002].frame = CGRectMake(190, 98, 175, 58);
     [self.view viewWithTag:2003].frame = CGRectMake(69, 25, 235, 62);
+    inviteFriendsLabelAction.frame = CGRectMake(36, 75+30, 300, 61);
 }
 
 - (void)initSubViews_iPhone5x {
@@ -189,9 +216,10 @@ int dt;
     [self.view viewWithTag:1002].frame = CGRectMake(265, 75, 35, 35);
     
     [self.view viewWithTag:2000].frame = CGRectMake(0, 441-64, 320, 160);
-    [self.view viewWithTag:2001].frame = CGRectMake(8, 72, 144, 58);
-    [self.view viewWithTag:2002].frame = CGRectMake(146, 73, 175, 58);
+//    [self.view viewWithTag:2001].frame = CGRectMake(8, 72, 144, 58);
+//    [self.view viewWithTag:2002].frame = CGRectMake(146, 73, 175, 58);
     [self.view viewWithTag:2003].frame = CGRectMake(43, 8, 235, 62);
+    inviteFriendsLabelAction.frame = CGRectMake(9, 73, 300, 61);
 }
 
 - (void)initSubViews_iPhone4x {
@@ -200,15 +228,16 @@ int dt;
     userImageView.frame = CGRectMake(6, 1, 30, 30);
     userInfoLabel.frame = CGRectMake(44, 2, 184, 26);
     [self.view viewWithTag:1001].frame = CGRectMake(225, 14, 87, 21);
-    contentImageView.frame = CGRectMake(25, 33, 270, 270);
+    contentImageView.frame = CGRectMake(15, 33, 290, 290);
     niceButton.frame = CGRectMake(274, 118, 100, 100);
     skipButton.frame = CGRectMake(-53, 118, 100, 100);
     [self.view viewWithTag:1002].frame = CGRectMake(250, 43, 35, 35);
     
-    [self.view viewWithTag:2000].frame = CGRectMake(0, 370-64, 320, 160);
-    [self.view viewWithTag:2001].frame = CGRectMake(8, 59, 144, 58);
-    [self.view viewWithTag:2002].frame = CGRectMake(146, 60, 175, 58);
-    [self.view viewWithTag:2003].frame = CGRectMake(43, 4, 235, 62);
+    [self.view viewWithTag:2000].frame = CGRectMake(0, 370-64+20, 320, 160);
+//    [self.view viewWithTag:2001].frame = CGRectMake(8, 59, 144, 58);
+//    [self.view viewWithTag:2002].frame = CGRectMake(146, 60, 175, 58);
+    [self.view viewWithTag:2003].frame = CGRectMake(43, 0, 235, 62);
+    inviteFriendsLabelAction.frame = CGRectMake(9, 46, 300, 61);
 }
 
 #pragma mark - Timer related
@@ -312,10 +341,13 @@ int dt;
         
         [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
         [oddsBonusLabel setText:[FormattingHelper formatLabelTextForCurrentOddBonus:appDelegateInst.myBiddingAndBonusInfo.bonusOdds]];
-        
-        [[self.view viewWithTag:2001] setHidden:[appDelegateInst.myBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
-        [[self.view viewWithTag:20021] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
-        [[self.view viewWithTag:20022] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+
+        [[self.view viewWithTag:2001] setHidden:YES];
+        [[self.view viewWithTag:20021] setHidden:YES];
+        [[self.view viewWithTag:20022] setHidden:YES];
+//        [[self.view viewWithTag:2001] setHidden:[appDelegateInst.myBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+//        [[self.view viewWithTag:20021] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+//        [[self.view viewWithTag:20022] setHidden:[appDelegateInst.myBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
     }
     
     [self getBiddingInfo];
@@ -338,62 +370,62 @@ int dt;
                    
                    //NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
                    
-                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
-                   
-                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
-                       
-                       BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
-                       if (aBiddingAndBonusInfo == nil) {
-                           
-                           aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
-                       }
-                       aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
-                       aBiddingAndBonusInfo.bonusOdds = [repDict objectForKey:@"bonusOdds"];
-                       
-                       [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
-                       
-                       [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
-                       [[self.view viewWithTag:20021] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
-                       [[self.view viewWithTag:20022] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
-                       
-                       if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
-                           
-                           [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
-                           
-                           CGAffineTransform transform_oddsLabel = oddsLabel.transform;
-                           [UIView animateWithDuration:1.0 animations:^{
-                               
-                               oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
-                           }
-                           completion:^(BOOL finished) {
-                               
-                               [UIView animateWithDuration:0.8 animations:^{
-                                   
-                                   oddsLabel.transform = transform_oddsLabel;
-                               }];
-                           }];
-                       }
-                       
-                       NSString *oddsBonusLabelString = [FormattingHelper formatLabelTextForCurrentOddBonus:aBiddingAndBonusInfo.bonusOdds];
-                       if ([oddsBonusLabel.text isEqualToString:oddsBonusLabelString] == NO) {
-                           
-                           [oddsBonusLabel setText:oddsBonusLabelString];
-                           
-                           CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
-                           [UIView animateWithDuration:1.0 animations:^{
-                               
-                               oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
-                           }
-                           completion:^(BOOL finished) {
-                               
-                               [UIView animateWithDuration:0.8 animations:^{
-                                   
-                                   oddsBonusLabel.transform = transform_oddsBonusLabel;
-                               }];
-                           }];
-                       }
-                       
-                   }
+//                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
+//                   
+//                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+//                       
+//                       BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
+//                       if (aBiddingAndBonusInfo == nil) {
+//                           
+//                           aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
+//                       }
+//                       aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
+//                       aBiddingAndBonusInfo.bonusOdds = [repDict objectForKey:@"bonusOdds"];
+//                       
+//                       [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
+//                       
+//                       [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
+//                       [[self.view viewWithTag:20021] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+//                       [[self.view viewWithTag:20022] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
+//                       
+//                       if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
+//                           
+//                           [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+//                           
+//                           CGAffineTransform transform_oddsLabel = oddsLabel.transform;
+//                           [UIView animateWithDuration:1.0 animations:^{
+//                               
+//                               oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
+//                           }
+//                           completion:^(BOOL finished) {
+//                               
+//                               [UIView animateWithDuration:0.8 animations:^{
+//                                   
+//                                   oddsLabel.transform = transform_oddsLabel;
+//                               }];
+//                           }];
+//                       }
+//                       
+//                       NSString *oddsBonusLabelString = [FormattingHelper formatLabelTextForCurrentOddBonus:aBiddingAndBonusInfo.bonusOdds];
+//                       if ([oddsBonusLabel.text isEqualToString:oddsBonusLabelString] == NO) {
+//                           
+//                           [oddsBonusLabel setText:oddsBonusLabelString];
+//                           
+//                           CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
+//                           [UIView animateWithDuration:1.0 animations:^{
+//                               
+//                               oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
+//                           }
+//                           completion:^(BOOL finished) {
+//                               
+//                               [UIView animateWithDuration:0.8 animations:^{
+//                                   
+//                                   oddsBonusLabel.transform = transform_oddsBonusLabel;
+//                               }];
+//                           }];
+//                       }
+//                       
+//                   }
                    
                } // End of Request 'Success'
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -732,12 +764,20 @@ int dt;
 #pragma mark - Color Transition related
 - (void)initViewForColorTransition {
     
-    UIView *aboveAllView = [[UIView alloc] initWithFrame:[self.view viewWithTag:1000].frame];
-    aboveAllView.tag = 1234;
-    [aboveAllView setUserInteractionEnabled:NO];
-    [aboveAllView setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
-    [[self.view viewWithTag:1000] addSubview:aboveAllView];
-    [[self.view viewWithTag:1000] bringSubviewToFront:aboveAllView];
+    CGRect aFrame= CGRectOffset(niceButton.frame, 0, 64);
+    [niceButton setFrame:aFrame];
+    [self.navigationController.view addSubview:niceButton];
+    
+    aFrame= CGRectOffset(skipButton.frame, 0, 64);
+    [skipButton setFrame:aFrame];
+    [self.navigationController.view addSubview:skipButton];
+    
+    colorSplashView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    colorSplashView.tag = 1234;
+    [colorSplashView setUserInteractionEnabled:NO];
+    [colorSplashView setBackgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor]];
+    [self.navigationController.view addSubview:colorSplashView];
+    [self.navigationController.view bringSubviewToFront:colorSplashView];
 }
 
 /*!
@@ -751,25 +791,28 @@ int dt;
     // close: skip with Nice
     if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
         
-        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
-        [[self.view viewWithTag:1000] bringSubviewToFront:niceButton];
+        [self.navigationController.view bringSubviewToFront:colorSplashView];
+        [self.navigationController.view bringSubviewToFront:niceButton];
         
-        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:niceButton.center backgroundColor:[Colors_Modal getUIColorForMain_5] duration:1.0 completion:block];
+        [colorSplashView mdInflateAnimatedFromPoint:niceButton.center backgroundColor:[Colors_Modal getUIColorForMain_5] duration:1.0 completion:block];
     }
     // close: skip with Not Nice
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
         
-        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
-        [[self.view viewWithTag:1000] bringSubviewToFront:skipButton];
+        [self.navigationController.view bringSubviewToFront:colorSplashView];
+        [self.navigationController.view bringSubviewToFront:skipButton];
         
-        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:skipButton.center backgroundColor:[Colors_Modal getUIColorForMain_4] duration:1.0 completion:block];
+        [colorSplashView mdInflateAnimatedFromPoint:skipButton.center backgroundColor:[Colors_Modal getUIColorForMain_4] duration:1.0 completion:block];
     }
     // close: regular
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
         
-        [[self.view viewWithTag:1000] bringSubviewToFront:[self.view viewWithTag:1234]];
+        [self.navigationController.view bringSubviewToFront:colorSplashView];
         
-        [[self.view viewWithTag:1234] mdInflateAnimatedFromPoint:timerController.center backgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor] duration:1.0 completion:block];
+        CGPoint timerCenterPoint = timerController.center;
+        timerCenterPoint.y += 64;
+        
+        [colorSplashView mdInflateAnimatedFromPoint:timerCenterPoint backgroundColor:[Colors_Modal getUIColorForNavigationBar_backgroundColor] duration:1.0 completion:block];
     }
 }
 
@@ -783,17 +826,20 @@ int dt;
     // open: skip with Nice
     if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {
         
-        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:niceButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+        [colorSplashView mdDeflateAnimatedToPoint:niceButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
     }
     // open: skip with Not Nice
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE) {
         
-        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:skipButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+        [colorSplashView mdDeflateAnimatedToPoint:skipButton.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
     }
     // open: regular
     else if (type == REASON_TO_SHOW_NEXT_CONTENT__REGULAR) {
         
-        [[self.view viewWithTag:1234] mdDeflateAnimatedToPoint:timerController.center backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
+        CGPoint timerCenterPoint = timerController.center;
+        timerCenterPoint.y += 64;
+        
+        [colorSplashView mdDeflateAnimatedToPoint:timerCenterPoint backgroundColor:[UIColor clearColor] duration:0.5 completion:block];
     }
 }
 
@@ -813,8 +859,6 @@ int dt;
                 
         } completion:nil];
     }
-    
-    
     
 //    [UIView animateWithDuration:0.5f
 //         animations:^{
@@ -840,10 +884,6 @@ int dt;
 //         }
 //    ];
 
-    
-    
-    
-    
     
 //    CGPoint origin = aButton.center;
 //    CGPoint target = CGPointMake(aButton.center.x-10, aButton.center.y);

@@ -24,8 +24,9 @@ int dt;
 
 @implementation Post_ViewController
 
-@synthesize contentImage;
+@synthesize contentImage, contentImage_strong;
 @synthesize currentPost;
+@synthesize originalPost;
 @synthesize appDelegateInst;
 @synthesize isWin;
 @synthesize closeButton;
@@ -84,6 +85,12 @@ int dt;
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                      [Colors_Modal getUIColorForNavigationBar_tintColor_1], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22.0], NSFontAttributeName, nil]];
     
+    NSData *temp = UIImageJPEGRepresentation(contentImage, 1);
+    contentImage_strong = [UIImage imageWithData:temp];
+    
+    [winImageView setImage:contentImage_strong];
+    
+    [self deleteOriginalPost];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -111,9 +118,25 @@ int dt;
     
     UINavigationController *myNavigationController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainNav"];
     [self presentViewController:myNavigationController animated:YES completion:nil];
+    
+    [self deleteOriginalPost];
 }
 
-// FIXME: adjust the damn screen to match all iPhones.  -->  TEST iPhone4.x & iPhone5.x
+- (void)deleteOriginalPost {
+    
+    // delete original postHistory if exists
+    if (originalPost != nil) {
+        
+        if (originalPost.isPublished == NO) {
+            
+            [DataStorageHelper deletePostHistory:originalPost.postId];
+            [ImageStorageHelper deleteImageFromLocalDirectory:originalPost.contentFileName];
+        }
+        
+        originalPost = nil;
+    }
+}
+
 - (void)initSubViews {
     
     [self.view setBackgroundColor:[Colors_Modal getUIColorForMain_2]];
@@ -258,7 +281,7 @@ int dt;
                        // do nothing for now
                    }
                    // WIN: published. WEEEE!!
-                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 3) {
+                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 3) {  // FIXME: DEBUG - TESTING - should be 3
                        
                        if (isBeingPublished == NO) {
                            
@@ -445,7 +468,7 @@ int dt;
     
     // TODO: should the winHeaderLabel contain changing custom messages???
     
-    [winImageView setImage:contentImage];
+//    [winImageView setImage:contentImage];
     
     [self initGraphView];
     [self initTimerView];
@@ -628,12 +651,12 @@ int dt;
     if (isEarnedBonus == YES) {
         
         loseLabelString = [NSString stringWithFormat:@"You didn't win.\nBut you've earned a bonus for next time: <bonusOddsNumber>%@</bonusOddsNumber>", earnedBonusString];
-        loseWantMoreLabelString = @"<wantMoreLink>WANT MORE?</wantMoreLink>";
+        loseWantMoreLabelString = @"<wantMoreLink>WANT MORE?</wantMoreLink>\r\ror <tryAgainLink>Try Again?</tryAgainLink>";
     }
     else {
         
         loseLabelString = [NSString stringWithFormat:@"So close...But no."];
-        loseWantMoreLabelString = @"<wantMoreLink>BOOST YOUR ODDS TO WIN NEXT TIME !!</wantMoreLink>";
+        loseWantMoreLabelString = @"<wantMoreLink>BOOST YOUR ODDS TO WIN NEXT TIME !!</wantMoreLink>\n\nor <tryAgainLink>Try Again</tryAgainLink>";
     }
     [loseLabel setAttributedText:[loseLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
     [loseWantMoreLabel setAttributedText:[loseWantMoreLabelString attributedStringWithStyleBook:labelAttributeStyle1]];
@@ -655,7 +678,7 @@ int dt;
 }
 
 - (void)showLoseViewWantMore:(NSTimer *)timer {
-
+    
     [UIView animateWithDuration:1.0f animations:^{
         
         mySlotMachine.frame = CGRectOffset(mySlotMachine.frame, 0, 200);
@@ -664,6 +687,118 @@ int dt;
         [self setStateForCloseButton:YES];
     }];
 }
+
+#pragma mark - Try Again related
+- (void)tryAgainPressed {
+    
+    // save current to original
+    originalPost = currentPost;
+    currentPost = nil;
+    
+    contentImage_strong = [ImageStorageHelper loadImageFromLocalDirectory:originalPost.contentFileName];
+    
+    // saving image locally - part 1/3
+    currentPost = [[PostHistory alloc] init];
+    currentPost.userId = appDelegateInst.loginUser.userId;
+    currentPost.contentFileName = [ImageStorageHelper saveImageToLocalDirectory:contentImage_strong aUsername:appDelegateInst.loginUser.userId];
+    currentPost.timerMSec = originalPost.timerMSec;
+    
+    // re-posting
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSData *imageData = UIImageJPEGRepresentation(contentImage_strong, 1.0f);
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostImage:[NSString stringWithFormat:@"%ld", (unsigned long)imageData.length]];
+    
+    NSLog(@"App API - Request: (Re)Post Image");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        [formData appendPartWithFileData:imageData name:@"file" fileName:@"jim.jpg" mimeType:@"image/jpeg"];
+        
+    }
+    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+       
+       NSLog(@"App API - Reply: (Re)Post Image [SUCCESS]");
+       
+       NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostImage:responseObject];
+       
+       // Success
+       if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+           
+           // post info
+           [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:currentPost.timerMSec contentImageItself:contentImage_strong];
+       }
+       // Failure
+       else {
+           
+           // delete locally stored image
+           [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+       }
+       
+   }
+   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+       
+       NSLog(@"App API - Reply: (Re)Post Image [FAILURE]");
+       NSLog(@"%@", error);
+       
+       // delete locally stored image
+       [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+   }
+     ];
+}
+
+- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself {
+    
+    AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
+    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSArray *postReqInfo = [AppAPI_Post_Modal requestContruct_PostInfo:imageURL timer:timer];
+    
+    NSLog(@"App API - Request: Post Info");
+    [operationManager POST:[postReqInfo objectAtIndex:0] parameters:[postReqInfo objectAtIndex:1]
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           
+           NSLog(@"App API - Reply: Post Info [SUCCESS]");
+           
+           NSDictionary *repDict = [AppAPI_Post_Modal processReply_PostInfo:responseObject];
+           
+           // Success
+           if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+               
+               // saving image locally - part 2/3
+               currentPost.timestamp = [[NSDate alloc] init];
+               currentPost.postId = [repDict objectForKey:@"postId"];
+               
+               // show next screen
+               Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
+               myViewController.contentImage = contentImageItself;
+               myViewController.currentPost = currentPost;
+               
+               myViewController.originalPost = originalPost;
+               
+               [self presentViewController:[[UINavigationController alloc] initWithRootViewController:myViewController] animated:NO completion:nil];
+           }
+           // Failure
+           else {
+               
+               // delete locally stored image
+               [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+           }
+           
+        } // End of Request 'Success'
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           
+           NSLog(@"App API - Reply: Post Info [FAILURE]");
+           NSLog(@"%@", error);
+           
+           // delete locally stored image
+           [ImageStorageHelper deleteImageFromLocalDirectory:currentPost.contentFileName];
+           
+        } // End of Request 'Failure'
+     ];
+}
+
 
 #pragma mark - Label style related
 - (void)initLabelStyles {
@@ -687,7 +822,13 @@ int dt;
                                  UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
                                  [self.navigationController pushViewController:myViewController animated:YES];
                              }],
-                             @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:40.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                             @"tryAgainLink":[WPAttributedStyleAction styledActionWithAction:^{
+                                 
+                                 [loseWantMoreLabel setUserInteractionEnabled:NO];
+                                 [self tryAgainPressed];
+                                 
+                             }],
+                             @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:30.0], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
                             };
 }
 

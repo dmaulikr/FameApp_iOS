@@ -24,12 +24,16 @@
 #import "AFNetworking.h"
 #import "AppAPI_Post_Modal.h"
 #import "DeviceTypeHelper.h"
+#import "ImageStorageHelper.h"
 
 
 @interface Post_ViewController : UIViewController <ZCSlotMachineDelegate, ZCSlotMachineDataSource, KKProgressTimerDelegate>
 
 @property (nonatomic, readwrite, copy) UIImage *contentImage;
 @property (nonatomic, readwrite, copy) PostHistory *currentPost;
+@property (nonatomic, readwrite, copy) PostHistory *originalPost;
+
+@property (nonatomic, strong) UIImage *contentImage_strong;
 
 @property (nonatomic, strong) AppDelegate *appDelegateInst;
 

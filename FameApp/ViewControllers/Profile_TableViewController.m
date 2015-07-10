@@ -360,7 +360,7 @@ int dt;
     long cellIndex = (aButton.tag - TAG_ID__BUTTON_REPOST);
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
     
-    UIImage *imageToSave = [ImageStorageHelper loadImageFromLocalDirectory:aPost.contentFileName];
+    UIImage *imageToSave = [[ImageStorageHelper loadImageFromLocalDirectory:aPost.contentFileName] copy];
     
     // saving image locally - part 1/3
     PostHistory *currentPost = [[PostHistory alloc] init];
@@ -394,8 +394,7 @@ int dt;
              if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
                  
                  // post info
-                 [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:currentPost.timerMSec contentImageItself:imageToSave currentPost:currentPost];
-                 
+                 [self sendPostInfo:[repDict objectForKey:@"imageUrl"] timer:currentPost.timerMSec contentImageItself:imageToSave currentPost:currentPost originalPost:aPost];
              }
              // Failure
              else {
@@ -426,7 +425,7 @@ int dt;
      ];
 }
 
-- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself currentPost:(PostHistory *)currentPost {
+- (void)sendPostInfo:(NSString *)imageURL timer:(int)timer contentImageItself:(UIImage *)contentImageItself currentPost:(PostHistory *)currentPost originalPost:(PostHistory *)originalPost {
         
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];
     operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -455,9 +454,9 @@ int dt;
                    Post_ViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PostScreen"];
                    myViewController.contentImage = contentImageItself;
                    myViewController.currentPost = currentPost;
+                   myViewController.originalPost = originalPost;
                    
                    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:myViewController] animated:YES completion:nil];
-                   
                }
                // Failure
                else {
@@ -495,11 +494,20 @@ int dt;
     PostHistory *aPost = [postsHistoryList objectAtIndex:cellIndex];
     
     [postsHistoryList removeObjectAtIndex:cellIndex];                           // remove from dataList
+    [self deletePostHistory:aPost isShowResultPopup:YES];
+}
+
+- (void)deletePostHistory:(PostHistory *)aPost isShowResultPopup:(BOOL)isShowResultPopup {
+    
     [DataStorageHelper deletePostHistory:aPost.postId];                         // remove entry from db
     [ImageStorageHelper deleteImageFromLocalDirectory:aPost.contentFileName];   // remove the content file
-    [popup dismiss:YES];
-    [postsTableView reloadData];
-    [self showStatusPopup:YES message:@"Post is gone forever."];
+    
+    if (isShowResultPopup == YES) {
+        
+        [popup dismiss:YES];
+        [postsTableView reloadData];
+        [self showStatusPopup:YES message:@"Post is gone forever."];
+    }
     
     
     // tell server the user deleted the post from the local device

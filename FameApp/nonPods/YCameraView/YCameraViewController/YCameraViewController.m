@@ -284,8 +284,14 @@
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
         if (!input) {
             NSLog(@"ERROR: trying to open camera: %@", error);
+            [(UIButton *)[self.view viewWithTag:666] setEnabled:NO];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't access camera" message:@"Please enable access in Privacy Settings to use the camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return;
         }
-        [session addInput:input];
+        else {
+            [session addInput:input];
+        }
     }
     
     if (FrontCamera) {
@@ -294,8 +300,15 @@
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:&error];
         if (!input) {
             NSLog(@"ERROR: trying to open camera: %@", error);
+            [(UIButton *)[self.view viewWithTag:666] setEnabled:NO];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't access camera" message:@"Please enable access in Privacy Settings to use the camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [(UIButton *)[self.view viewWithTag:666] setEnabled:NO];
+            return;
         }
-        [session addInput:input];
+        else {
+            [session addInput:input];
+        }
     }
     
     if (stillImageOutput)
@@ -304,10 +317,10 @@
     stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil] autorelease];
     [stillImageOutput setOutputSettings:outputSettings];
-    
+        
     [session addOutput:stillImageOutput];
     
-	[session startRunning];
+    [session startRunning];
 }
 
 - (IBAction)snapImage:(id)sender {

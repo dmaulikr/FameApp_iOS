@@ -117,7 +117,7 @@
                         <constraint firstAttribute="trailing" secondItem="77" secondAttribute="trailing" constant="21" id="xRM-32-ums"/>
                     </constraints>
                 </view>
-                <view tag="3000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="31" userLabel="View_3">
+                <view tag="3000" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31" userLabel="View_3">
                     <rect key="frame" x="0.0" y="365" width="320" height="115"/>
                     <subviews>
                         <button opaque="NO" tag="666" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32">
@@ -149,7 +149,7 @@
                                 <action selector="switchToLibrary:" destination="-1" eventType="touchUpInside" id="87"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCz-vv-NSh">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCz-vv-NSh">
                             <rect key="frame" x="237" y="48" width="45" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="45" id="tY5-DN-Hk0"/>
