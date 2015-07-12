@@ -24,7 +24,7 @@ int dt;
 
 @synthesize appDelegateInst;
 @synthesize appTimeOffset, contentQueue_1, contentQueue_2, isMainQueue_1;
-@synthesize labelAttributeStyle1, currentContent_postId;
+@synthesize labelAttributeStyle1, labelAttributeStyle2, currentContent_postId;
 @synthesize colorSplashView, userImageView, userInfoLabel, contentImageView;
 @synthesize niceButton, skipButton, bidPostButton;
 @synthesize oddsLabel, oddsBonusLabel, inviteFriendsButton, inviteFriendsLabelAction;
@@ -148,24 +148,6 @@ int dt;
     [self initTipsLabel];
 }
 
-- (void)initTipsLabel {
-    
-    NSDictionary *labelAttributeStyle2 = @{
-                             @"body":@[ [UIFont fontWithName:@"HelveticaNeue" size:18.0], [Colors_Modal getUIColorForMain_7]],
-                             @"inviteLink":[WPAttributedStyleAction styledActionWithAction:^{
-                                 
-                                 UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
-                                 [self.navigationController pushViewController:myViewController animated:YES];
-                             }],
-                             @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:19.0], [Colors_Modal getUIColorForMain_1], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
-                             };
-    
-    [inviteFriendsLabelAction setNumberOfLines:2];
-    
-    NSString *tipString = (dt != IPHONE_4x) ? @"TIP: Skyrocket your special\nmoment to shine by <inviteLink>Inviting a Friend</inviteLink>." : @"TIP:Share your fame with <inviteLink>Friends</inviteLink>";
-    [inviteFriendsLabelAction setAttributedText:[tipString attributedStringWithStyleBook:labelAttributeStyle2]];
-}
-
 - (void)initSubViews_iPhone6Plus {
     
     [self.view viewWithTag:1000].frame = CGRectMake(0, 0, 414, 512);
@@ -236,6 +218,53 @@ int dt;
 //    [self.view viewWithTag:2002].frame = CGRectMake(146, 60, 175, 58);
     [self.view viewWithTag:2003].frame = CGRectMake(43, 0, 235, 62);
     inviteFriendsLabelAction.frame = CGRectMake(9, 46, 300, 61);
+}
+
+#pragma mark - Tips related
+- (void)initTipsLabel {
+    
+    labelAttributeStyle2 = @{
+                               @"body":@[ [UIFont fontWithName:@"HelveticaNeue" size:18.0], [Colors_Modal getUIColorForMain_7]],
+                               @"inviteLink":[WPAttributedStyleAction styledActionWithAction:^{
+                                   
+                                   UIViewController *myViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"InviteScreen"];
+                                   [self.navigationController pushViewController:myViewController animated:YES];
+                               }],
+                               @"link":@[ [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:19.0], [Colors_Modal getUIColorForMain_1], @{NSUnderlineStyleAttributeName : @(kCTUnderlineStyleSingle|kCTUnderlinePatternSolid)}]
+                            };
+    
+    [inviteFriendsLabelAction setNumberOfLines:2];
+}
+
+- (void)setRandomTip {
+    
+    NSString *tipString = @"";
+    
+    // all by iPhone4x
+    if (dt != IPHONE_4x) {
+        
+        NSArray *tipsList_regular = @[
+                                      @"TIP: Skyrocket your special\nmoment to shine by <inviteLink>Inviting a Friend</inviteLink>.",
+                                      @"TIP: FameApp is better with <inviteLink>friends</inviteLink>.",
+                                      @"TIP: Don't forget to vote on what you see right now!!"
+                                     ];
+        
+        tipString = [tipsList_regular objectAtIndex:(arc4random() % [tipsList_regular count])];
+    }
+    // only for iPhone4x
+    else {
+        
+        NSArray *tipsList_iPhone4 = @[
+                                      @"TIP: Share your fame with <inviteLink>Friends</inviteLink>",
+                                      @"TIP: FameApp is better with <inviteLink>friends</inviteLink>.",
+                                      @"TIP: Don't forget to upvote!!"
+                                      /////////////////////////////////////.
+                                     ];
+        
+        tipString = [tipsList_iPhone4 objectAtIndex:(arc4random() % [tipsList_iPhone4 count])];
+    }
+    
+    [inviteFriendsLabelAction setAttributedText:[tipString attributedStringWithStyleBook:labelAttributeStyle2]];
 }
 
 #pragma mark - Timer related
@@ -820,6 +849,8 @@ int dt;
  2 = open: regular.
  */
 - (void)colorTransitionBetweenContents_OpenType:(int)type completion:(void (^)(void))block {
+    
+    [self setRandomTip];
     
     // open: skip with Nice
     if (type == REASON_TO_SHOW_NEXT_CONTENT__SKIP__NICE) {

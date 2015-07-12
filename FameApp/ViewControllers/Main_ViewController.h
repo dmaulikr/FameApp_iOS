@@ -40,6 +40,7 @@
 @property (nonatomic) BOOL isMainQueue_1;
 
 @property (nonatomic, strong) NSDictionary *labelAttributeStyle1;
+@property (nonatomic, strong) NSDictionary *labelAttributeStyle2;
 @property (nonatomic, strong) NSString *currentContent_postId;
 
 @property (nonatomic, strong) UIView *colorSplashView;
