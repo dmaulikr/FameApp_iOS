@@ -42,10 +42,6 @@
 #pragma mark - Private Methods
 + (void)setImageWithCacheOptions:(DFImageRequestOptions *)options imageURL:(NSString *)imageURL imageView:(UIImageView *)imageView placeholderImageName:(NSString *)placeholderImageName completeBlock:(myCompleteBlock)completeBlock {
     
-    
-    // FIXME: use completeBlock
-    
-    
     if ((imageURL == nil) || ([imageURL isEqualToString:@""])) {
         
         if ((imageView != nil)

@@ -281,7 +281,7 @@ int dt;
                        // do nothing for now
                    }
                    // WIN: published. WEEEE!!
-                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 3) {  // FIXME: DEBUG - TESTING - should be 3
+                   else if ([[repDict objectForKey:@"postStatus"] intValue] == 3) {
                        
                        if (isBeingPublished == NO) {
                            

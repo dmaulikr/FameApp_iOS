@@ -13,8 +13,6 @@ static int const REASON_TO_SHOW_NEXT_CONTENT__SKIP__NOT_NICE = 1;
 static int const REASON_TO_SHOW_NEXT_CONTENT__REGULAR = 2;
 int dt;
 
-// FIXME: short cache is not released  ???
-
 // FIXME: on reply from App API methods: each reply method should handle NSNull by replacing it with a value that the app can handle without crashing, or getting stuck.
 
 
@@ -370,62 +368,62 @@ int dt;
                    
                    //NSLog(@"App API - Reply: Channel Bidding Info [SUCCESS]");
                    
-//                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
-//                   
-//                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
-//                       
-//                       BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
-//                       if (aBiddingAndBonusInfo == nil) {
-//                           
-//                           aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
-//                       }
-//                       aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
-//                       aBiddingAndBonusInfo.bonusOdds = [repDict objectForKey:@"bonusOdds"];
-//                       
-//                       [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
-//                       
+                   NSDictionary *repDict = [AppAPI_Channel_Modal processReply_BiddingInfo:responseObject];
+                   
+                   if ([[repDict objectForKey:@"statusCode"] intValue] == 0) {
+                       
+                       BiddingAndBonusInfo *aBiddingAndBonusInfo = [DataStorageHelper getBiddingAndBonusInfo:appDelegateInst.loginUser.userId];
+                       if (aBiddingAndBonusInfo == nil) {
+                           
+                           aBiddingAndBonusInfo = [[BiddingAndBonusInfo alloc] init];
+                       }
+                       aBiddingAndBonusInfo.winningOdds = [repDict objectForKey:@"winOdds"];
+                       aBiddingAndBonusInfo.bonusOdds = [repDict objectForKey:@"bonusOdds"];
+                       
+                       [DataStorageHelper setBiddingAndBonusInfo:aBiddingAndBonusInfo];
+                       
 //                       [[self.view viewWithTag:2001] setHidden:[aBiddingAndBonusInfo.winningOdds isEqualToString:@""]];
 //                       [[self.view viewWithTag:20021] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
 //                       [[self.view viewWithTag:20022] setHidden:[aBiddingAndBonusInfo.bonusOdds isEqualToString:@""]];
-//                       
-//                       if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
-//                           
-//                           [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
-//                           
-//                           CGAffineTransform transform_oddsLabel = oddsLabel.transform;
-//                           [UIView animateWithDuration:1.0 animations:^{
-//                               
-//                               oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
-//                           }
-//                           completion:^(BOOL finished) {
-//                               
-//                               [UIView animateWithDuration:0.8 animations:^{
-//                                   
-//                                   oddsLabel.transform = transform_oddsLabel;
-//                               }];
-//                           }];
-//                       }
-//                       
-//                       NSString *oddsBonusLabelString = [FormattingHelper formatLabelTextForCurrentOddBonus:aBiddingAndBonusInfo.bonusOdds];
-//                       if ([oddsBonusLabel.text isEqualToString:oddsBonusLabelString] == NO) {
-//                           
-//                           [oddsBonusLabel setText:oddsBonusLabelString];
-//                           
-//                           CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
-//                           [UIView animateWithDuration:1.0 animations:^{
-//                               
-//                               oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
-//                           }
-//                           completion:^(BOOL finished) {
-//                               
-//                               [UIView animateWithDuration:0.8 animations:^{
-//                                   
-//                                   oddsBonusLabel.transform = transform_oddsBonusLabel;
-//                               }];
-//                           }];
-//                       }
-//                       
-//                   }
+                       
+                       if ([oddsLabel.text isEqualToString:aBiddingAndBonusInfo.winningOdds] == NO) {
+                           
+                           [oddsLabel setText:appDelegateInst.myBiddingAndBonusInfo.winningOdds];
+                           
+                           CGAffineTransform transform_oddsLabel = oddsLabel.transform;
+                           [UIView animateWithDuration:1.0 animations:^{
+                               
+                               oddsLabel.transform = CGAffineTransformScale(oddsLabel.transform, 1.3, 1.3);
+                           }
+                           completion:^(BOOL finished) {
+                               
+                               [UIView animateWithDuration:0.8 animations:^{
+                                   
+                                   oddsLabel.transform = transform_oddsLabel;
+                               }];
+                           }];
+                       }
+                       
+                       NSString *oddsBonusLabelString = [FormattingHelper formatLabelTextForCurrentOddBonus:aBiddingAndBonusInfo.bonusOdds];
+                       if ([oddsBonusLabel.text isEqualToString:oddsBonusLabelString] == NO) {
+                           
+                           [oddsBonusLabel setText:oddsBonusLabelString];
+                           
+                           CGAffineTransform transform_oddsBonusLabel = oddsBonusLabel.transform;
+                           [UIView animateWithDuration:1.0 animations:^{
+                               
+                               oddsBonusLabel.transform = CGAffineTransformScale(oddsBonusLabel.transform, 1.3, 1.3);
+                           }
+                           completion:^(BOOL finished) {
+                               
+                               [UIView animateWithDuration:0.8 animations:^{
+                                   
+                                   oddsBonusLabel.transform = transform_oddsBonusLabel;
+                               }];
+                           }];
+                       }
+                       
+                   }
                    
                } // End of Request 'Success'
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
