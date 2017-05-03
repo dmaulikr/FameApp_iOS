@@ -3,6 +3,9 @@
 # Fame App - iOS app
 http://thefameapp.co
 
+<img src="misc/promo_2.png" height="457">
+<img src="misc/promo_1.png" height="400">
+
 
 ## Namespace / Bundle Identifier
 com.fameapp
