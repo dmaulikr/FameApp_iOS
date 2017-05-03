@@ -1,11 +1,10 @@
 <img src="FameApp/Images.xcassets/Logos/jim.imageset/jim.png" height="100"><img src="FameApp/Images.xcassets/Logos/TextLogo_Black.imageset/text_logo_black.png" height=100>
 
-# Fame App - iOS app
-http://thefameapp.co
-
 <img src="misc/promo_2.png" height="457">
 <img src="misc/promo_1.png" height="400">
 
+# Fame App - iOS app
+http://thefameapp.co
 
 ## Namespace / Bundle Identifier
 com.fameapp
