@@ -1,4 +1,5 @@
-![ios_project_banner.png](https://bitbucket.org/repo/a94xRK/images/492821692-ios_project_banner.png)
+<img src="FameApp/Images.xcassets/Logos/jim.imageset/jim.png" height="100"><img src="FameApp/Images.xcassets/Logos/TextLogo_Black.imageset/text_logo_black.png" height=100>
+
 # Fame App - iOS app
 
 
