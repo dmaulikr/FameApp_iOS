@@ -1,9 +1,6 @@
 ![ios_project_banner.png](https://bitbucket.org/repo/a94xRK/images/492821692-ios_project_banner.png)
 # Fame App - iOS app
 
-## Release Notes
-### version 0.0.1
-
 
 ## Namespace / Bundle Identifier
 com.fameapp
